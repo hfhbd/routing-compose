@@ -1,9 +1,11 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
-
 version: 2
+registries:
+  maven-github:
+    type: maven-repository
+    url: https://maven.pkg.github.com/hfhbd
+    username: dependabot
+    password: ${{secrets.GHP_TOKEN}}
+
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -21,3 +23,5 @@ updates:
       - "hfhbd"
     assignees:
       - "hfhbd"
+    registries:
+      - maven-github

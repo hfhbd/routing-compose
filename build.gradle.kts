@@ -12,8 +12,8 @@ repositories {
     maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
     maven(url = "https://maven.pkg.github.com/hfhbd/*") {
         credentials {
-            username = System.getenv("GITHUB_ACTOR")
-            password = System.getenv("GITHUB_TOKEN")
+            username = System.getProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+            password = System.getProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
         }
     }
 }

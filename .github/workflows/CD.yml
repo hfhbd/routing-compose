@@ -19,6 +19,8 @@ jobs:
           java-version: 11
       - name: Build with Gradle
         run: ./gradlew build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish
         run: ./gradlew -Pversion=$version publish
         env:
