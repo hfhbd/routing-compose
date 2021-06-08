@@ -42,7 +42,7 @@ kotlin {
 
 publishing {
     repositories {
-        maven(url = "https://maven.pkg.github.com/hfhbd/routing-compose") {
+        maven(url = "https://maven.pkg.github.com/hfhbd/RoutingCompose") {
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
