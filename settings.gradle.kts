@@ -5,4 +5,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "ComposeRouting"
+rootProject.name = "routing-compose"
