@@ -5,10 +5,7 @@ import androidx.compose.runtime.*
 public class IntContentNode : ContentNode() {
     public lateinit var content: @Composable (Int) -> Unit
 
-    override fun matches(subRoute: String): Boolean {
-        println("got $subRoute $this\n")
-        return subRoute.toIntOrNull() != null
-    }
+    override fun matches(subRoute: String): Boolean = subRoute.toIntOrNull() != null
 
     @Composable
     override fun display(subRoute: String) {
@@ -16,7 +13,5 @@ public class IntContentNode : ContentNode() {
         content(argument)
     }
 
-    override fun toString(): String {
-        return "IntContentNode()"
-    }
+    override fun toString(): String = "IntContentNode()"
 }

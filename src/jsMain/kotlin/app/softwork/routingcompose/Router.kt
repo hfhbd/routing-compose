@@ -9,7 +9,6 @@ public interface Router {
         val root = NavBuilder(RootNode()).apply { builder() }.build()
         val fullPath by getPath(initPath)
         val withTrailingSlash = if(fullPath.endsWith("/")) fullPath else "$fullPath/"
-        println("updated with $withTrailingSlash")
         root.execute(withTrailingSlash)
         return root
     }

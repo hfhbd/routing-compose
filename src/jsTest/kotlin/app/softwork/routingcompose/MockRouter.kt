@@ -34,7 +34,6 @@ class MockRouter : Router {
         val path = remember { mutableStateOf(defaultPath) }
         DisposableEffect(Unit) {
             val id = subscribe {
-                println("subUpdate $it")
                 path.value = it
             }
             onDispose {

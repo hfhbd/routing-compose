@@ -15,7 +15,5 @@ public class ConstantRouteNode(public val node: String) : RouteNode() {
         }
     }
 
-    override fun toString(): String {
-        return "ConstantRouteNode(node='$node',children='$children')"
-    }
+    override fun toString(): String = "ConstantRouteNode(node='$node',children='$children')"
 }
