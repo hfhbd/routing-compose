@@ -8,58 +8,55 @@ class StringRoutingTest {
     fun contentTest() = runTest {
         val router = MockRouter()
         compose {
-            router {
+            router("/") {
                 route("/foo") {
-                    Text("Foo")
+                    noMatch("foo") {
+                        Text("foo")
+                    }
                 }
                 string {
                     Text("bar$it")
                 }
-                noMatch {
+                noMatch("other") {
                     Text("other")
                 }
             }
         }
-        assertEquals("other", content)
+        assertEquals("other", root.innerHTML)
 
-        router.navigate("/foo")
-        waitForChanges()
-        assertEquals("foo", content)
-
-        router.navigate("/bar")
-        waitForChanges()
-        assertEquals("barbar", content)
+        router.navigate("/foo", "foo")
+        router.navigate("/bar", "barbar")
     }
 
     @Test
     fun routeTest() = runTest {
         val router = MockRouter()
         compose {
-            router {
+            router("/") {
                 route("/users") {
                     stringRoute { str ->
                         route("/todos") {
                             string {
                                 Text("Todo $it for user: ${str.value}")
                             }
-                            noMatch {
+                            noMatch("todos") {
                                 Text("All todos for user: ${str.value}")
                             }
                         }
-                        noMatch {
+                        noMatch("userInfo") {
                             Text("UserInfo: ${str.value}")
                         }
                     }
-                    noMatch {
+                    noMatch("noUser") {
                         Text("No userID")
                     }
                 }
-                noMatch {
+                noMatch("other") {
                     Text("other")
                 }
             }
         }
-        assertEquals("other", content)
+        assertEquals("other", root.innerHTML)
 
         router.navigate("/users", "No userID")
         router.navigate("/users/john", "UserInfo: john")

@@ -9,59 +9,57 @@ class UUIDRoutingTest {
     fun contentTest() = runTest {
         val router = MockRouter()
         compose {
-            router {
+            router("/") {
                 route("/foo") {
-                    Text("Foo")
+                    noMatch("foo") {
+                        Text("foo")
+                    }
                 }
                 uuid {
                     Text("bar$it")
                 }
-                noMatch {
+                noMatch("other") {
                     Text("other")
                 }
             }
         }
-        assertEquals("other", content)
+        assertEquals("other", root.innerHTML)
 
-        router.navigate("/foo")
-        waitForChanges()
-        assertEquals("foo", content)
+        router.navigate("/foo", "foo")
 
         val uuid = UUID()
-        router.navigate("/$uuid")
-        waitForChanges()
-        assertEquals("bar$uuid", content)
+        router.navigate("/$uuid", "bar$uuid")
     }
 
     @Test
     fun routeTest() = runTest {
         val router = MockRouter()
         compose {
-            router {
+            router("/") {
                 route("/users") {
-                    uuidRoute { uuid ->
+                    uuidRoute { userID ->
                         route("/todos") {
-                            uuid {
-                                Text("Todo $it for user: ${uuid.value}")
+                            uuid { todoID ->
+                                Text("Todo $todoID for user: ${userID.value}")
                             }
-                            noMatch {
-                                Text("All todos for user: ${uuid.value}")
+                            noMatch("todos") {
+                                Text("All todos for user: ${userID.value}")
                             }
                         }
-                        noMatch {
-                            Text("UserInfo: ${uuid.value}")
+                        noMatch("user") {
+                            Text("UserInfo: ${userID.value}")
                         }
                     }
-                    noMatch {
+                    noMatch("noUser") {
                         Text("No userID")
                     }
                 }
-                noMatch {
+                noMatch("other") {
                     Text("other")
                 }
             }
         }
-        assertEquals("other", content)
+        assertEquals("other", root.innerHTML)
 
         router.navigate("/users", "No userID")
         val userID = UUID()
