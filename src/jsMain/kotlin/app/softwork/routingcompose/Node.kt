@@ -7,5 +7,5 @@ public sealed class Node {
 
 
     @Composable
-    public abstract fun execute(subRoute: String)
+    public abstract fun execute(path: String)
 }

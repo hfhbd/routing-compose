@@ -1,4 +1,4 @@
 package app.softwork.routingcompose
 
 @DslMarker
-public annotation class NavBuilderDSL
+public annotation class RouteBuilderDSL

@@ -9,55 +9,69 @@ internal class HashRouterTest {
     fun simpleTest() = runTest {
         val router = MockRouter()
         compose {
-            router {
+            router("/") {
                 route("/foo") {
-                    Text("Foo")
+                    noMatch("foo") {
+                        Text("foo")
+                    }
                 }
                 route("/bar") {
-                    Text("bar")
+                    noMatch("bar") {
+                        Text("bar")
+                    }
                 }
-                noMatch {
+                noMatch("other") {
                     Text("other")
                 }
             }
         }
-        assertEquals("other", content)
+        assertEquals("other", root.innerHTML)
 
-        router.navigate("/foo")
-        waitForChanges()
-        assertEquals("foo", content)
+        router.navigate("/foo","foo")
+        router.navigate("/bar", "bar")
+    }
 
-        router.navigate("/bar")
-        waitForChanges()
-        assertEquals("bar", content)
+    @Test
+    fun emptyTest() = runTest {
+        val router = MockRouter()
+        compose {
+            router("/") {
+                noMatch("other") {
+                    Text("other")
+                }
+            }
+        }
+        assertEquals("other", root.innerHTML)
     }
 
     @Test
     fun deepTest() = runTest {
         val router = MockRouter()
         compose {
-            router {
+            router("/foo") {
                 route("/foo") {
                     route("/bar") {
-                        Text("bar")
+                        route("/baz"){
+                            noMatch("baz") {
+                                Text("baz")
+                            }
+                        }
+                        noMatch("bar") {
+                            Text("bar")
+                        }
                     }
-                    noMatch {
-                        Text("Foo")
+                    noMatch("foo") {
+                        Text("foo")
                     }
                 }
-                noMatch {
+                noMatch("other") {
                     Text("other")
                 }
             }
         }
-        assertEquals("other", content)
-
-        router.navigate("/foo")
-        waitForChanges()
-        assertEquals("foo", content)
-
-        router.navigate("/foo/bar")
-        waitForChanges()
-        assertEquals("bar", content)
+        assertEquals("foo", root.innerHTML)
+        router.navigate("/foo/bar", "bar")
+        router.navigate("/foo/bar/baz", "baz")
+        router.navigate("/", "other")
     }
 }
