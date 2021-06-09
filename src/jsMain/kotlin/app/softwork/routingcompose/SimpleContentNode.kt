@@ -5,18 +5,12 @@ import androidx.compose.runtime.*
 public class SimpleContentNode(public val id: String) : ContentNode() {
     public lateinit var content: @Composable () -> Unit
 
-    override fun matches(subRoute: String): Boolean {
-        println("matches $this $subRoute\nAAAA")
-        return true
-    }
+    override fun matches(subRoute: String): Boolean = true
 
     @Composable
     override fun display(subRoute: String) {
-        println("display $this $subRoute\nAAAA")
         content()
     }
 
-    override fun toString(): String {
-        return "SimpleContentNode(id=$id)"
-    }
+    override fun toString(): String = "SimpleContentNode(id=$id)"
 }

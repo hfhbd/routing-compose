@@ -5,7 +5,6 @@ import androidx.compose.runtime.*
 public abstract class ContentNode : Node() {
     @Composable
     override fun execute(path: String) {
-        println("executing $this $path \nAAAA")
         display(path)
     }
 
