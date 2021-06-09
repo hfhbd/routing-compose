@@ -11,14 +11,14 @@ class UUIDRoutingTest {
         compose {
             router("/") {
                 route("/foo") {
-                    noMatch("foo") {
+                    noMatch {
                         Text("foo")
                     }
                 }
                 uuid {
                     Text("bar$it")
                 }
-                noMatch("other") {
+                noMatch {
                     Text("other")
                 }
             }
@@ -42,19 +42,19 @@ class UUIDRoutingTest {
                             uuid { todoID ->
                                 Text("Todo $todoID for user: ${userID.value}")
                             }
-                            noMatch("todos") {
+                            noMatch {
                                 Text("All todos for user: ${userID.value}")
                             }
                         }
-                        noMatch("user") {
+                        noMatch {
                             Text("UserInfo: ${userID.value}")
                         }
                     }
-                    noMatch("noUser") {
+                    noMatch {
                         Text("No userID")
                     }
                 }
-                noMatch("other") {
+                noMatch {
                     Text("other")
                 }
             }

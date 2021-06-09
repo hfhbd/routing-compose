@@ -84,7 +84,7 @@ public class NavBuilder internal constructor(private val node: RouteNode) {
 
     @Composable
     @ContentBuilderDSL
-    public fun noMatch(id: String, content: @Composable () -> Unit) {
-        node.children += SimpleContentNode(id).apply { this.content = content }
+    public fun noMatch(content: @Composable () -> Unit) {
+        node.children += SimpleContentNode().apply { this.content = content }
     }
 }
