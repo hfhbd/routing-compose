@@ -11,16 +11,16 @@ internal class HashRouterTest {
         compose {
             router("/") {
                 route("/foo") {
-                    noMatch("foo") {
+                    noMatch {
                         Text("foo")
                     }
                 }
                 route("/bar") {
-                    noMatch("bar") {
+                    noMatch {
                         Text("bar")
                     }
                 }
-                noMatch("other") {
+                noMatch {
                     Text("other")
                 }
             }
@@ -36,7 +36,7 @@ internal class HashRouterTest {
         val router = MockRouter()
         compose {
             router("/") {
-                noMatch("other") {
+                noMatch {
                     Text("other")
                 }
             }
@@ -52,19 +52,19 @@ internal class HashRouterTest {
                 route("/foo") {
                     route("/bar") {
                         route("/baz"){
-                            noMatch("baz") {
+                            noMatch {
                                 Text("baz")
                             }
                         }
-                        noMatch("bar") {
+                        noMatch {
                             Text("bar")
                         }
                     }
-                    noMatch("foo") {
+                    noMatch {
                         Text("foo")
                     }
                 }
-                noMatch("other") {
+                noMatch {
                     Text("other")
                 }
             }

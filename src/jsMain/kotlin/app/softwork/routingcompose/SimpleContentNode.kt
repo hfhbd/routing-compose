@@ -2,7 +2,7 @@ package app.softwork.routingcompose
 
 import androidx.compose.runtime.*
 
-public class SimpleContentNode(public val id: String) : ContentNode() {
+public class SimpleContentNode : ContentNode() {
     public lateinit var content: @Composable () -> Unit
 
     override fun matches(subRoute: String): Boolean = true
@@ -12,5 +12,5 @@ public class SimpleContentNode(public val id: String) : ContentNode() {
         content()
     }
 
-    override fun toString(): String = "SimpleContentNode(id=$id)"
+    override fun toString(): String = "SimpleContentNode()"
 }

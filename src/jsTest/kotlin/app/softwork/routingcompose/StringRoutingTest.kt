@@ -10,14 +10,14 @@ class StringRoutingTest {
         compose {
             router("/") {
                 route("/foo") {
-                    noMatch("foo") {
+                    noMatch {
                         Text("foo")
                     }
                 }
                 string {
                     Text("bar$it")
                 }
-                noMatch("other") {
+                noMatch {
                     Text("other")
                 }
             }
@@ -39,19 +39,19 @@ class StringRoutingTest {
                             string {
                                 Text("Todo $it for user: ${str.value}")
                             }
-                            noMatch("todos") {
+                            noMatch {
                                 Text("All todos for user: ${str.value}")
                             }
                         }
-                        noMatch("userInfo") {
+                        noMatch {
                             Text("UserInfo: ${str.value}")
                         }
                     }
-                    noMatch("noUser") {
+                    noMatch {
                         Text("No userID")
                     }
                 }
-                noMatch("other") {
+                noMatch {
                     Text("other")
                 }
             }
