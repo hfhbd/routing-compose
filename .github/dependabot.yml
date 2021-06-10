@@ -1,27 +1,27 @@
 version: 2
- registries:
-   maven-github:
-     type: maven-repository
-     url: https://maven.pkg.github.com/hfhbd
-     username: dependabot
-     password: ${{secrets.GHP_TOKEN}}
+registries:
+  maven-github:
+    type: maven-repository
+    url: https://maven.pkg.github.com/hfhbd
+    username: dependabot
+    password: ${{secrets.GHP_TOKEN}}
 
- updates:
-   - package-ecosystem: "github-actions"
-     directory: "/"
-     schedule:
-       interval: "daily"
-     reviewers:
-       - "hfhbd"
-     assignees:
-       - "hfhbd"
-   - package-ecosystem: "gradle"
-     directory: "/"
-     schedule:
-       interval: "daily"
-     reviewers:
-       - "hfhbd"
-     assignees:
-       - "hfhbd"
-     registries:
-       - maven-github
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "hfhbd"
+    assignees:
+      - "hfhbd"
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "hfhbd"
+    assignees:
+      - "hfhbd"
+    registries:
+      - maven-github
