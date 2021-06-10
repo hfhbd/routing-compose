@@ -7,20 +7,18 @@ public class NavBuilder internal constructor(private val node: RouteNode) {
 
     internal fun build(): Node = node
 
-    @Composable
     @RouteBuilderDSL
     public fun route(
         route: String,
-        nestedRoute: @Composable NavBuilder.() -> Unit
+        nestedRoute: NavBuilder.() -> Unit
     ) {
         require(route.startsWith("/"))
         val childNode = NavBuilder(ConstantRouteNode(route)).apply { nestedRoute() }.build()
         node.children += childNode
     }
 
-    @Composable
     @RouteBuilderDSL
-    public fun stringRoute(nestedRoute: @Composable NavBuilder.(Lazy<String>) -> Unit = {}) {
+    public fun stringRoute(nestedRoute: NavBuilder.(Lazy<String>) -> Unit = {}) {
         val childNode = StringRouteNode()
         NavBuilder(childNode).apply {
             nestedRoute(lazy {
@@ -30,7 +28,6 @@ public class NavBuilder internal constructor(private val node: RouteNode) {
         node.children += childNode
     }
 
-    @Composable
     @ContentBuilderDSL
     public fun string(content: @Composable (String) -> Unit) {
         val childNode = StringContentNode().apply {
@@ -39,9 +36,9 @@ public class NavBuilder internal constructor(private val node: RouteNode) {
         node.children += childNode
     }
 
-    @Composable
+
     @RouteBuilderDSL
-    public fun intRoute(nestedRoute: @Composable NavBuilder.(Lazy<Int>) -> Unit = {}) {
+    public fun intRoute(nestedRoute: NavBuilder.(Lazy<Int>) -> Unit = {}) {
         val childNode = IntRouteNode()
         NavBuilder(childNode).apply {
             nestedRoute(lazy {
@@ -51,7 +48,6 @@ public class NavBuilder internal constructor(private val node: RouteNode) {
         node.children += childNode
     }
 
-    @Composable
     @ContentBuilderDSL
     public fun int(content: @Composable (Int) -> Unit) {
         val childNode = IntContentNode().apply {
@@ -60,9 +56,8 @@ public class NavBuilder internal constructor(private val node: RouteNode) {
         node.children += childNode
     }
 
-    @Composable
     @RouteBuilderDSL
-    public fun uuidRoute(nestedRoute: @Composable NavBuilder.(Lazy<UUID>) -> Unit = {}) {
+    public fun uuidRoute(nestedRoute: NavBuilder.(Lazy<UUID>) -> Unit = {}) {
         val childNode = UUIDRouteNode()
         NavBuilder(childNode).apply {
             nestedRoute(lazy {
@@ -72,7 +67,7 @@ public class NavBuilder internal constructor(private val node: RouteNode) {
         node.children += childNode
     }
 
-    @Composable
+
     @ContentBuilderDSL
     public fun uuid(content: @Composable (UUID) -> Unit) {
         val childNode = UUIDContentNode().apply {
@@ -82,7 +77,6 @@ public class NavBuilder internal constructor(private val node: RouteNode) {
     }
 
 
-    @Composable
     @ContentBuilderDSL
     public fun noMatch(content: @Composable () -> Unit) {
         node.children += SimpleContentNode().apply { this.content = content }
