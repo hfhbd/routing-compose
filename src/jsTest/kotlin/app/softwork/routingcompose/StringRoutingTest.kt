@@ -63,4 +63,27 @@ class StringRoutingTest {
         router.navigate("/users/john/todos", "All todos for user: john")
         router.navigate("/users/john/todos/first", "Todo first for user: john")
     }
+
+    @Test
+    fun nested() = runTest {
+        val router = MockRouter()
+        compose {
+            router("/") {
+                stringRoute { userID ->
+                    string { todoID ->
+                        Text("Todo with $todoID from user ${userID.value}")
+                    }
+                    noMatch {
+                        Text("User ${userID.value}")
+                    }
+                }
+                noMatch {
+                    Text("No userID given")
+                }
+            }
+        }
+        assertEquals("No userID given", root.innerHTML)
+        router.navigate("/f", expected = "User f")
+        router.navigate("/f/t", expected = "Todo with t from user f")
+    }
 }

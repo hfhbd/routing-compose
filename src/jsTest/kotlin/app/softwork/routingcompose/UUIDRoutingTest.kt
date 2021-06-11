@@ -68,4 +68,29 @@ class UUIDRoutingTest {
         val todoID = UUID()
         router.navigate("/users/$userID/todos/$todoID", "Todo $todoID for user: $userID")
     }
+
+    @Test
+    fun nested() = runTest {
+        val router = MockRouter()
+        compose {
+            router("/") {
+                uuidRoute { userID ->
+                    uuid { todoID ->
+                        Text("Todo with $todoID from user ${userID.value}")
+                    }
+                    noMatch {
+                        Text("User ${userID.value}")
+                    }
+                }
+                noMatch {
+                    Text("No userID given")
+                }
+            }
+        }
+        assertEquals("No userID given", root.innerHTML)
+        val userID = UUID()
+        router.navigate("/$userID", expected = "User $userID")
+        val todoID = UUID()
+        router.navigate("/$userID/$todoID", expected = "Todo with $todoID from user $userID")
+    }
 }
