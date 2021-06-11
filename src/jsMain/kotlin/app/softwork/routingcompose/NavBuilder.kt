@@ -5,15 +5,13 @@ import kotlinx.uuid.*
 
 public class NavBuilder internal constructor(private val node: RouteNode) {
 
-    internal fun build(): Node = node
-
     @RouteBuilderDSL
     public fun route(
         route: String,
         nestedRoute: NavBuilder.() -> Unit
     ) {
-        require(route.startsWith("/"))
-        val childNode = NavBuilder(ConstantRouteNode(route)).apply { nestedRoute() }.build()
+        val childNode = ConstantRouteNode(route)
+        NavBuilder(childNode).apply { nestedRoute() }
         node.children += childNode
     }
 

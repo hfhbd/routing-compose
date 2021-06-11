@@ -27,7 +27,7 @@ internal class HashRouterTest {
         }
         assertEquals("other", root.innerHTML)
 
-        router.navigate("/foo","foo")
+        router.navigate("/foo", "foo")
         router.navigate("/bar", "bar")
     }
 
@@ -51,7 +51,7 @@ internal class HashRouterTest {
             router("/foo") {
                 route("/foo") {
                     route("/bar") {
-                        route("/baz"){
+                        route("/baz") {
                             noMatch {
                                 Text("baz")
                             }
@@ -73,5 +73,21 @@ internal class HashRouterTest {
         router.navigate("/foo/bar", "bar")
         router.navigate("/foo/bar/baz", "baz")
         router.navigate("/", "other")
+    }
+
+    @Test
+    fun noTrailingSlash() = runTest {
+        val router = MockRouter()
+        compose {
+            router("/") {
+                assertFailsWith<IllegalArgumentException> {
+                    route("foo") {
+                        noMatch {
+                            Text("Should not reach")
+                        }
+                    }
+                }
+            }
+        }
     }
 }

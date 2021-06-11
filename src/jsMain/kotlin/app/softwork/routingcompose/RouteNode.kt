@@ -6,8 +6,8 @@ public abstract class RouteNode : Node() {
     public var children: List<Node> = emptyList()
 
     @Composable
-    public open fun execute(path: String) {
-        val childPath = getChildPath(path)
+    public fun execute(path: String) {
+        val childPath = path.removePrefix("/").takeWhile { it != '/' }
         val matchedChild = children.firstOrNull { child ->
             child.matches(childPath)
         }
@@ -22,7 +22,4 @@ public abstract class RouteNode : Node() {
             }
         }
     }
-
-
-    internal open fun getChildPath(fullPath: String): String = fullPath.removePrefix("/").takeWhile { it != '/' }
 }
