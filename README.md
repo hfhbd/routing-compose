@@ -22,3 +22,20 @@ dependencies {
     implementation("app.softwork:routing-compose:0.0.1")
 }
 ````
+
+## Usage
+```kotlin
+HashRouter(initPath = "/users") {
+    route("/users") {
+        int { userID ->
+            Text("User with $userID") 
+        } 
+        noMatch {
+            Text("User list")
+        }
+    }
+    noMatch {
+        Text("Hello World")
+    }
+}
+```
