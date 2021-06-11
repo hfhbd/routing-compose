@@ -64,4 +64,27 @@ class IntegerRoutingTest {
         router.navigate("/users/5/todos", "All todos for user: 5")
         router.navigate("/users/5/todos/42", "Todo 42 for user: 5")
     }
+
+    @Test
+    fun nested() = runTest {
+        val router = MockRouter()
+        compose {
+            router("/") {
+                intRoute { userID ->
+                    int { todoID ->
+                        Text("Todo with $todoID from user ${userID.value}")
+                    }
+                    noMatch {
+                        Text("User ${userID.value}")
+                    }
+                }
+                noMatch {
+                    Text("No userID given")
+                }
+            }
+        }
+        assertEquals("No userID given", root.innerHTML)
+        router.navigate("/42", expected = "User 42")
+        router.navigate("/42/42", expected = "Todo with 42 from user 42")
+    }
 }

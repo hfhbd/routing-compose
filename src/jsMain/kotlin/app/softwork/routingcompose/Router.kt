@@ -6,7 +6,8 @@ public interface Router {
     @Composable
     public operator fun invoke(initPath: String, builder: @Composable NavBuilder.() -> Unit): Node {
         require(initPath.startsWith("/"))
-        val root = NavBuilder(RootNode()).apply { builder() }.build()
+        val root = RootNode()
+        NavBuilder(root).apply { builder() }
         val fullPath by getPath(initPath)
         val withTrailingSlash = if(fullPath.endsWith("/")) fullPath else "$fullPath/"
         root.execute(withTrailingSlash)
