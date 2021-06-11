@@ -10,7 +10,7 @@ public abstract class RouteNode : Node() {
         val childPath = path.removePrefix("/").takeWhile { it != '/' }
         val matchedChild = children.firstOrNull { child ->
             child.matches(childPath)
-        }
+        } ?: error("No node matching $childPath of $path found. Please add a noMatch route.")
 
         when (matchedChild) {
             is ContentNode -> {
