@@ -27,9 +27,9 @@ public object HashRouter : Router {
     }
 
     @Composable
-    override fun getPath(initPath: String): State<String> {
-        require(initPath.startsWith("/"))
-        val defaultPath = window.location.hash.removePrefix("#").ifBlank { initPath }
+    override fun getPath(initRoute: String): State<String> {
+        require(initRoute.startsWith("/")) { "initRoute must start with a slash." }
+        val defaultPath = window.location.hash.removePrefix("#").ifBlank { initRoute }
         val path = remember { mutableStateOf(defaultPath) }
         DisposableEffect(Unit) {
             val id = subscribe {

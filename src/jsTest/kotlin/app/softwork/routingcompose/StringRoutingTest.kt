@@ -9,7 +9,7 @@ class StringRoutingTest {
         val router = MockRouter()
         compose {
             router("/") {
-                route("/foo") {
+                route("foo") {
                     noMatch {
                         Text("foo")
                     }
@@ -33,9 +33,9 @@ class StringRoutingTest {
         val router = MockRouter()
         compose {
             router("/") {
-                route("/users") {
+                route("users") {
                     stringRoute { str ->
-                        route("/todos") {
+                        route("todos") {
                             string {
                                 Text("Todo $it for user: ${str.value}")
                             }

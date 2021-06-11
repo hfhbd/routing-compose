@@ -1,13 +1,12 @@
 package app.softwork.routingcompose
 
-public class ConstantRouteNode(node: String) : RouteNode() {
+public class ConstantRouteNode(public val route: String) : RouteNode() {
     init {
-        require(node.startsWith("/")) { "$node must start with a trailing slash" }
+        require(!route.startsWith("/")) { "$route must not start with a trailing slash." }
+        require(!route.contains("/")) { "To use nested routes, use route() { route() { } } instead." }
     }
 
-    public val node: String = node.removePrefix("/")
+    override fun matches(subRoute: String): Boolean = subRoute == route
 
-    override fun matches(subRoute: String): Boolean = subRoute == node
-
-    override fun toString(): String = "ConstantRouteNode(node='$node',children='$children')"
+    override fun toString(): String = "ConstantRouteNode(route='$route',children='$children')"
 }

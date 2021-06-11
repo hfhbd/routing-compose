@@ -10,7 +10,7 @@ class UUIDRoutingTest {
         val router = MockRouter()
         compose {
             router("/") {
-                route("/foo") {
+                route("foo") {
                     noMatch {
                         Text("foo")
                     }
@@ -36,9 +36,9 @@ class UUIDRoutingTest {
         val router = MockRouter()
         compose {
             router("/") {
-                route("/users") {
+                route("users") {
                     uuidRoute { userID ->
-                        route("/todos") {
+                        route("todos") {
                             uuid { todoID ->
                                 Text("Todo $todoID for user: ${userID.value}")
                             }

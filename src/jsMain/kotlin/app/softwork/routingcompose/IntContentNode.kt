@@ -8,9 +8,8 @@ public class IntContentNode : ContentNode() {
     override fun matches(subRoute: String): Boolean = subRoute.toIntOrNull() != null
 
     @Composable
-    override fun display(subRoute: String) {
-        val argument = subRoute.toInt()
-        content(argument)
+    override fun display(argument: String) {
+        content(argument.toInt())
     }
 
     override fun toString(): String = "IntContentNode()"

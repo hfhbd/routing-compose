@@ -8,7 +8,7 @@ public class SimpleContentNode : ContentNode() {
     override fun matches(subRoute: String): Boolean = true
 
     @Composable
-    override fun display(subRoute: String) {
+    override fun display(argument: String) {
         content()
     }
 

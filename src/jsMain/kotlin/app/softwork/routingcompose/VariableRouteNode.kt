@@ -4,7 +4,7 @@ public abstract class VariableRouteNode<T : Any> : RouteNode() {
     public lateinit var variable: T
 
     override fun matches(subRoute: String): Boolean {
-        val match = fromPath(subRoute)
+        val match = variable(fromRoute = subRoute)
         return when {
             match != null -> {
                 variable = match
@@ -16,5 +16,5 @@ public abstract class VariableRouteNode<T : Any> : RouteNode() {
         }
     }
 
-    public abstract fun fromPath(directRoute: String): T?
+    public abstract fun variable(fromRoute: String): T?
 }

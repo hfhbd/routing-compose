@@ -28,9 +28,9 @@ class MockRouter : Router {
     private var currentPath = "#"
 
     @Composable
-    override fun getPath(initPath: String): State<String> {
-        require(initPath.startsWith("/"))
-        val defaultPath = currentPath.removePrefix("#").ifBlank { initPath }
+    override fun getPath(initRoute: String): State<String> {
+        require(initRoute.startsWith("/"))
+        val defaultPath = currentPath.removePrefix("#").ifBlank { initRoute }
         val path = remember { mutableStateOf(defaultPath) }
         DisposableEffect(Unit) {
             val id = subscribe {

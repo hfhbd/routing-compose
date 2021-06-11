@@ -9,8 +9,8 @@ public class UUIDContentNode : ContentNode() {
     override fun matches(subRoute: String): Boolean = UUID.isValidUUIDString(subRoute)
 
     @Composable
-    override fun display(subRoute: String) {
-        val uuid = subRoute.toUUID()
+    override fun display(argument: String) {
+        val uuid = argument.toUUID()
         content(uuid)
     }
 }

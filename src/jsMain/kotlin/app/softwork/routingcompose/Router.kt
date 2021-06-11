@@ -4,18 +4,17 @@ import androidx.compose.runtime.*
 
 public interface Router {
     @Composable
-    public operator fun invoke(initPath: String, builder: @Composable NavBuilder.() -> Unit): Node {
-        require(initPath.startsWith("/"))
+    public operator fun invoke(initRoute: String, builder: @Composable NavBuilder.() -> Unit): Node {
         val root = RootNode()
         NavBuilder(root).apply { builder() }
-        val fullPath by getPath(initPath)
+        val fullPath by getPath(initRoute)
         val withTrailingSlash = if(fullPath.endsWith("/")) fullPath else "$fullPath/"
         root.execute(withTrailingSlash)
         return root
     }
 
     @Composable
-    public fun getPath(initPath: String): State<String>
+    public fun getPath(initRoute: String): State<String>
 
     public fun navigate(to: String)
 }
