@@ -25,7 +25,7 @@ dependencies {
 
 ## Usage
 ```kotlin
-HashRouter(initPath = "/users") {
+HashRouter(initRoute = "/users") {
     route("/users") {
         int { userID ->
             Text("User with $userID") 

@@ -10,12 +10,12 @@ internal class HashRouterTest {
         val router = MockRouter()
         compose {
             router("/") {
-                route("/foo") {
+                route("foo") {
                     noMatch {
                         Text("foo")
                     }
                 }
-                route("/bar") {
+                route("bar") {
                     noMatch {
                         Text("bar")
                     }
@@ -49,9 +49,9 @@ internal class HashRouterTest {
         val router = MockRouter()
         compose {
             router("/foo") {
-                route("/foo") {
-                    route("/bar") {
-                        route("/baz") {
+                route("foo") {
+                    route("bar") {
+                        route("baz") {
                             noMatch {
                                 Text("baz")
                             }
@@ -76,9 +76,9 @@ internal class HashRouterTest {
     }
 
     @Test
-    fun noTrailingSlash() = runTest {
+    fun notFound() = runTest {
         val router = MockRouter()
-        assertFailsWith<IllegalArgumentException> {
+        assertFailsWith<IllegalStateException> {
             compose {
                 router("/") {
                     route("foo") {
@@ -92,15 +92,18 @@ internal class HashRouterTest {
     }
 
     @Test
-    fun notFound() = runTest {
+    fun nestedRoute() = runTest {
         val router = MockRouter()
-        assertFailsWith<IllegalStateException> {
+        assertFailsWith<IllegalArgumentException> {
             compose {
                 router("/") {
-                    route("/foo") {
+                    route("foo/foo") {
                         noMatch {
-                            Text("Should not be reached")
+                            Text("FooBar")
                         }
+                    }
+                    noMatch {
+                        Text("No match")
                     }
                 }
             }
