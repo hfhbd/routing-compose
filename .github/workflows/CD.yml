@@ -21,7 +21,35 @@ jobs:
         run: ./gradlew build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Save sample
+        uses: actions/upload-artifact@v2
+        with:
+          path: integrationTest/build/distributions
       - name: Publish
         run: ./gradlew -Pversion=$version publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  webpage:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set environment for version
+        run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
+      - name: Switch to GitHub Pages
+        uses: actions/checkout@v2
+        with:
+          ref: webpage
+      - uses: actions/download-artifact@v2
+      - name: Copy files to /
+        run: cp -r artifact/* . && rm -Rf artifact/*
+      - name: Config git
+        run: git config user.email "cd-bot@softwork.app" && git config user.name "CD Bot"
+      - name: Add changes
+        run: git add .
+      - name: Try to commit changes
+        run: git commit -m "Publish docs $version"
+        continue-on-error: true
+      - name: Publish changes
+        run: git push
+        if: ${{ success() }}
