@@ -6,3 +6,7 @@ pluginManagement {
 }
 
 rootProject.name = "routing-compose"
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+include(":integrationTest")

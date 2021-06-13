@@ -14,16 +14,22 @@ public object HashRouter : Router {
         }
     }
 
+    init {
+        window.onhashchange = {
+            val new: String = window.location.hash.removePrefix("#")
+            subscriber.entries.forEach { (_, fn) ->
+                fn(new)
+            }
+        }
+    }
+
     private fun removeSubscription(id: Int) {
         subscriber.remove(id)
     }
 
     override fun navigate(to: String) {
         require(to.startsWith("/"))
-        subscriber.entries.forEach { (_, fn) ->
-            fn(to)
-        }
-        window.history.pushState(null, title = "", "#$to")
+        window.location.hash = to
     }
 
     @Composable
