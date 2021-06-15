@@ -10,22 +10,28 @@ fun main() {
         HashRouter(initRoute = "/") {
             route("foo") {
                 int {
-                    Text("Hello user $it")
-                    Text("Use the back and forward functions of your browser to go navigate back.")
+                    P { Text("Hello user $it") }
+                    P { Text("Use the back and forward functions of your browser to go navigate back.") }
                 }
                 noMatch {
-                    NavLink("/foo/42") {
-                        Text("Navigate to foo with a userID")
-                    }
                     P {
                         Text("Foo")
+                    }
+                    P {
+                        NavLink("/foo/42") {
+                            Text("Click to navigate to /foo/42 with a userID")
+                        }
                     }
                 }
             }
             noMatch {
-                Text("Hello Routing")
-                NavLink("/foo") {
-                    Text("Navigate to foo")
+                P {
+                    Text("Hello Routing")
+                }
+                P {
+                    NavLink("/foo") {
+                        Text("Click to navigate to /foo")
+                    }
                 }
             }
         }
