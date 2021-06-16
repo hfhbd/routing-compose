@@ -7,32 +7,38 @@ import org.jetbrains.compose.web.dom.*
 fun main() {
     renderComposableInBody {
         Clock()
-        HashRouter(initRoute = "/") {
-            route("foo") {
-                int {
-                    P { Text("Hello user $it") }
-                    P { Text("Use the back and forward functions of your browser to go navigate back.") }
-                }
-                noMatch {
-                    P {
-                        Text("Foo")
-                    }
-                    P {
-                        NavLink("/foo/42") {
-                            Text("Click to navigate to /foo/42 with a userID")
-                        }
-                    }
+        P {
+            Text("HashRouter implementation")
+        }
+        HashRouter("/") { Routing() }
+    }
+}
+
+@Composable
+fun NavBuilder.Routing() {
+    route("foo") {
+        int {
+            P { Text("Hello user $it") }
+            P { Text("Use the back and forward functions of your browser to go navigate back.") }
+        }
+        noMatch {
+            P {
+                Text("Foo")
+            }
+            P {
+                NavLink("/foo/42") {
+                    Text("Click to navigate to /foo/42 with a userID")
                 }
             }
-            noMatch {
-                P {
-                    Text("Hello Routing")
-                }
-                P {
-                    NavLink("/foo") {
-                        Text("Click to navigate to /foo")
-                    }
-                }
+        }
+    }
+    noMatch {
+        P {
+            Text("Hello Routing")
+        }
+        P {
+            NavLink("/foo") {
+                Text("Click to navigate to /foo")
             }
         }
     }
