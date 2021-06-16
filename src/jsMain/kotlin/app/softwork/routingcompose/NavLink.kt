@@ -3,6 +3,7 @@ package app.softwork.routingcompose
 import androidx.compose.runtime.*
 import org.jetbrains.compose.web.attributes.*
 import org.jetbrains.compose.web.dom.*
+import org.w3c.dom.*
 
 /**
  * Routing navigation Composable that will navigate to the provided path leveraging
@@ -11,7 +12,7 @@ import org.jetbrains.compose.web.dom.*
 @Composable
 public fun NavLink(
     to: String,
-    attrs: AttrsBuilder<Tag.A>.() -> Unit = {},
+    attrs: AttrsBuilder<HTMLAnchorElement>.() -> Unit = {},
     content: @Composable () -> Unit
 ) {
     val router = RouterCompositionLocal.current
