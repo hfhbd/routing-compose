@@ -6,7 +6,7 @@ import kotlinx.browser.*
 /**
  * This [Router] implementation uses `/#/path` to persistent the current route in [window.location.hash].
  *
- * Every request will always request `GET /`, so your server needs only to listen and serve this endpoint.
+ * Every request will always request `GET /`, so your server needs only to listen and serve this endpoint, or index.html file.
  */
 public object HashRouter : Router {
     private var subCounter = 0
