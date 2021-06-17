@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-    implementation("app.softwork:routing-compose:0.0.10")
+    implementation("app.softwork:routing-compose:0.0.11")
 }
 ````
 
@@ -28,7 +28,7 @@ dependencies {
 Example with `HashRouter`, `BrowserRouter` will be implemented in the same manner.
 
 ```kotlin
-HashRouter(initRoute = "/users") {
+HashRouter(initRoute = "/users") { // or BrowserRouter(initRoute = "/users") {
     route("/users") {
         int { userID ->
             Text("User with $userID") 
@@ -48,7 +48,7 @@ RoutingCompose offers two routing implementations, `HashRouter` and `BrowserRout
 [This article](https://blog.bitsrc.io/using-hashed-vs-nonhashed-url-paths-in-single-page-apps-a66234cefc96) provides a good explanation of the difference between each routing strategy.
 
 ### HashRouter
-`HashRouter` is used for hashed urls (e.g. yoursite.com/#/path). This strategy requires no additional setup to work in a single page compose-web application.
+`HashRouter` is used for hashed urls (e.g. yoursite.com/#/path). This strategy requires no additional setup to work in a single page compose-web application. Some SaaS providers, like GitHub Pages, do not offer configuration options, so you have to use `HashRouter`.
 
 ### BrowserRouter
 
