@@ -14,7 +14,9 @@ import kotlinx.browser.*
  * request a specific path. Each server's implementation of a catch-all will be different and you
  * should handle this based on the webserver environment you're running.
  *
- * For more information about this catch-all on
+ * For more information about this catch-all, check your webserver implementation's specific
+ * instructions. For development environments, see the RoutingCompose Readme
+ * for full instructions.
  */
 public object BrowserRouter : Router {
     private var subCounter = 0
