@@ -7,10 +7,17 @@ import org.jetbrains.compose.web.dom.*
 fun main() {
     renderComposableInBody {
         Clock()
+        
         P {
             Text("HashRouter implementation")
         }
         HashRouter("/") { Routing() }
+        
+        Hr()
+        P {
+            Text("BrowserRouter implementation")
+        }
+        BrowserRouter(initRoute = "/") { Routing() }
     }
 }
 
