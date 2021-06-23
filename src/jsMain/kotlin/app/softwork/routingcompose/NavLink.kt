@@ -15,10 +15,10 @@ public fun NavLink(
     attrs: AttrsBuilder<HTMLAnchorElement>.() -> Unit = {},
     content: @Composable () -> Unit
 ) {
-    val router = RouterCompositionLocal.current
     A(attrs = {
         attrs()
         onClick {
+            val router = RouterCompositionLocal.current
             router.navigate(to)
         }
     }) { content() }
