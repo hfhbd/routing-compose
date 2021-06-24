@@ -32,7 +32,7 @@ public class NavBuilder internal constructor(private val node: RouteNode) {
      * To get the route parameter, call the [Lazy] parameter inside a [ContentNode].
      */
     @RouteBuilderDSL
-    public fun stringRoute(nestedRoute: NavBuilder.(Lazy<String>) -> Unit = {}) {
+    public fun stringRoute(nestedRoute: NavBuilder.(Lazy<String>) -> Unit) {
         val childNode = StringRouteNode()
         NavBuilder(childNode).apply {
             nestedRoute(lazy {
@@ -60,7 +60,7 @@ public class NavBuilder internal constructor(private val node: RouteNode) {
      * To get the route parameter, call the [Lazy] parameter inside a [ContentNode].
      */
     @RouteBuilderDSL
-    public fun intRoute(nestedRoute: NavBuilder.(Lazy<Int>) -> Unit = {}) {
+    public fun intRoute(nestedRoute: NavBuilder.(Lazy<Int>) -> Unit) {
         val childNode = IntRouteNode()
         NavBuilder(childNode).apply {
             nestedRoute(lazy {
@@ -88,7 +88,7 @@ public class NavBuilder internal constructor(private val node: RouteNode) {
      * To get the route parameter, call the [Lazy] parameter inside a [ContentNode].
      */
     @RouteBuilderDSL
-    public fun uuidRoute(nestedRoute: NavBuilder.(Lazy<UUID>) -> Unit = {}) {
+    public fun uuidRoute(nestedRoute: NavBuilder.(Lazy<UUID>) -> Unit) {
         val childNode = UUIDRouteNode()
         NavBuilder(childNode).apply {
             nestedRoute(lazy {

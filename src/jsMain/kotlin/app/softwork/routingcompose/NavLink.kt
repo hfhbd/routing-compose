@@ -12,12 +12,12 @@ import org.w3c.dom.*
 @Composable
 public fun NavLink(
     to: String,
-    attrs: AttrsBuilder<HTMLAnchorElement>.() -> Unit = {},
+    attrs: (AttrsBuilder<HTMLAnchorElement>.() -> Unit)? = null,
     content: @Composable () -> Unit
 ) {
     val router = RouterCompositionLocal.current
     A(attrs = {
-        attrs()
+        attrs?.invoke(this)
         onClick {
             router.navigate(to)
         }

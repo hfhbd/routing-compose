@@ -19,7 +19,7 @@ public interface Router {
     @Composable
     public operator fun invoke(
         initRoute: String,
-        builder: @Composable NavBuilder.() -> Unit
+        builder: NavBuilder.() -> Unit
     ): Node {
         val root = RootNode()
 
