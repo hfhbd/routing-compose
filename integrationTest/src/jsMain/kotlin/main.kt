@@ -21,7 +21,6 @@ fun main() {
     }
 }
 
-@Composable
 fun NavBuilder.Routing() {
     route("foo") {
         int {
@@ -53,10 +52,10 @@ fun NavBuilder.Routing() {
 
 @Composable
 fun Clock() {
-    val scope = rememberCoroutineScope()
+    val scope = MainScope()
     var current by remember { mutableStateOf(0) }
 
-    SideEffect {
+    LaunchedEffect(Unit) {
         scope.launch {
             while (true) {
                 delay(1000)
