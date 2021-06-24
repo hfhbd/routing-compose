@@ -52,15 +52,12 @@ fun NavBuilder.Routing() {
 
 @Composable
 fun Clock() {
-    val scope = MainScope()
     var current by remember { mutableStateOf(0) }
 
     LaunchedEffect(Unit) {
-        scope.launch {
-            while (true) {
-                delay(1000)
-                current += 1
-            }
+        while (true) {
+            delay(1000)
+            current += 1
         }
     }
 
