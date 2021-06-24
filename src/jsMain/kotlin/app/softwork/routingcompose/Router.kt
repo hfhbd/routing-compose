@@ -8,8 +8,10 @@ import androidx.compose.runtime.*
  *
  * This is particularly useful for [NavLink], so we can have a single Composable
  * agnostic of the top level router implementation.
+ * 
+ * To use this composition, you need to invoke any [Router] implementation first.
  */
-internal val RouterCompositionLocal: ProvidableCompositionLocal<Router> =
+public val RouterCompositionLocal: ProvidableCompositionLocal<Router> =
     staticCompositionLocalOf { error("Router not defined, cannot provide through RouterCompositionLocal.") }
 
 public interface Router {
