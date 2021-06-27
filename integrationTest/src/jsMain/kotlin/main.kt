@@ -2,22 +2,41 @@ import androidx.compose.runtime.*
 import app.softwork.routingcompose.*
 import kotlinx.coroutines.*
 import org.jetbrains.compose.web.*
+import org.jetbrains.compose.web.attributes.*
 import org.jetbrains.compose.web.dom.*
 
 fun main() {
     renderComposableInBody {
         Clock()
-        
+
         P {
             Text("HashRouter implementation")
         }
         HashRouter("/") { Routing() }
-        
+
         Hr()
         P {
             Text("BrowserRouter implementation")
         }
         BrowserRouter(initRoute = "/") { Routing() }
+
+        P {
+            Text("Custom router usage")
+        }
+        P {
+            Code {
+                Text("val router by Router")
+                Text("router.navigate(to = /foo")
+            }
+        }
+
+        val router by Router
+        Input(type = InputType.Button) {
+            onClick {
+                router.navigate("/foo")
+            }
+            value("Click to navigate to /foo")
+        }
     }
 }
 
