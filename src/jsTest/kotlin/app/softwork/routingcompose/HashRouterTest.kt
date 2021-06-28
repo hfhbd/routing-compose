@@ -109,4 +109,25 @@ internal class HashRouterTest {
             }
         }
     }
+
+    @Test
+    fun RouterCompositionLocalTest() = runTest {
+        var router: Router? = null
+        compose {
+            MockRouter().invoke("/") {
+                route("foo") {
+                    noMatch { Text("Foo") }
+                }
+                noMatch {
+                    Text("NoMatch")
+
+                    router = RouterCompositionLocal.current
+                }
+            }
+        }
+        assertEquals("NoMatch", root.innerHTML)
+        router!!.navigate("/foo")
+        waitChanges()
+        assertEquals("Foo", root.innerHTML)
+    }
 }
