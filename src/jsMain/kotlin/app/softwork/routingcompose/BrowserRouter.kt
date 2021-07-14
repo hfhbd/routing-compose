@@ -1,7 +1,6 @@
 package app.softwork.routingcompose
 
 
-import androidx.compose.runtime.*
 import kotlinx.browser.*
 
 /**
@@ -18,31 +17,11 @@ import kotlinx.browser.*
  * instructions. For development environments, see the RoutingCompose Readme
  * for full instructions.
  */
-public object BrowserRouter : Router {
-    private var subCounter = 0
-    private val subscriber: MutableMap<Int, (String) -> Unit> = mutableMapOf()
-
-    private fun subscribe(block: (String) -> Unit): Int {
-        subscriber[subCounter] = block
-        return subCounter.also {
-            subCounter += 1
-        }
-    }
-
+public object BrowserRouter : AbstractRouter(window.location.pathname) {
     init {
         window.onpopstate = {
-            notifySubscribersOfNewPath()
+            update(newPath = window.location.pathname)
         }
-    }
-
-    private fun notifySubscribersOfNewPath(newPath: String = window.location.pathname) {
-        subscriber.entries.forEach { (_, fn) ->
-            fn(newPath)
-        }
-    }
-
-    private fun removeSubscription(id: Int) {
-        subscriber.remove(id)
     }
 
     override fun navigate(to: String) {
@@ -53,23 +32,6 @@ public object BrowserRouter : Router {
         The history API unfortunately provides no callback to listen for
         [window.history.pushState], so we need to notify subscribers when pushing a new path.
          */
-        notifySubscribersOfNewPath()
-    }
-
-    @Composable
-    override fun getPath(initRoute: String): State<String> {
-        require(initRoute.startsWith("/")) { "initRoute must start with a slash." }
-
-        val defaultPath = window.location.pathname.ifBlank { initRoute }
-        val path = remember { mutableStateOf(defaultPath) }
-        DisposableEffect(Unit) {
-            val id = subscribe {
-                path.value = it
-            }
-            onDispose {
-                removeSubscription(id)
-            }
-        }
-        return path
+        update(newPath = window.location.pathname)
     }
 }

@@ -15,15 +15,21 @@ repositories {
 }
 
 kotlin {
+    jvm()
     js(IR) {
         browser()
         binaries.executable()
     }
 
     sourceSets {
-        val jsMain by getting {
+        commonMain {
             dependencies {
                 implementation(projects.routingCompose)
+            }
+        }
+        val jvmMain by getting {
+            dependencies {
+                implementation(compose.desktop.currentOs)
             }
         }
     }

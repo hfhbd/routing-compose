@@ -15,7 +15,7 @@ public fun NavLink(
     attrs: (AttrsBuilder<HTMLAnchorElement>.() -> Unit)? = null,
     content: @Composable () -> Unit
 ) {
-    val router = RouterCompositionLocal.current
+    val router = Router.current
     A(attrs = {
         attrs?.invoke(this)
         onClick {
