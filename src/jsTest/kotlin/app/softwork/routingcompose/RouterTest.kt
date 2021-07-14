@@ -1,5 +1,6 @@
 package app.softwork.routingcompose
 
+import org.jetbrains.compose.web.attributes.*
 import org.jetbrains.compose.web.dom.*
 import org.jetbrains.compose.web.dom.Text
 import org.w3c.dom.*
@@ -124,9 +125,9 @@ internal class RouterTest {
                     Text("NoMatch")
 
                     val router = Router.current
-                    Input {
+                    Input(type = InputType.Text) {
                         ref {
-                            input = (it as HTMLInputElement)
+                            input = it
                             onDispose {
 
                             }
