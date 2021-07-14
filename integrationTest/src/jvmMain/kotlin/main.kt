@@ -7,12 +7,18 @@ import app.softwork.routingcompose.*
 fun main() {
     repeat(2) {
         Window(title = "$it") {
-            DesktopRouter("/") {
-                string {
-                    Text("Hello $it")
+            DesktopRouter("/$it") {
+                int {
+                    Content(it)
                 }
-                noMatch {
-                    Content()
+                string {
+                    Column {
+                        Text("Hello $it")
+                        val router = Router.current
+                        Button(onClick = { router.navigateBack() }) {
+                            Text("Back")
+                        }
+                    }
                 }
             }
         }
@@ -20,11 +26,11 @@ fun main() {
 }
 
 @Composable
-fun Content() {
+fun Content(int: Int) {
     var name by remember { mutableStateOf("") }
     val router = Router.current
     Column {
-        Text("Hello World")
+        Text("Hello World $int")
         TextField(value = name, {
             name = it
         })
