@@ -1,9 +1,12 @@
 package app.softwork.routingcompose
 
+import org.jetbrains.compose.web.attributes.*
 import org.jetbrains.compose.web.dom.*
+import org.jetbrains.compose.web.dom.Text
+import org.w3c.dom.*
 import kotlin.test.*
 
-internal class HashRouterTest {
+internal class RouterTest {
 
     @Test
     fun simpleTest() = runTest {
@@ -112,7 +115,7 @@ internal class HashRouterTest {
 
     @Test
     fun RouterCompositionLocalTest() = runTest {
-        var router: Router? = null
+        var input: HTMLInputElement? = null
         compose {
             MockRouter().invoke("/") {
                 route("foo") {
@@ -121,12 +124,23 @@ internal class HashRouterTest {
                 noMatch {
                     Text("NoMatch")
 
-                    router = RouterCompositionLocal.current
+                    val router = Router.current
+                    Input(type = InputType.Text) {
+                        ref {
+                            input = it
+                            onDispose {
+
+                            }
+                        }
+                        onClick {
+                            router.navigate(to = "/foo")
+                        }
+                    }
                 }
             }
         }
-        assertEquals("NoMatch", root.innerHTML)
-        router!!.navigate("/foo")
+        assertEquals("""NoMatch<input type="text">""", root.innerHTML)
+        input!!.click()
         waitChanges()
         assertEquals("Foo", root.innerHTML)
     }

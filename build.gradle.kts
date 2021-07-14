@@ -19,6 +19,7 @@ repositories {
 }
 
 kotlin {
+    jvm()
     js(IR) {
         browser {
             binaries.library()
@@ -28,14 +29,24 @@ kotlin {
     explicitApi()
 
     sourceSets {
+        commonMain {
+            dependencies {
+                api(compose.runtime)
+                api("app.softwork:kotlinx-uuid-core:0.0.6")
+            }
+        }
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
             }
         }
+        val jvmMain by getting {
+            dependencies {
+                api(compose.desktop.common)
+            }
+        }
         val jsMain by getting {
             dependencies {
-                api("app.softwork:kotlinx-uuid-core:0.0.6")
                 api(compose.web.core)
             }
         }
