@@ -4,7 +4,6 @@ import androidx.compose.runtime.*
 import kotlin.reflect.*
 
 
-
 public interface Router {
 
     @Composable
@@ -35,6 +34,15 @@ public interface Router {
         private val RouterCompositionLocal: ProvidableCompositionLocal<Router> =
             staticCompositionLocalOf { error("Router not defined, cannot provide through RouterCompositionLocal.") }
 
+         /**
+         * Provide the router implementation through a CompositionLocal so deeper level
+         * Composables in the composition can have access to the current router.
+         *
+         * This is particularly useful for [NavLink], so we can have a single Composable
+         * agnostic of the top level router implementation.
+         *
+         * To use this composition, you need to invoke any [Router] implementation first.
+         */
         public val current: Router
             @Composable
             get() = RouterCompositionLocal.current
