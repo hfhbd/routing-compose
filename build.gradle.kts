@@ -1,5 +1,5 @@
 plugins {
-    kotlin("multiplatform") version "1.5.10"
+    kotlin("multiplatform") version "1.5.21"
     id("org.jetbrains.compose") version "0.5.0-build253"
     `maven-publish`
 }
