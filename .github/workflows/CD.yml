@@ -19,16 +19,18 @@ jobs:
           java-version: 11
       - name: Build with Gradle
         run: ./gradlew build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Save sample
         uses: actions/upload-artifact@v2
         with:
           path: integrationTest/build/distributions
       - name: Publish
-        run: ./gradlew -Pversion=$version publish
+        run: ./gradlew -Pversion=$version -Dorg.gradle.parallel=false publish closeAndReleaseStagingRepository
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SIGNING_PRIVATE_KEY: ${{ secrets.SIGNING_PRIVATE_KEY }}
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+          SONARTYPE_APIKEY: ${{ secrets.SONARTYPE_APIKEY }}
+          SONARTYPE_APITOKEN: ${{ secrets.SONARTYPE_APITOKEN }}
 
   webpage:
     needs: build
