@@ -9,6 +9,7 @@ import kotlinx.uuid.*
  *
  * Unfortunately, every `@Composable` block has to be inside a [ContentNode].
  */
+@ContentBuilderDSL
 public class NavBuilder internal constructor(private val node: RouteNode) {
 
     /**
@@ -44,9 +45,10 @@ public class NavBuilder internal constructor(private val node: RouteNode) {
 
     /**
      * Displays this `@Composable` block when the last subroute is a [String].
+     * This acts as a catch-all rule, as every route is a [String].
      */
     @ContentBuilderDSL
-    public fun string(content: @Composable (String) -> Unit) {
+    public fun string(content: @Composable Content.(String) -> Unit) {
         val childNode = StringContentNode().apply {
             this.content = content
         }
@@ -74,7 +76,7 @@ public class NavBuilder internal constructor(private val node: RouteNode) {
      * Displays this `@Composable` block when the last subroute is a [Int].
      */
     @ContentBuilderDSL
-    public fun int(content: @Composable (Int) -> Unit) {
+    public fun int(content: @Composable Content.(Int) -> Unit) {
         val childNode = IntContentNode().apply {
             this.content = content
         }
@@ -102,7 +104,7 @@ public class NavBuilder internal constructor(private val node: RouteNode) {
      * Displays this `@Composable` block when the last subroute is a [UUID].
      */
     @ContentBuilderDSL
-    public fun uuid(content: @Composable (UUID) -> Unit) {
+    public fun uuid(content: @Composable Content.(UUID) -> Unit) {
         val childNode = UUIDContentNode().apply {
             this.content = content
         }
@@ -113,7 +115,13 @@ public class NavBuilder internal constructor(private val node: RouteNode) {
      * Always displays this `@Composable` when called by [RouteNode.execute].
      */
     @ContentBuilderDSL
-    public fun noMatch(content: @Composable () -> Unit) {
+    public fun noMatch(content: @Composable Content.() -> Unit) {
         node.children += SimpleContentNode().apply { this.content = content }
     }
+
+    /**
+     * Just a simple object to use in the DSL preventing misuse
+     */
+    @ContentBuilderDSL
+    public object Content
 }

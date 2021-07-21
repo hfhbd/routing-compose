@@ -1,6 +1,6 @@
 package app.softwork.routingcompose
 
-class MockRouter : AbstractRouter("") {
+class MockRouter : Router("") {
 
     override fun navigate(to: String) {
         require(to.startsWith("/"))

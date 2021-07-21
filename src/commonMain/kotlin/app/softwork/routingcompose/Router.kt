@@ -4,7 +4,45 @@ import androidx.compose.runtime.*
 import kotlin.reflect.*
 
 
-public interface Router {
+public abstract class Router(private val initPath: String) {
+    public abstract fun navigate(to: String)
+
+
+    private var subCounter = 0
+    private val subscriber: MutableMap<Int, (String) -> Unit> = mutableMapOf()
+
+    private fun subscribe(block: (String) -> Unit): Int {
+        subscriber[subCounter] = block
+        return subCounter.also {
+            subCounter += 1
+        }
+    }
+
+    private fun removeSubscription(id: Int) {
+        subscriber.remove(id)
+    }
+
+    internal fun update(newPath: String) {
+        subscriber.entries.forEach { (_, fn) ->
+            fn(newPath)
+        }
+    }
+
+    @Composable
+    internal fun getPath(initRoute: String): State<String> {
+        require(initRoute.startsWith("/")) { "initRoute must start with a slash." }
+        val defaultPath = initPath.ifBlank { initRoute }
+        val path = remember { mutableStateOf(defaultPath) }
+        DisposableEffect(Unit) {
+            val id = subscribe {
+                path.value = it
+            }
+            onDispose {
+                removeSubscription(id)
+            }
+        }
+        return path
+    }
 
     @Composable
     public operator fun invoke(
@@ -15,7 +53,7 @@ public interface Router {
 
         // Provide [RouterCompositionLocal] to composables deeper in the composition.
         CompositionLocalProvider(
-            RouterCompositionLocal provides this@Router
+            RouterCompositionLocal provides this
         ) {
             NavBuilder(root).builder()
 
@@ -25,16 +63,11 @@ public interface Router {
         }
     }
 
-    @Composable
-    public fun getPath(initRoute: String): State<String>
-
-    public fun navigate(to: String)
-
     public companion object {
         private val RouterCompositionLocal: ProvidableCompositionLocal<Router> =
             staticCompositionLocalOf { error("Router not defined, cannot provide through RouterCompositionLocal.") }
 
-         /**
+        /**
          * Provide the router implementation through a CompositionLocal so deeper level
          * Composables in the composition can have access to the current router.
          *

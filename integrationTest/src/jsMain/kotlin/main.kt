@@ -19,24 +19,6 @@ fun main() {
             Text("BrowserRouter implementation")
         }
         BrowserRouter(initRoute = "/") { Routing() }
-
-        P {
-            Text("Custom router usage")
-        }
-        P {
-            Code {
-                Text("val router = Router.current")
-                Text("router.navigate(to = /foo")
-            }
-        }
-
-        val router = Router.current
-        Input(type = InputType.Button) {
-            onClick {
-                router.navigate("/foo")
-            }
-            value("Click to navigate to /foo")
-        }
     }
 }
 
@@ -52,7 +34,7 @@ fun NavBuilder.Routing() {
             }
             P {
                 NavLink("/foo/42") {
-                    Text("Click to navigate to /foo/42 with a userID")
+                    Text("NavLink: Click to navigate to /foo/42 with a userID")
                 }
             }
         }
@@ -63,8 +45,26 @@ fun NavBuilder.Routing() {
         }
         P {
             NavLink("/foo") {
-                Text("Click to navigate to /foo")
+                Text("NavLink: Click here to navigate to /foo")
             }
+        }
+        P {
+            Text("Custom router usage")
+        }
+        P {
+            Code {
+                Text("val router = Router.current")
+                Br()
+                Text("router.navigate(to = /foo)")
+            }
+        }
+
+        val router = Router.current
+        Input(type = InputType.Button) {
+            onClick {
+                router.navigate("/foo")
+            }
+            value("Click to navigate to /foo")
         }
     }
 }
