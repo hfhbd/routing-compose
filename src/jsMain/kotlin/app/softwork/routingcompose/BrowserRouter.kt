@@ -17,7 +17,7 @@ import kotlinx.browser.*
  * instructions. For development environments, see the RoutingCompose Readme
  * for full instructions.
  */
-public object BrowserRouter : AbstractRouter(window.location.pathname) {
+public object BrowserRouter : Router(window.location.pathname) {
     init {
         window.onpopstate = {
             update(newPath = window.location.pathname)
