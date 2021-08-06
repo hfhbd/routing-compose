@@ -2,7 +2,7 @@ import java.util.Base64
 
 plugins {
     kotlin("multiplatform") version "1.5.21"
-    id("org.jetbrains.compose") version "1.0.0-alpha2"
+    id("org.jetbrains.compose") version "1.0.0-alpha3"
     `maven-publish`
     signing
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
