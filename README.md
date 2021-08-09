@@ -1,6 +1,6 @@
 # RoutingCompose
 
-Highly experimental routing feature for [Compose Web](https://github.com/Jetbrains/compose-jb)
+Highly experimental routing feature for [Compose Web and Desktop](https://github.com/Jetbrains/compose-jb)
 
 ## Install
 
@@ -18,7 +18,7 @@ dependencies {
 
 ## Usage
 
-Example with `HashRouter`, `BrowserRouter` will be implemented in the same manner.
+Example with `HashRouter`, `BrowserRouter`, `DesktopRouter` will be implemented in the same manner.
 
 ```kotlin
 HashRouter(initRoute = "/users") { // or BrowserRouter(initRoute = "/users") {
@@ -36,9 +36,9 @@ HashRouter(initRoute = "/users") { // or BrowserRouter(initRoute = "/users") {
 }
 ```
 
-RoutingCompose offers two routing implementations, `HashRouter` and `BrowserRouter`.
+RoutingCompose offers three routing implementations, `HashRouter`, `BrowserRouter` and `DesktopRouter`.
 
-[This article](https://blog.bitsrc.io/using-hashed-vs-nonhashed-url-paths-in-single-page-apps-a66234cefc96) provides a good explanation of the difference between each routing strategy.
+[This article](https://blog.bitsrc.io/using-hashed-vs-nonhashed-url-paths-in-single-page-apps-a66234cefc96) provides a good explanation of the difference between each browser routing strategy.
 
 ### HashRouter
 `HashRouter` is used for hashed urls (e.g. yoursite.com/#/path). This strategy requires no additional setup to work in a single page compose-web application. Some SaaS providers, like GitHub Pages, do not offer configuration options, so you have to use `HashRouter`.
@@ -67,3 +67,32 @@ config.devServer = {
 ```
 
 Then run your web app and it should route all paths to a valid route. You can confirm this by refreshing or manually entering a path.
+
+### DesktopRouter
+You can use the `DesktopRouter` implementation to add a routing feature to your Compose Desktop application. 
+Every Window must have exactly 1 `DesktopRouter`. 
+The `DesktopRouter` contains a special `navigateBack` method.
+
+```kotlin
+Window {
+    DesktopRouter("/") {
+        string {
+            Column {
+                Text("Hello $it")
+                val router = Router.current
+                Button(onClick = { router.navigateBack() }) {
+                    Text("Go back")
+                }
+            }
+        }
+        noMatch {
+            val router = Router.current
+            Button(onClick = { 
+                router.navigate(to = "/World")
+            }) {
+                Text("Navigate to World")
+            }
+        }
+    }
+}
+```
