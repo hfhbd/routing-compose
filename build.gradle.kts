@@ -85,6 +85,7 @@ publishing {
         }
     }
 }
+
 (System.getProperty("signing.privateKey") ?: System.getenv("SIGNING_PRIVATE_KEY"))?.let {
     String(Base64.getDecoder().decode(it)).trim()
 }?.let { key ->
