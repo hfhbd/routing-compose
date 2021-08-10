@@ -60,9 +60,9 @@ publishing {
                 classifier = "javadoc"
             }
             pom {
-                name.set("app.softwork UUID Library")
-                description.set("A multiplatform Kotlin UUID library, forked from https://github.com/cy6erGn0m/kotlinx-uuid")
-                url.set("https://github.com/hfhbd/kotlinx-uuid")
+                name.set("app.softwork Routing Compose")
+                description.set("A multiplatform library for routing to use with JetPack Compose")
+                url.set("https://github.com/hfhbd/routing-compose")
                 licenses {
                     license {
                         name.set("The Apache License, Version 2.0")
@@ -77,9 +77,9 @@ publishing {
                     }
                 }
                 scm {
-                    connection.set("scm:git://github.com/hfhbd/kotlinx-uuid.git")
-                    developerConnection.set("scm:git://github.com/hfhbd/kotlinx-uuid.git")
-                    url.set("https://github.com/hfhbd/kotlinx-uuid")
+                    connection.set("scm:git://github.com/hfhbd/routing-compose.git")
+                    developerConnection.set("scm:git://github.com/hfhbd/routing-compose.git")
+                    url.set("https://github.com/hfhbd/routing-compose")
                 }
             }
         }
