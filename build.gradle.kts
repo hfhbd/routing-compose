@@ -61,7 +61,7 @@ publishing {
             }
             pom {
                 name.set("app.softwork Routing Compose")
-                description.set("A multiplatform library for routing to use with JetPack Compose")
+                description.set("A multiplatform library for routing to use with JetPack Compose Web and Desktop")
                 url.set("https://github.com/hfhbd/routing-compose")
                 licenses {
                     license {
