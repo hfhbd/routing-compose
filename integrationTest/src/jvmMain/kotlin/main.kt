@@ -1,22 +1,27 @@
-import androidx.compose.desktop.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.window.*
 import app.softwork.routingcompose.*
 
-fun main() {
+fun main() = application {
     repeat(2) {
-        Window(title = "$it") {
-            DesktopRouter("/$it") {
-                int {
-                    Content(it)
-                }
-                string {
-                    Column {
-                        Text("Hello $it")
-                        val router = Router.current
-                        Button(onClick = { router.navigateBack() }) {
-                            Text("Back")
+        var isOpen by remember { mutableStateOf(true) }
+        if (isOpen) {
+            Window(onCloseRequest = {
+                isOpen = false
+            }, title = "$it") {
+                DesktopRouter("/$it") {
+                    int {
+                        Content(it)
+                    }
+                    string {
+                        Column {
+                            Text("Hello $it")
+                            val router = Router.current
+                            Button(onClick = { router.navigateBack() }) {
+                                Text("Back")
+                            }
                         }
                     }
                 }

@@ -2,8 +2,7 @@ package app.softwork.routingcompose
 
 import androidx.compose.runtime.*
 
-public class StringContentNode : ContentNode() {
-    public lateinit var content: @Composable NavBuilder.Content.(String) -> Unit
+public class StringContentNode(public val content: @Composable NavBuilder.Content.(String) -> Unit) : ContentNode() {
 
     override fun matches(subRoute: String): Boolean = subRoute.isNotEmpty()
 
