@@ -2,8 +2,7 @@ package app.softwork.routingcompose
 
 import androidx.compose.runtime.*
 
-public class SimpleContentNode : ContentNode() {
-    public lateinit var content: @Composable NavBuilder.Content.() -> Unit
+public class SimpleContentNode(public val content: @Composable NavBuilder.Content.() -> Unit) : ContentNode() {
 
     override fun matches(subRoute: String): Boolean = true
 

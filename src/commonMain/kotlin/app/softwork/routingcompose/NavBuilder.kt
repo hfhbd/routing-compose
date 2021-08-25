@@ -49,9 +49,7 @@ public class NavBuilder internal constructor(private val node: RouteNode) {
      */
     @ContentBuilderDSL
     public fun string(content: @Composable Content.(String) -> Unit) {
-        val childNode = StringContentNode().apply {
-            this.content = content
-        }
+        val childNode = StringContentNode(content)
         node.children += childNode
     }
 
@@ -77,9 +75,7 @@ public class NavBuilder internal constructor(private val node: RouteNode) {
      */
     @ContentBuilderDSL
     public fun int(content: @Composable Content.(Int) -> Unit) {
-        val childNode = IntContentNode().apply {
-            this.content = content
-        }
+        val childNode = IntContentNode(content)
         node.children += childNode
     }
 
@@ -105,10 +101,7 @@ public class NavBuilder internal constructor(private val node: RouteNode) {
      */
     @ContentBuilderDSL
     public fun uuid(content: @Composable Content.(UUID) -> Unit) {
-        val childNode = UUIDContentNode().apply {
-            this.content = content
-        }
-        node.children += childNode
+        node.children += UUIDContentNode(content)
     }
 
     /**
@@ -116,7 +109,7 @@ public class NavBuilder internal constructor(private val node: RouteNode) {
      */
     @ContentBuilderDSL
     public fun noMatch(content: @Composable Content.() -> Unit) {
-        node.children += SimpleContentNode().apply { this.content = content }
+        node.children += SimpleContentNode(content)
     }
 
     /**

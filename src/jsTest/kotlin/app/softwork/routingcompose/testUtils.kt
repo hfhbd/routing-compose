@@ -55,7 +55,7 @@ internal fun runBlockingTest(
 internal fun String.asHtmlElement() = document.createElement(this) as HTMLElement
 
 /* Currently, the recompositionRunner relies on AnimationFrame to run the recomposition and
-applyChanges. Therefore we can use this method after updating the state and before making
+applyChanges. Therefore, we can use this method after updating the state and before making
 assertions.
 If tests get broken, then DefaultMonotonicFrameClock need to be checked if it still
 uses window.requestAnimationFrame */
