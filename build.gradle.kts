@@ -51,36 +51,35 @@ kotlin {
     }
 }
 
-task("emptyJar", Jar::class) { }
+val emptyJar by tasks.creating(Jar::class) { }
 
 publishing {
     publications.all {
-        if (this is MavenPublication) {
-            artifact(tasks.getByName("emptyJar")) {
-                classifier = "javadoc"
+        this as MavenPublication
+        artifact(emptyJar) {
+            classifier = "javadoc"
+        }
+        pom {
+            name.set("app.softwork Routing Compose")
+            description.set("A multiplatform library for routing to use with JetPack Compose Web and Desktop")
+            url.set("https://github.com/hfhbd/routing-compose")
+            licenses {
+                license {
+                    name.set("The Apache License, Version 2.0")
+                    url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+                }
             }
-            pom {
-                name.set("app.softwork Routing Compose")
-                description.set("A multiplatform library for routing to use with JetPack Compose Web and Desktop")
+            developers {
+                developer {
+                    id.set("hfhbd")
+                    name.set("Philip Wedemann")
+                    email.set("mybztg+mavencentral@icloud.com")
+                }
+            }
+            scm {
+                connection.set("scm:git://github.com/hfhbd/routing-compose.git")
+                developerConnection.set("scm:git://github.com/hfhbd/routing-compose.git")
                 url.set("https://github.com/hfhbd/routing-compose")
-                licenses {
-                    license {
-                        name.set("The Apache License, Version 2.0")
-                        url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
-                    }
-                }
-                developers {
-                    developer {
-                        id.set("hfhbd")
-                        name.set("Philip Wedemann")
-                        email.set("mybztg+mavencentral@icloud.com")
-                    }
-                }
-                scm {
-                    connection.set("scm:git://github.com/hfhbd/routing-compose.git")
-                    developerConnection.set("scm:git://github.com/hfhbd/routing-compose.git")
-                    url.set("https://github.com/hfhbd/routing-compose")
-                }
             }
         }
     }

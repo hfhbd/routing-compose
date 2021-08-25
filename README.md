@@ -18,7 +18,7 @@ dependencies {
 
 ## Usage
 
-Example with `HashRouter`, `BrowserRouter`, `DesktopRouter` will be implemented in the same manner.
+Example with `HashRouter`, `BrowserRouter` and `DesktopRouter` will be implemented in the same manner.
 
 ```kotlin
 HashRouter(initRoute = "/users") { // or BrowserRouter(initRoute = "/users") {
@@ -66,7 +66,7 @@ config.devServer = {
 };
 ```
 
-Then run your web app and it should route all paths to a valid route. You can confirm this by refreshing or manually entering a path.
+Then run your web app, and it should route all paths to a valid route. You can confirm this by refreshing or manually entering a path.
 
 ### DesktopRouter
 You can use the `DesktopRouter` implementation to add a routing feature to your Compose Desktop application. 
