@@ -30,7 +30,7 @@ kotlin {
         commonMain {
             dependencies {
                 api(compose.runtime)
-                api("app.softwork:kotlinx-uuid-core:0.0.9")
+                api("app.softwork:kotlinx-uuid-core:0.0.10")
             }
         }
         commonTest {
