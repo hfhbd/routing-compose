@@ -22,10 +22,7 @@ public abstract class Router(private val initPath: String) {
         subscriber.remove(id)
     }
 
-    /**
-     * Temporarly public due to https://github.com/JetBrains/compose-jb/issues/1119
-     */
-    public fun update(newPath: String) {
+    internal fun update(newPath: String) {
         subscriber.entries.forEach { (_, fn) ->
             fn(newPath)
         }
