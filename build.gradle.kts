@@ -48,6 +48,11 @@ kotlin {
                 api(compose.web.core)
             }
         }
+        val jsTest by getting {
+            dependencies {
+                implementation(compose.web.testUtils)
+            }
+        }
     }
 }
 
