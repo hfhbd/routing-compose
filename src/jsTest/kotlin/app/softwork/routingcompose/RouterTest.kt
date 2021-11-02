@@ -3,15 +3,17 @@ package app.softwork.routingcompose
 import org.jetbrains.compose.web.attributes.*
 import org.jetbrains.compose.web.dom.*
 import org.jetbrains.compose.web.dom.Text
+import org.jetbrains.compose.web.testutils.*
 import org.w3c.dom.*
 import kotlin.test.*
 
+@ComposeWebExperimentalTestsApi
 internal class RouterTest {
 
     @Test
     fun simpleTest() = runTest {
         val router = MockRouter()
-        compose {
+        composition {
             router("/") {
                 route("foo") {
                     noMatch {
@@ -30,14 +32,18 @@ internal class RouterTest {
         }
         assertEquals("other", root.innerHTML)
 
-        router.navigate("/foo", "foo")
-        router.navigate("/bar", "bar")
+        router.navigate("/foo")
+        waitForRecompositionComplete()
+        assertEquals("foo", root.innerHTML)
+        router.navigate("/bar")
+        waitForRecompositionComplete()
+        assertEquals("bar", root.innerHTML)
     }
 
     @Test
     fun emptyTest() = runTest {
         val router = MockRouter()
-        compose {
+        composition {
             router("/") {
                 noMatch {
                     Text("other")
@@ -50,7 +56,7 @@ internal class RouterTest {
     @Test
     fun deepTest() = runTest {
         val router = MockRouter()
-        compose {
+        composition {
             router("/foo") {
                 route("foo") {
                     route("bar") {
@@ -73,16 +79,22 @@ internal class RouterTest {
             }
         }
         assertEquals("foo", root.innerHTML)
-        router.navigate("/foo/bar", "bar")
-        router.navigate("/foo/bar/baz", "baz")
-        router.navigate("/", "other")
+        router.navigate("/foo/bar")
+        waitForRecompositionComplete()
+        assertEquals("bar", root.innerHTML)
+        router.navigate("/foo/bar/baz")
+        waitForRecompositionComplete()
+        assertEquals("baz", root.innerHTML)
+        router.navigate("/")
+        waitForRecompositionComplete()
+        assertEquals("other", root.innerHTML)
     }
 
     @Test
     fun notFound() = runTest {
         val router = MockRouter()
         assertFailsWith<IllegalStateException> {
-            compose {
+            composition {
                 router("/") {
                     route("foo") {
                         noMatch {
@@ -98,7 +110,7 @@ internal class RouterTest {
     fun nestedRoute() = runTest {
         val router = MockRouter()
         assertFailsWith<IllegalArgumentException> {
-            compose {
+            composition {
                 router("/") {
                     route("foo/foo") {
                         noMatch {
@@ -116,7 +128,7 @@ internal class RouterTest {
     @Test
     fun RouterCompositionLocalTest() = runTest {
         var input: HTMLInputElement? = null
-        compose {
+        composition {
             MockRouter().invoke("/") {
                 route("foo") {
                     noMatch { Text("Foo") }
@@ -141,7 +153,7 @@ internal class RouterTest {
         }
         assertEquals("""NoMatch<input type="text">""", root.innerHTML)
         input!!.click()
-        waitChanges()
+        waitForRecompositionComplete()
         assertEquals("Foo", root.innerHTML)
     }
 }

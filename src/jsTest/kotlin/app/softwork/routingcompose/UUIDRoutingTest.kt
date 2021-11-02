@@ -2,13 +2,15 @@ package app.softwork.routingcompose
 
 import kotlinx.uuid.*
 import org.jetbrains.compose.web.dom.*
+import org.jetbrains.compose.web.testutils.*
 import kotlin.test.*
 
+@ComposeWebExperimentalTestsApi
 class UUIDRoutingTest {
     @Test
     fun contentTest() = runTest {
         val router = MockRouter()
-        compose {
+        composition {
             router("/") {
                 route("foo") {
                     noMatch {
@@ -25,16 +27,20 @@ class UUIDRoutingTest {
         }
         assertEquals("other", root.innerHTML)
 
-        router.navigate("/foo", "foo")
+        router.navigate("/foo")
+        waitForRecompositionComplete()
+        assertEquals("foo", root.innerHTML)
 
         val uuid = UUID()
-        router.navigate("/$uuid", "bar$uuid")
+        router.navigate("/$uuid")
+        waitForRecompositionComplete()
+        assertEquals("bar$uuid", root.innerHTML)
     }
 
     @Test
     fun routeTest() = runTest {
         val router = MockRouter()
-        compose {
+        composition {
             router("/") {
                 route("users") {
                     uuidRoute { userID ->
@@ -61,18 +67,26 @@ class UUIDRoutingTest {
         }
         assertEquals("other", root.innerHTML)
 
-        router.navigate("/users", "No userID")
+        router.navigate("/users")
+        waitForRecompositionComplete()
+        assertEquals("No userID", root.innerHTML)
         val userID = UUID()
-        router.navigate("/users/$userID", "UserInfo: $userID")
-        router.navigate("/users/$userID/todos", "All todos for user: $userID")
+        router.navigate("/users/$userID")
+        waitForRecompositionComplete()
+        assertEquals("UserInfo: $userID", root.innerHTML)
+        router.navigate("/users/$userID/todos")
+        waitForRecompositionComplete()
+        assertEquals("All todos for user: $userID", root.innerHTML)
         val todoID = UUID()
-        router.navigate("/users/$userID/todos/$todoID", "Todo $todoID for user: $userID")
+        router.navigate("/users/$userID/todos/$todoID")
+        waitForRecompositionComplete()
+        assertEquals("Todo $todoID for user: $userID", root.innerHTML)
     }
 
     @Test
     fun nested() = runTest {
         val router = MockRouter()
-        compose {
+        composition {
             router("/") {
                 uuidRoute { userID ->
                     uuid { todoID ->
@@ -89,8 +103,12 @@ class UUIDRoutingTest {
         }
         assertEquals("No userID given", root.innerHTML)
         val userID = UUID()
-        router.navigate("/$userID", expected = "User $userID")
+        router.navigate("/$userID")
+        waitForRecompositionComplete()
+        assertEquals("User $userID", root.innerHTML)
         val todoID = UUID()
-        router.navigate("/$userID/$todoID", expected = "Todo with $todoID from user $userID")
+        router.navigate("/$userID/$todoID")
+        waitForRecompositionComplete()
+        assertEquals("Todo with $todoID from user $userID", root.innerHTML)
     }
 }
