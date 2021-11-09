@@ -2,18 +2,21 @@ package app.softwork.routingcompose
 
 import androidx.compose.runtime.*
 
-public class DesktopRouter private constructor(initRoute: String) : Router("") {
-    private val stack = mutableListOf(initRoute)
+public class DesktopRouter private constructor() : Router() {
+    private val stack = mutableStateListOf<String>()
+
+    @Composable
+    override fun getPath(initPath: String): State<String> {
+        return derivedStateOf { stack.lastOrNull() ?: initPath }
+    }
 
     override fun navigate(to: String) {
         require(to.startsWith("/"))
-        update(newPath = to)
         stack.add(to)
     }
 
     internal fun navigateBack() {
         stack.removeAt(stack.lastIndex)
-        update(newPath = stack.last())
     }
 
     public companion object {
@@ -23,9 +26,10 @@ public class DesktopRouter private constructor(initRoute: String) : Router("") {
          * You should never have more than 1 [DesktopRouter] per [Window][androidx.compose.desktop.Window].
          * To get the current [Router] inside the [navBuilder] `@Composable` tree call [Router.current].
          */
+        @Routing
         @Composable
-        public operator fun invoke(initRoute: String, navBuilder: NavBuilder.() -> Unit) {
-            DesktopRouter(initRoute).invoke(initRoute, navBuilder)
+        public operator fun invoke(initRoute: String, navBuilder: @Composable NavBuilder.() -> Unit) {
+            DesktopRouter().invoke(initRoute, navBuilder)
         }
     }
 }

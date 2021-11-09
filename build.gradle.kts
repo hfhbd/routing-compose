@@ -1,4 +1,5 @@
-import java.util.Base64
+import org.jetbrains.compose.*
+import java.util.*
 
 plugins {
     kotlin("multiplatform") version "1.5.31"
@@ -13,7 +14,7 @@ group = "app.softwork"
 repositories {
     mavenCentral()
     google()
-    maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
+    jetbrainsCompose()
 }
 
 kotlin {
@@ -25,8 +26,17 @@ kotlin {
     }
 
     explicitApi()
-
+    targets.all {
+        compilations.all {
+            kotlinOptions.allWarningsAsErrors = true
+        }
+    }
     sourceSets {
+        all {
+            languageSettings {
+                progressiveMode = true
+            }
+        }
         commonMain {
             dependencies {
                 api(compose.runtime)
@@ -38,11 +48,6 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
-        val jvmMain by getting {
-            dependencies {
-                api(compose.desktop.common)
-            }
-        }
         val jsMain by getting {
             dependencies {
                 api(compose.web.core)
@@ -51,6 +56,13 @@ kotlin {
         val jsTest by getting {
             dependencies {
                 implementation(compose.web.testUtils)
+            }
+        }
+
+        val jvmTest by getting {
+            dependencies {
+                implementation(compose.uiTestJUnit4) // there is no non-ui testing
+                implementation(compose.desktop.currentOs) // ui-testings needs skiko
             }
         }
     }
@@ -93,7 +105,6 @@ publishing {
 (System.getProperty("signing.privateKey") ?: System.getenv("SIGNING_PRIVATE_KEY"))?.let {
     String(Base64.getDecoder().decode(it)).trim()
 }?.let { key ->
-    println("found key, config signing")
     signing {
         val signingPassword = System.getProperty("signing.password") ?: System.getenv("SIGNING_PASSWORD")
         useInMemoryPgpKeys(key, signingPassword)

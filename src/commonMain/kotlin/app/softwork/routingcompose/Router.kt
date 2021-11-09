@@ -4,65 +4,26 @@ import androidx.compose.runtime.*
 import kotlin.reflect.*
 
 
-public abstract class Router(private val initPath: String) {
+public abstract class Router {
     public abstract fun navigate(to: String)
 
-
-    private var subCounter = 0
-    private val subscriber: MutableMap<Int, (String) -> Unit> = mutableMapOf()
-
-    private fun subscribe(block: (String) -> Unit): Int {
-        subscriber[subCounter] = block
-        return subCounter.also {
-            subCounter += 1
-        }
-    }
-
-    private fun removeSubscription(id: Int) {
-        subscriber.remove(id)
-    }
-
-    /**
-     * Temporarly public due to https://github.com/JetBrains/compose-jb/issues/1119
-     */
-    public fun update(newPath: String) {
-        subscriber.entries.forEach { (_, fn) ->
-            fn(newPath)
-        }
-    }
-
     @Composable
-    internal fun getPath(initRoute: String): State<String> {
-        require(initRoute.startsWith("/")) { "initRoute must start with a slash." }
-        val defaultPath = initPath.ifBlank { initRoute }
-        val path = remember { mutableStateOf(defaultPath) }
-        DisposableEffect(Unit) {
-            val id = subscribe {
-                path.value = it
-            }
-            onDispose {
-                removeSubscription(id)
-            }
-        }
-        return path
-    }
+    public abstract fun getPath(initPath: String): State<String>
 
     @Composable
     public operator fun invoke(
         initRoute: String,
-        builder: NavBuilder.() -> Unit
+        routing: @Composable NavBuilder.() -> Unit
     ) {
-        val root = RootNode()
-
+        require(initRoute.startsWith("/")) { "initRoute must start with a slash." }
         // Provide [RouterCompositionLocal] to composables deeper in the composition.
         CompositionLocalProvider(
             RouterCompositionLocal provides this
         ) {
-            NavBuilder(root).builder()
-
-            val fullPath by getPath(initRoute)
-            val withTrailingSlash = if (fullPath.endsWith("/")) fullPath else "$fullPath/"
-            root.execute(withTrailingSlash)
+            val path by getPath(initRoute)
+            require(path.startsWith("/")) { "path must start with a slash." }
+            val node by derivedStateOf { NavBuilder(path) }
+            node.routing()
         }
     }
 
