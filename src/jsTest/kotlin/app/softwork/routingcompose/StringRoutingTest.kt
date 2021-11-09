@@ -11,7 +11,7 @@ class StringRoutingTest {
         val router = MockRouter()
         composition {
             router("/") {
-                route("foo") {
+                constant("foo") {
                     noMatch {
                         Text("foo")
                     }
@@ -39,18 +39,18 @@ class StringRoutingTest {
         val router = MockRouter()
         composition {
             router("/") {
-                route("users") {
-                    stringRoute { str ->
-                        route("todos") {
+                constant("users") {
+                    string { userID ->
+                        constant("todos") {
                             string {
-                                Text("Todo $it for user: ${str.value}")
+                                Text("Todo $it for user: $userID")
                             }
                             noMatch {
-                                Text("All todos for user: ${str.value}")
+                                Text("All todos for user: $userID")
                             }
                         }
                         noMatch {
-                            Text("UserInfo: ${str.value}")
+                            Text("UserInfo: $userID")
                         }
                     }
                     noMatch {
@@ -83,12 +83,12 @@ class StringRoutingTest {
         val router = MockRouter()
         composition {
             router("/") {
-                stringRoute { userID ->
+                string { userID ->
                     string { todoID ->
-                        Text("Todo with $todoID from user ${userID.value}")
+                        Text("Todo with $todoID from user $userID")
                     }
                     noMatch {
-                        Text("User ${userID.value}")
+                        Text("User $userID")
                     }
                 }
                 noMatch {

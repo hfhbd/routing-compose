@@ -12,7 +12,7 @@ class UUIDRoutingTest {
         val router = MockRouter()
         composition {
             router("/") {
-                route("foo") {
+                constant("foo") {
                     noMatch {
                         Text("foo")
                     }
@@ -42,18 +42,18 @@ class UUIDRoutingTest {
         val router = MockRouter()
         composition {
             router("/") {
-                route("users") {
-                    uuidRoute { userID ->
-                        route("todos") {
+                constant("users") {
+                    uuid { userID ->
+                        constant("todos") {
                             uuid { todoID ->
-                                Text("Todo $todoID for user: ${userID.value}")
+                                Text("Todo $todoID for user: $userID")
                             }
                             noMatch {
-                                Text("All todos for user: ${userID.value}")
+                                Text("All todos for user: $userID")
                             }
                         }
                         noMatch {
-                            Text("UserInfo: ${userID.value}")
+                            Text("UserInfo: $userID")
                         }
                     }
                     noMatch {
@@ -88,12 +88,12 @@ class UUIDRoutingTest {
         val router = MockRouter()
         composition {
             router("/") {
-                uuidRoute { userID ->
+                uuid { userID ->
                     uuid { todoID ->
-                        Text("Todo with $todoID from user ${userID.value}")
+                        Text("Todo with $todoID from user $userID")
                     }
                     noMatch {
-                        Text("User ${userID.value}")
+                        Text("User $userID")
                     }
                 }
                 noMatch {

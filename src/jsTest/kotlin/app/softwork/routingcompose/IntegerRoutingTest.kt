@@ -11,7 +11,7 @@ class IntegerRoutingTest {
         val router = MockRouter()
         composition {
             router("/") {
-                route("foo") {
+                constant("foo") {
                     noMatch {
                         Text("foo")
                     }
@@ -40,18 +40,18 @@ class IntegerRoutingTest {
         val router = MockRouter()
         composition {
             router("/") {
-                route("users") {
-                    intRoute { str ->
-                        route("todos") {
+                constant("users") {
+                    int { userID ->
+                        constant("todos") {
                             int {
-                                Text("Todo $it for user: ${str.value}")
+                                Text("Todo $it for user: $userID")
                             }
                             noMatch {
-                                Text("All todos for user: ${str.value}")
+                                Text("All todos for user: $userID")
                             }
                         }
                         noMatch {
-                            Text("UserInfo: ${str.value}")
+                            Text("UserInfo: $userID")
                         }
                     }
                     noMatch {
@@ -84,12 +84,12 @@ class IntegerRoutingTest {
         val router = MockRouter()
         composition {
             router("/") {
-                intRoute { userID ->
+                int { userID ->
                     int { todoID ->
-                        Text("Todo with $todoID from user ${userID.value}")
+                        Text("Todo with $todoID from user $userID")
                     }
                     noMatch {
-                        Text("User ${userID.value}")
+                        Text("User $userID")
                     }
                 }
                 noMatch {
@@ -104,5 +104,25 @@ class IntegerRoutingTest {
         router.navigate("/42/42")
         waitForRecompositionComplete()
         assertEquals(expected = "Todo with 42 from user 42", actual = root.innerHTML)
+    }
+
+    @Test
+    fun invalide() = runTest {
+        val router = MockRouter()
+        composition {
+            router("/") {
+                int {
+                    Text("int $it")
+                }
+                noMatch {
+                    Text("noMatch")
+                }
+            }
+        }
+        assertEquals("noMatch", root.innerHTML)
+
+        router.navigate("/foo")
+        waitForRecompositionComplete()
+        assertEquals("noMatch", root.innerHTML)
     }
 }

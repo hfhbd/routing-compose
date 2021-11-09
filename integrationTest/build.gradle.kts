@@ -1,3 +1,5 @@
+import org.jetbrains.compose.*
+
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose")
@@ -6,14 +8,15 @@ plugins {
 repositories {
     mavenCentral()
     google()
-    maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
+    jetbrainsCompose()
 }
 
 kotlin {
     jvm()
     js(IR) {
-        browser()
-        binaries.executable()
+        browser {
+            binaries.executable()
+        }
     }
 
     sourceSets {

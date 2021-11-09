@@ -15,12 +15,12 @@ internal class RouterTest {
         val router = MockRouter()
         composition {
             router("/") {
-                route("foo") {
+                constant("foo") {
                     noMatch {
                         Text("foo")
                     }
                 }
-                route("bar") {
+                constant("bar") {
                     noMatch {
                         Text("bar")
                     }
@@ -54,13 +54,38 @@ internal class RouterTest {
     }
 
     @Test
+    fun mixed() = runTest {
+        val router = MockRouter()
+        composition {
+            router("/") {
+                int {
+                    Text("int $it")
+                }
+                string {
+                    Text("string $it")
+                }
+                noMatch {
+                    Text("noMatch")
+                }
+            }
+        }
+        assertEquals("noMatch", root.innerHTML)
+        router.navigate("/42")
+        waitForRecompositionComplete()
+        assertEquals("int 42", root.innerHTML)
+        router.navigate("/foo")
+        waitForRecompositionComplete()
+        assertEquals("string foo", root.innerHTML)
+    }
+
+    @Test
     fun deepTest() = runTest {
         val router = MockRouter()
         composition {
             router("/foo") {
-                route("foo") {
-                    route("bar") {
-                        route("baz") {
+                constant("foo") {
+                    constant("bar") {
+                        constant("baz") {
                             noMatch {
                                 Text("baz")
                             }
@@ -91,28 +116,12 @@ internal class RouterTest {
     }
 
     @Test
-    fun notFound() = runTest {
-        val router = MockRouter()
-        assertFailsWith<IllegalStateException> {
-            composition {
-                router("/") {
-                    route("foo") {
-                        noMatch {
-                            Text("Should not be reached")
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    @Test
     fun nestedRoute() = runTest {
         val router = MockRouter()
         assertFailsWith<IllegalArgumentException> {
             composition {
                 router("/") {
-                    route("foo/foo") {
+                    constant("foo/foo") {
                         noMatch {
                             Text("FooBar")
                         }
@@ -127,11 +136,12 @@ internal class RouterTest {
 
     @Test
     fun RouterCompositionLocalTest() = runTest {
+        val mockRouter = MockRouter()
         var input: HTMLInputElement? = null
         composition {
-            MockRouter().invoke("/") {
-                route("foo") {
-                    noMatch { Text("Foo") }
+            mockRouter("/") {
+                constant("foo") {
+                    Text("Foo")
                 }
                 noMatch {
                     Text("NoMatch")

@@ -3,10 +3,26 @@ import app.softwork.routingcompose.*
 import kotlinx.coroutines.*
 import org.jetbrains.compose.web.*
 import org.jetbrains.compose.web.attributes.*
+import org.jetbrains.compose.web.css.*
+import org.jetbrains.compose.web.css.Color.black
+import org.jetbrains.compose.web.css.Color.white
 import org.jetbrains.compose.web.dom.*
+
+object DarkMode : StyleSheet() {
+    init {
+        "body" style {
+            media("prefers-color-scheme: dark") {
+                color(white)
+                backgroundColor(black)
+            }
+        }
+    }
+}
 
 fun main() {
     renderComposableInBody {
+        Style(DarkMode)
+
         Clock()
 
         P {
@@ -22,8 +38,11 @@ fun main() {
     }
 }
 
+@Routing
+@Composable
 fun NavBuilder.Routing() {
-    route("foo") {
+    constant("foo") {
+        Text("Header for /foo")
         int {
             P { Text("Hello user $it") }
             P { Text("Use the back and forward functions of your browser to go navigate back.") }
@@ -38,6 +57,7 @@ fun NavBuilder.Routing() {
                 }
             }
         }
+        Text("Footer for /foo")
     }
     noMatch {
         P {
@@ -71,12 +91,10 @@ fun NavBuilder.Routing() {
 
 @Composable
 fun Clock() {
-    var current by remember { mutableStateOf(0) }
-
-    LaunchedEffect(Unit) {
+    val current by produceState(0) {
         while (true) {
             delay(1000)
-            current += 1
+            value += 1
         }
     }
 
