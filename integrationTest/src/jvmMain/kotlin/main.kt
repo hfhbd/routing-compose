@@ -23,11 +23,12 @@ private fun Demo(it: Int) {
                         int {
                             Text("Answer of the universe")
                         }
-                    }
-                    int {
-                        Content(it)
-                        if (it == 42) {
-                            wasMagic42 = true
+                    } else {
+                        int {
+                            Content(it)
+                            if (it == 42) {
+                                wasMagic42 = true
+                            }
                         }
                     }
                     string {
