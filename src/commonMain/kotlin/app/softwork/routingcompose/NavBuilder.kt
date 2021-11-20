@@ -9,6 +9,30 @@ import kotlin.jvm.*
  * Use the DSL functions to build the expected route handled by a [Router].
  * If two routes matches the same path, the first declared route is chosen.
  *
+ * With dynamic routing displaying will not stop if two routes of the same kind matches the current route:
+ *
+ * wrong usage:
+ *
+ *     if(true) {
+ *       int {
+ *         Text("Match")
+ *       }
+ *     }
+ *     int {
+ *       Text("Will be displayed too")
+ *     }
+ *
+ * correct usage:
+ *
+ *     if(true) {
+ *       int {
+ *         Text("Match")
+ *       }
+ *     } else {
+ *       int {
+ *         Text("Wont be displayed")
+ *       }
+ *     }
  */
 @Routing
 public data class NavBuilder(
@@ -28,7 +52,7 @@ public data class NavBuilder(
      */
     @Routing
     @Composable
-    public fun constant(
+    public fun route(
         route: String,
         nestedRoute: @Composable NavBuilder.() -> Unit
     ) {
@@ -45,8 +69,6 @@ public data class NavBuilder(
 
     /**
      * Executes its children when the requested subroute is a [String].
-     *
-     * To get the route parameter, call the [Lazy] parameter inside a [ContentNode].
      */
     @Routing
     @Composable
@@ -61,9 +83,7 @@ public data class NavBuilder(
     }
 
     /**
-     * Executes its children when the requested subroute is a [String].
-     *
-     * To get the route parameter, call the [Lazy] parameter inside a [ContentNode].
+     * Executes its children when the requested subroute is a [Int].
      */
     @Routing
     @Composable
@@ -78,6 +98,9 @@ public data class NavBuilder(
         }
     }
 
+    /**
+     * Executes its children when the requested subroute is a [UUID].
+     */
     @Routing
     @Composable
     public fun uuid(nestedRoute: @Composable NavBuilder.(UUID) -> Unit) {
@@ -91,6 +114,9 @@ public data class NavBuilder(
         }
     }
 
+    /**
+     * Fallback if no matching route is found.
+     */
     @Routing
     @Composable
     public fun noMatch(content: @Composable () -> Unit) {
