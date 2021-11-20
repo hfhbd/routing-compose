@@ -22,7 +22,7 @@ Example with `HashRouter`, `BrowserRouter` and `DesktopRouter` will be implement
 
 ```kotlin
 HashRouter(initRoute = "/users") { // or BrowserRouter(initRoute = "/users") {
-    route("/users") {
+    constant("/users") {
         int { userID ->
             Text("User with $userID") 
         } 
