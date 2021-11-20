@@ -41,7 +41,7 @@ fun main() {
 @Routing
 @Composable
 fun NavBuilder.Routing() {
-    constant("foo") {
+    route("foo") {
         Text("Header for /foo")
         int {
             P { Text("Hello user $it") }

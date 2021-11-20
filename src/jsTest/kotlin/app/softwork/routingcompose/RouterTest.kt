@@ -1,5 +1,6 @@
 package app.softwork.routingcompose
 
+import androidx.compose.runtime.*
 import org.jetbrains.compose.web.attributes.*
 import org.jetbrains.compose.web.dom.*
 import org.jetbrains.compose.web.dom.Text
@@ -15,12 +16,12 @@ internal class RouterTest {
         val router = MockRouter()
         composition {
             router("/") {
-                constant("foo") {
+                route("foo") {
                     noMatch {
                         Text("foo")
                     }
                 }
-                constant("bar") {
+                route("bar") {
                     noMatch {
                         Text("bar")
                     }
@@ -83,9 +84,9 @@ internal class RouterTest {
         val router = MockRouter()
         composition {
             router("/foo") {
-                constant("foo") {
-                    constant("bar") {
-                        constant("baz") {
+                route("foo") {
+                    route("bar") {
+                        route("baz") {
                             noMatch {
                                 Text("baz")
                             }
@@ -121,7 +122,7 @@ internal class RouterTest {
         assertFailsWith<IllegalArgumentException> {
             composition {
                 router("/") {
-                    constant("foo/foo") {
+                    route("foo/foo") {
                         noMatch {
                             Text("FooBar")
                         }
@@ -135,12 +136,75 @@ internal class RouterTest {
     }
 
     @Test
+    fun wrongDynamicTest() = runTest {
+        val router = MockRouter()
+        var addNewRoute by mutableStateOf(false)
+        composition {
+            router("/") {
+                if (addNewRoute) {
+                    int {
+                        Text(it.toString())
+                    }
+                }
+                int {
+                    Text("wrong")
+                }
+                noMatch {
+                    Text("NoMatch")
+                }
+            }
+        }
+        assertEquals("NoMatch", root.innerHTML)
+
+        router.navigate("/1")
+        waitForRecompositionComplete()
+        assertEquals("wrong", root.innerHTML)
+
+        addNewRoute = true
+        router.navigate("/1")
+        waitForRecompositionComplete()
+        assertEquals("1wrong", root.innerHTML)
+    }
+
+    @Test
+    fun correctDynamicTest() = runTest {
+        val router = MockRouter()
+        var addNewRoute by mutableStateOf(false)
+        composition {
+            router("/") {
+                if (addNewRoute) {
+                    int {
+                        Text(it.toString())
+                    }
+                } else {
+                    int {
+                        Text("correct")
+                    }
+                }
+                noMatch {
+                    Text("NoMatch")
+                }
+            }
+        }
+        assertEquals("NoMatch", root.innerHTML)
+
+        router.navigate("/1")
+        waitForRecompositionComplete()
+        assertEquals("correct", root.innerHTML)
+
+        addNewRoute = true
+        router.navigate("/1")
+        waitForRecompositionComplete()
+        assertEquals("1", root.innerHTML)
+    }
+
+    @Test
     fun RouterCompositionLocalTest() = runTest {
         val mockRouter = MockRouter()
         var input: HTMLInputElement? = null
         composition {
             mockRouter("/") {
-                constant("foo") {
+                route("foo") {
                     Text("Foo")
                 }
                 noMatch {

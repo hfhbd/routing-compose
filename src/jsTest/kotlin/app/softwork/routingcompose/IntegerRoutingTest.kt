@@ -11,7 +11,7 @@ class IntegerRoutingTest {
         val router = MockRouter()
         composition {
             router("/") {
-                constant("foo") {
+                route("foo") {
                     noMatch {
                         Text("foo")
                     }
@@ -40,9 +40,9 @@ class IntegerRoutingTest {
         val router = MockRouter()
         composition {
             router("/") {
-                constant("users") {
+                route("users") {
                     int { userID ->
-                        constant("todos") {
+                        route("todos") {
                             int {
                                 Text("Todo $it for user: $userID")
                             }
