@@ -3,7 +3,7 @@ import java.util.*
 
 plugins {
     kotlin("multiplatform") version "1.5.31"
-    id("org.jetbrains.compose") version "1.0.0-beta6-dev455"
+    id("org.jetbrains.compose") version "1.0.0-beta6-dev464"
     `maven-publish`
     signing
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
@@ -61,6 +61,7 @@ kotlin {
 
         val jvmTest by getting {
             dependencies {
+                @OptIn(ExperimentalComposeLibrary::class)
                 implementation(compose.uiTestJUnit4) // there is no non-ui testing
                 implementation(compose.desktop.currentOs) // ui-testings needs skiko
             }
