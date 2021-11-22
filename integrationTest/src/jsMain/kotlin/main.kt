@@ -41,6 +41,9 @@ fun main() {
 @Routing
 @Composable
 fun NavBuilder.Routing() {
+    var foundAnswer by remember { mutableStateOf(false) }
+    Text("Parameters: ${this.parameters?.map}")
+
     route("foo") {
         Text("Header for /foo")
         int {
@@ -59,13 +62,40 @@ fun NavBuilder.Routing() {
         }
         Text("Footer for /foo")
     }
+    if(foundAnswer) {
+        route("question") {
+            Text("life, the universe and everything")
+        }
+    }
+    int {
+        if (it == 42) {
+            SideEffect {
+                foundAnswer = true
+            }
+            Text("Found the answer, new route /question is available")
+            P {
+                NavLink("/question") {
+                    Text("NavLink: Click here to see the question")
+                }
+            }
+        } else {
+            Text("Wrong answer: $it")
+        }
+    }
     noMatch {
         P {
             Text("Hello Routing")
         }
         P {
-            NavLink("/foo") {
-                Text("NavLink: Click here to navigate to /foo")
+            var answer by remember { mutableStateOf(0) }
+            Input(InputType.Number) {
+                onChange {
+                    answer = it.value?.toInt() ?: 0
+                }
+                value(answer)
+            }
+            NavLink("/$answer") {
+                Text("Submit answer")
             }
         }
         P {
