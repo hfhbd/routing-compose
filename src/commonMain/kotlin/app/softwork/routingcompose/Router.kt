@@ -20,8 +20,8 @@ public abstract class Router {
         CompositionLocalProvider(
             RouterCompositionLocal provides this
         ) {
-            val path by getPath(initRoute)
-            require(path.startsWith("/")) { "path must start with a slash." }
+            val rawPath by getPath(initRoute)
+            val path = Path.from(rawPath)
             val node by derivedStateOf { NavBuilder(path) }
             node.routing()
         }
