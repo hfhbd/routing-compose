@@ -2,7 +2,7 @@ import org.jetbrains.compose.*
 import java.util.*
 
 plugins {
-    kotlin("multiplatform") version "1.5.31"
+    kotlin("multiplatform") version "1.6.0"
     id("org.jetbrains.compose") version "1.0.0"
     `maven-publish`
     signing
