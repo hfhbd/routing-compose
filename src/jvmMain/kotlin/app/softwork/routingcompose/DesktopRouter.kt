@@ -11,7 +11,6 @@ public class DesktopRouter private constructor() : Router() {
     }
 
     override fun navigate(to: String) {
-        require(to.startsWith("/"))
         stack.add(to)
     }
 

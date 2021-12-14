@@ -11,7 +11,6 @@ class MockRouter : Router() {
         derivedStateOf { currentPath.value ?: initPath }
 
     override fun navigate(to: String) {
-        require(to.startsWith("/"))
         currentPath.value = to
     }
 }

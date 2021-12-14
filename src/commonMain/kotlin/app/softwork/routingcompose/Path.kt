@@ -5,7 +5,6 @@ internal data class Path(val path: String, val parameters: Parameters?) {
 
     internal companion object {
         fun from(rawPath: String): Path {
-            require(rawPath.startsWith("/")) { "path must start with a slash: $rawPath" }
             val pathAndQuery = rawPath.split("?")
             val (path, rawParameters) = when (pathAndQuery.size) {
                 1 -> {
@@ -18,8 +17,10 @@ internal data class Path(val path: String, val parameters: Parameters?) {
                     error("path contains more than 1 '?' delimiter: $rawPath")
                 }
             }
-            return Path(path, rawParameters?.let { Parameters.from(it) })
+            return Path(path.addPrefix("/"), rawParameters?.let { Parameters.from(it) })
         }
+
+        private fun String.addPrefix(prefix: String) = if(startsWith(prefix)) this else "$prefix$this"
     }
 
     val currentPath get() = path.removePrefix("/").takeWhile { it != '/' }

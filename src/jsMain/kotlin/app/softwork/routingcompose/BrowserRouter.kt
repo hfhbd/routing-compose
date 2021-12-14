@@ -36,8 +36,6 @@ public object BrowserRouter : Router() {
     }
 
     override fun navigate(to: String) {
-        require(to.startsWith("/"))
-
         window.history.pushState(null, "", to)
         /*
         The history API unfortunately provides no callback to listen for
