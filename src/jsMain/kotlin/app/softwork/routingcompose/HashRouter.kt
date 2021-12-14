@@ -21,7 +21,6 @@ public object HashRouter : Router() {
         }
 
     override fun navigate(to: String) {
-        require(to.startsWith("/"))
         window.location.hash = to
     }
 }

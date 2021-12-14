@@ -56,10 +56,10 @@ public class NavBuilder internal constructor(
         route: String,
         nestedRoute: @Composable NavBuilder.() -> Unit
     ) {
-        require(!route.startsWith("/")) { "$route must not start with a trailing slash." }
-        require(!route.contains("/")) { "To use nested routes, use route() { route() { } } instead." }
+        val relaxedRoute = route.removePrefix("/").removeSuffix("/")
+        require(!relaxedRoute.contains("/")) { "To use nested routes, use route() { route() { } } instead." }
         val currentPath = remainingPath.currentPath
-        if ((match == Match.Unknown || match == Match.Constant) && route == currentPath) {
+        if ((match == Match.Unknown || match == Match.Constant) && relaxedRoute == currentPath) {
             val newPath = remainingPath.newPath(currentPath)
             val newState = remember(newPath) { NavBuilder(newPath) }
             newState.nestedRoute()

@@ -230,4 +230,39 @@ internal class RouterTest {
         waitForRecompositionComplete()
         assertEquals("Foo", root.innerHTML)
     }
+
+    @Test
+    fun relaxedTest() = runTest {
+        val router = MockRouter()
+        composition {
+            router("foo") {
+                route("/foo") {
+                    noMatch {
+                        Text("foo")
+                    }
+                }
+                route("bar") {
+                    noMatch {
+                        Text("bar")
+                    }
+                }
+                noMatch {
+                    Text("other")
+                }
+            }
+        }
+        assertEquals("foo", root.innerHTML)
+
+        router.navigate("/bar")
+        waitForRecompositionComplete()
+        assertEquals("bar", root.innerHTML)
+
+        router.navigate("/foo")
+        waitForRecompositionComplete()
+        assertEquals("foo", root.innerHTML)
+
+        router.navigate("/asf")
+        waitForRecompositionComplete()
+        assertEquals("other", root.innerHTML)
+    }
 }

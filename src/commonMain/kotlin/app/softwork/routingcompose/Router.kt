@@ -15,14 +15,12 @@ public abstract class Router {
         initRoute: String,
         routing: @Composable NavBuilder.() -> Unit
     ) {
-        require(initRoute.startsWith("/")) { "initRoute must start with a slash." }
         // Provide [RouterCompositionLocal] to composables deeper in the composition.
         CompositionLocalProvider(
             RouterCompositionLocal provides this
         ) {
             val rawPath by getPath(initRoute)
-            val path = Path.from(rawPath)
-            val node by derivedStateOf { NavBuilder(path) }
+            val node by derivedStateOf { NavBuilder(Path.from(rawPath)) }
             node.routing()
         }
     }
