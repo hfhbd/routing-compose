@@ -3,7 +3,7 @@ import java.util.*
 
 plugins {
     kotlin("multiplatform") version "1.6.10"
-    id("org.jetbrains.compose") version "1.0.1-rc2"
+    id("org.jetbrains.compose") version "1.1.0-alpha1-dev536"
     `maven-publish`
     signing
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
