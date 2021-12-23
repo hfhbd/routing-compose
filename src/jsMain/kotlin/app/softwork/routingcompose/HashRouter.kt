@@ -11,9 +11,9 @@ import kotlinx.browser.*
 public object HashRouter : Router() {
     @Composable
     override fun getPath(initPath: String): State<String> =
-        produceState(initialValue = window.location.hash.removePrefix("#").ifBlank { initPath }) {
+        produceState(initialValue = window.location.hash.removePrefix("/").removePrefix("#").ifBlank { initPath }) {
             window.onhashchange = {
-                val update: String = window.location.hash.removePrefix("#").ifBlank { initPath }
+                val update: String = window.location.hash.removePrefix("/").removePrefix("#").ifBlank { initPath }
                 update.let {
                     value = it
                 }
