@@ -61,8 +61,13 @@ fun NavBuilder.Routing() {
             }
         }
         Text("Footer for /foo")
+        P {
+            NavLink(to = "#") {
+                Text("Testing simple # link")
+            }
+        }
     }
-    if(foundAnswer) {
+    if (foundAnswer) {
         route("question") {
             Text("life, the universe and everything")
         }
