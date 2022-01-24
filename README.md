@@ -1,6 +1,6 @@
 # RoutingCompose
 
-Highly experimental routing feature for [Compose Web and Desktop](https://github.com/Jetbrains/compose-jb)
+Routing feature for [Compose Web and Desktop](https://github.com/Jetbrains/compose-jb)
 
 ## Install
 
@@ -21,14 +21,39 @@ dependencies {
 Example with `HashRouter`, `BrowserRouter` and `DesktopRouter` will be implemented in the same manner.
 
 ```kotlin
+HashRouter(initRoute = "/hello") { // or BrowserRouter(initRoute = "/hello") {
+    route("/hello") {
+        Text("Hello World")
+    }
+}
+```
+More complex sample showing `Router.current`, query parameters, `@Composable` support and dynamic routing with `mutableState`:
+```kt
+@Composable
+fun SomeContainer(content: @Composable () -> Unit) {
+    header()
+    content()
+    footer()
+}
+
 HashRouter(initRoute = "/users") { // or BrowserRouter(initRoute = "/users") {
+    val enableFeature by remember { mutableStateOf(false) }
     route("/users") {
-        int { userID ->
-            Text("User with $userID") 
-        } 
-        noMatch {
-            Text("User list")
+        SomeContainer {
+            int { userID ->
+                Text("User with $userID")
+            }
+            noMatch {
+                Text("User list")
+            }
         }
+    }
+    if (enableFeature) {
+       route("/hiddenFeature") {
+           val params: Map<String, List<String>>? = parameters?.map
+           val router = Router.current
+           Text("Hidden feature")
+       }
     }
     noMatch {
         Text("Hello World")
