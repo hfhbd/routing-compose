@@ -19,10 +19,11 @@ jobs:
           java-version: 11
       - name: Build with Gradle
         run: ./gradlew build
+
       - name: Save sample
         uses: actions/upload-artifact@v2
         with:
-          path: integrationTest/build/distributions
+          path: integrationTest/hashRouterTest/build/distributions
       - name: Publish
         run: ./gradlew -Pversion=$version -Dorg.gradle.parallel=false publish closeAndReleaseStagingRepository
         env:
@@ -36,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      
+
     steps:
       - name: Set environment for version
         run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV

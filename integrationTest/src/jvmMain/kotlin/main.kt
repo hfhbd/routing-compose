@@ -19,14 +19,23 @@ private fun Demo(it: Int) {
         }, title = "$it") {
             DesktopRouter("/$it") {
                 Column {
+                    val params = parameters?.map
+                    if (params != null) {
+                        Text("Parameters: $params")
+                    }
+                    val router = Router.current
                     if (wasMagic42) {
-                        int {
-                            Text("Answer of the universe")
+                        route("/answer") {
+                            Text("The Answer to the Ultimate Question of Life, the Universe, and Everything is 42.")
+                            Button(onClick = { router.navigateBack() }) {
+                                Text("Back")
+                            }
                         }
-                    } else {
-                        int {
-                            Content(it)
-                            if (it == 42) {
+                    }
+                    int {
+                        Content(it, wasMagic42)
+                        if (it == 42) {
+                            LaunchedEffect(it) {
                                 wasMagic42 = true
                             }
                         }
@@ -34,7 +43,6 @@ private fun Demo(it: Int) {
                     string {
                         Column {
                             Text("Hello $it")
-                            val router = Router.current
                             Button(onClick = { router.navigateBack() }) {
                                 Text("Back")
                             }
@@ -47,7 +55,7 @@ private fun Demo(it: Int) {
 }
 
 @Composable
-fun Content(int: Int) {
+fun Content(int: Int, wasMagic42: Boolean) {
     var name by remember { mutableStateOf("") }
     val router = Router.current
     Column {
@@ -60,6 +68,14 @@ fun Content(int: Int) {
             router.navigate("/$name")
         }) {
             Text("Update name")
+        }
+
+        if (wasMagic42) {
+            Button({
+                router.navigate("/answer")
+            }) {
+                Text("Unlocked answer")
+            }
         }
     }
 }

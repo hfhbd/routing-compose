@@ -11,14 +11,16 @@ import kotlinx.browser.*
 public object HashRouter : Router() {
     @Composable
     override fun getPath(initPath: String): State<String> =
-        produceState(initialValue = window.location.hash.removePrefix("/").removePrefix("#").ifBlank { initPath }) {
+        produceState(initialValue = currentURL(fallback = initPath)) {
             window.onhashchange = {
-                val update: String = window.location.hash.removePrefix("/").removePrefix("#").ifBlank { initPath }
-                update.let {
-                    value = it
-                }
+                value = currentURL(fallback = initPath)
+                Unit
             }
         }
+
+    private fun currentURL(fallback: String) = window.location.hash
+        .removePrefix("/").removePrefix("#")
+        .ifBlank { fallback }
 
     override fun navigate(to: String) {
         window.location.hash = to
