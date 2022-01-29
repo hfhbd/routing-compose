@@ -23,10 +23,16 @@ fun Demo(router: Router) {
 
 object DarkMode : StyleSheet() {
     init {
-        "body" style {
-            media("prefers-color-scheme: dark") {
+        media("prefers-color-scheme", StylePropertyValue("dark")) {
+            "body" style {
                 color(white)
                 backgroundColor(black)
+            }
+        }
+        media("prefers-color-scheme", StylePropertyValue("light")) {
+            "body" style {
+                color(black)
+                backgroundColor(white)
             }
         }
     }
