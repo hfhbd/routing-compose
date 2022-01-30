@@ -42,6 +42,35 @@ internal class RouterTest {
     }
 
     @Test
+    fun updateTest() = runTest {
+        val router = MockRouter()
+        var foo by mutableStateOf(false)
+        composition {
+            router("/") {
+                if (foo) {
+                    route("foo") {
+                        noMatch {
+                            Text("foo")
+                        }
+                    }
+                }
+                noMatch {
+                    Text("other")
+                }
+            }
+        }
+        assertEquals("other", root.innerHTML)
+
+        router.navigate("/foo")
+        waitForRecompositionComplete()
+        assertEquals("other", root.innerHTML)
+
+        foo = true
+        waitForRecompositionComplete()
+        assertEquals("foo", root.innerHTML)
+    }
+
+    @Test
     fun emptyTest() = runTest {
         val router = MockRouter()
         composition {
