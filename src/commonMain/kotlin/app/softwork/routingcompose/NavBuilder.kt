@@ -38,10 +38,10 @@ public class NavBuilder internal constructor(
 ) {
     public val parameters: Parameters? get() = remainingPath.parameters
 
-    private var match by mutableStateOf(Match.Unknown)
+    private var match by mutableStateOf(Match.NoMatch)
 
     private enum class Match {
-        Constant, Integer, String, Uuid, NoMatch, Unknown
+        Constant, Integer, String, Uuid, NoMatch
     }
 
 
@@ -59,7 +59,7 @@ public class NavBuilder internal constructor(
         val relaxedRoute = route.removePrefix("/").removeSuffix("/")
         require(!relaxedRoute.contains("/")) { "To use nested routes, use route() { route() { } } instead." }
         val currentPath = remainingPath.currentPath
-        if ((match == Match.Unknown || match == Match.Constant) && relaxedRoute == currentPath) {
+        if ((match == Match.NoMatch || match == Match.Constant) && relaxedRoute == currentPath) {
             val newPath = remainingPath.newPath(currentPath)
             val newState = remember(newPath) { NavBuilder(newPath) }
             newState.nestedRoute()
@@ -74,7 +74,7 @@ public class NavBuilder internal constructor(
     @Composable
     public fun string(nestedRoute: @Composable NavBuilder.(String) -> Unit) {
         val currentPath = remainingPath.currentPath
-        if ((match == Match.Unknown || match == Match.String) && currentPath.isNotEmpty()) {
+        if ((match == Match.NoMatch || match == Match.String) && currentPath.isNotEmpty()) {
             val newPath = remainingPath.newPath(currentPath)
             val newState = remember(newPath) { NavBuilder(newPath) }
             newState.nestedRoute(currentPath)
@@ -90,7 +90,7 @@ public class NavBuilder internal constructor(
     public fun int(nestedRoute: @Composable NavBuilder.(Int) -> Unit) {
         val currentPath = remainingPath.currentPath
         val int = currentPath.toIntOrNull()
-        if ((match == Match.Unknown || match == Match.Integer) && int != null) {
+        if ((match == Match.NoMatch || match == Match.Integer) && int != null) {
             val newPath = remainingPath.newPath(currentPath)
             val newState = remember(newPath) { NavBuilder(newPath) }
             newState.nestedRoute(int)
@@ -106,7 +106,7 @@ public class NavBuilder internal constructor(
     public fun uuid(nestedRoute: @Composable NavBuilder.(UUID) -> Unit) {
         val currentPath = remainingPath.currentPath
         val uuid = currentPath.toUUIDOrNull()
-        if ((match == Match.Unknown || match == Match.Uuid) && uuid != null) {
+        if ((match == Match.NoMatch || match == Match.Uuid) && uuid != null) {
             val newPath = remainingPath.newPath(currentPath)
             val newState = remember(newPath) { NavBuilder(newPath) }
             newState.nestedRoute(uuid)
@@ -120,9 +120,8 @@ public class NavBuilder internal constructor(
     @Routing
     @Composable
     public fun noMatch(content: @Composable () -> Unit) {
-        if ((match == Match.Unknown || match == Match.NoMatch)) {
+        if (match == Match.NoMatch) {
             content()
-            match = Match.NoMatch
         }
     }
 }
