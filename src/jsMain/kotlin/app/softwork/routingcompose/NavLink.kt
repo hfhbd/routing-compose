@@ -12,7 +12,7 @@ import org.w3c.dom.*
 @Composable
 public fun NavLink(
     to: String,
-    attrs: (AttrsBuilder<HTMLAnchorElement>.() -> Unit)? = null,
+    attrs: (AttrsScope<HTMLAnchorElement>.() -> Unit)? = null,
     content: @Composable () -> Unit
 ) {
     val router = Router.current
