@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Set environment for version
         run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: gradle/wrapper-validation-action@v1
       - uses: actions/setup-java@v2
         with:
@@ -42,7 +42,7 @@ jobs:
       - name: Set environment for version
         run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
       - name: Switch to GitHub Pages
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: webpage
       - uses: actions/download-artifact@v2
