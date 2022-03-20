@@ -33,9 +33,7 @@ import kotlinx.uuid.*
  *     }
  */
 @Routing
-public class NavBuilder internal constructor(
-    private val remainingPath: Path
-) {
+public class NavBuilder internal constructor(private val remainingPath: Path) {
     public val parameters: Parameters? get() = remainingPath.parameters
 
     private var match by mutableStateOf(Match.NoMatch)

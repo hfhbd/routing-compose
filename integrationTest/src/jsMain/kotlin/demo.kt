@@ -1,6 +1,7 @@
 import androidx.compose.runtime.*
 import app.softwork.routingcompose.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import org.jetbrains.compose.web.attributes.*
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.css.Color.black
@@ -12,8 +13,6 @@ import kotlin.time.Duration.Companion.seconds
 @Composable
 fun Demo(router: Router) {
     Style(DarkMode)
-
-    Clock()
 
     P {
         Text("HashRouter implementation")
@@ -49,6 +48,8 @@ fun NavBuilder.Routing() {
         delay(5.seconds)
         enableAnswer = true
     }
+
+    Clock()
 
     P {
         Text("Parameters: ${this@Routing.parameters?.map}")
@@ -134,12 +135,16 @@ fun NavBuilder.Routing() {
 
 @Composable
 fun Clock() {
-    val current by produceState(0) {
-        while (true) {
-            delay(timeMillis = 1000)
-            value += 1
+    val current by remember {
+        flow {
+            var i = 0
+            while (true) {
+                emit(i)
+                delay(timeMillis = 1000)
+                i += 1
+            }
         }
-    }
+    }.collectAsState(0)
 
     P {
         Text(current.toString())
