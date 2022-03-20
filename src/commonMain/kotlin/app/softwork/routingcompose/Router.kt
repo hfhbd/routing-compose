@@ -16,9 +16,7 @@ public abstract class Router {
         routing: @Composable NavBuilder.() -> Unit
     ) {
         // Provide [RouterCompositionLocal] to composables deeper in the composition.
-        CompositionLocalProvider(
-            RouterCompositionLocal provides this
-        ) {
+        CompositionLocalProvider(RouterCompositionLocal provides this) {
             val rawPath by getPath(initRoute)
             val node by derivedStateOf { NavBuilder(Path.from(rawPath)) }
             node.routing()
