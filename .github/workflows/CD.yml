@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: webpage
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
       - name: Copy files to /
         run: cp -r artifact/* . && rm -Rf artifact/*
       - name: Config git
