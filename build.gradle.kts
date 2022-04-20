@@ -2,8 +2,8 @@ import org.jetbrains.compose.*
 import java.util.*
 
 plugins {
-    kotlin("multiplatform") version "1.6.10"
-    id("org.jetbrains.compose") version "1.1.1"
+    kotlin("multiplatform") version "1.6.21"
+    id("org.jetbrains.compose") version "0.0.0-on-rebase-12-apr-2022-dev670"
     `maven-publish`
     signing
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
@@ -40,7 +40,7 @@ kotlin {
         commonMain {
             dependencies {
                 api(compose.runtime)
-                api("app.softwork:kotlinx-uuid-core:0.0.12")
+                api("app.softwork:kotlinx-uuid-core:0.0.14")
             }
         }
         commonTest {
@@ -123,9 +123,4 @@ nexusPublishing {
             snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
         }
     }
-}
-
-rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin> {
-    val nodeM1Version = "16.13.1"
-    rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().nodeVersion = nodeM1Version
 }

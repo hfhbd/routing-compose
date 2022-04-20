@@ -7,7 +7,6 @@ import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.css.Color.black
 import org.jetbrains.compose.web.css.Color.white
 import org.jetbrains.compose.web.dom.*
-import kotlin.time.*
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
@@ -44,7 +43,6 @@ object DarkMode : StyleSheet() {
 fun NavBuilder.Routing() {
     var enableAnswer by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
-        @OptIn(ExperimentalTime::class)
         delay(5.seconds)
         enableAnswer = true
     }
