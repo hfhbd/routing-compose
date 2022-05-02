@@ -16,10 +16,14 @@ public fun NavLink(
     content: @Composable () -> Unit
 ) {
     val router = Router.current
-    A(attrs = {
-        attrs?.invoke(this)
-        onClick {
-            router.navigate(to)
+    A(
+        href = to,
+        attrs = {
+            attrs?.invoke(this)
+            onClick {
+                router.navigate(to)
+                it.preventDefault()
+            }
         }
-    }) { content() }
+    ) { content() }
 }
