@@ -13,4 +13,6 @@ class MockRouter : Router() {
     override fun navigate(to: String) {
         currentPath.value = to
     }
+
+    override val root: String = "/"
 }

@@ -6,6 +6,7 @@ import kotlin.reflect.*
 
 public abstract class Router {
     public abstract fun navigate(to: String)
+    public abstract val root: String
 
     @Composable
     public abstract fun getPath(initPath: String): State<String>

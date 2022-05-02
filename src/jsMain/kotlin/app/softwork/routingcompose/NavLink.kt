@@ -17,12 +17,10 @@ public fun NavLink(
 ) {
     val router = Router.current
     A(
-        href = to,
         attrs = {
             attrs?.invoke(this)
             onClick {
                 router.navigate(to)
-                it.preventDefault()
             }
         }
     ) { content() }

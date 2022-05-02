@@ -3,6 +3,6 @@ import org.jetbrains.compose.web.*
 
 fun main() {
     renderComposableInBody {
-        Demo(HashRouter)
+        Demo(HashRouter, "HashRouter")
     }
 }

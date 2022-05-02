@@ -43,4 +43,6 @@ public object BrowserRouter : Router() {
          */
         currentPath.value = window.location.newPath()
     }
+
+    override val root: String = "/"
 }
