@@ -10,11 +10,11 @@ import org.jetbrains.compose.web.dom.*
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
-fun Demo(router: Router) {
+fun Demo(router: Router, name: String) {
     Style(DarkMode)
 
     P {
-        Text("HashRouter implementation")
+        Text("$name implementation")
     }
     router("/") {
         Routing()
@@ -79,7 +79,7 @@ fun NavBuilder.Routing() {
             Br()
             Text("Footer for /users")
             Br()
-            A(href = "#") {
+            NavLink(to = router.root) {
                 Text("Go back to main page")
             }
         }

@@ -10,6 +10,8 @@ public class DesktopRouter private constructor() : Router() {
         return derivedStateOf { stack.lastOrNull() ?: initPath }
     }
 
+    override val root: String = "/"
+
     override fun navigate(to: String) {
         stack.add(to)
     }
