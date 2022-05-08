@@ -16,7 +16,7 @@ fun Demo(router: Router, name: String) {
     P {
         Text("$name implementation")
     }
-    router("/") {
+    router.route("/") {
         Routing()
     }
 }
@@ -38,9 +38,45 @@ object DarkMode : StyleSheet() {
     }
 }
 
+private const val Players = 5
+
+@Composable
+fun RouteBuilder.Users() {
+    P {
+        Text("Header for /users")
+    }
+    int { userID ->
+        P { Text("Hello user $userID") }
+        P { Text("Use the back and forward functions of your browser to go navigate back.") }
+    }
+
+    noMatch {
+        P {
+            Text("Users")
+        }
+        val router = Router.current
+        for (i in 0..Players) {
+            P {
+                Input(type = InputType.Button) {
+                    onClick {
+                        router.navigate("$i", Parameters.from("name" to "paul"))
+                    }
+                    value("Navigate to $i with the userName paul")
+                }
+            }
+        }
+        Br()
+        Text("Footer for /users")
+        Br()
+        NavLink(to = "/") {
+            Text("Go back to main page")
+        }
+    }
+}
+
 @Routing
 @Composable
-fun NavBuilder.Routing() {
+fun RouteBuilder.Routing() {
     var enableAnswer by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
         delay(5.seconds)
@@ -53,36 +89,7 @@ fun NavBuilder.Routing() {
         Text("Parameters: ${this@Routing.parameters?.map}")
     }
     route("users") {
-        P {
-            Text("Header for /users")
-        }
-        int { userID ->
-            P { Text("Hello user $userID") }
-            P { Text("Use the back and forward functions of your browser to go navigate back.") }
-        }
-
-        noMatch {
-            P {
-                Text("Users")
-            }
-            val router = Router.current
-            for (i in 0..5) {
-                P {
-                    Input(type = InputType.Button) {
-                        onClick {
-                            router.navigate("/users/$i?name=paul")
-                        }
-                        value("Navigate to /users/$i with the user name paul")
-                    }
-                }
-            }
-            Br()
-            Text("Footer for /users")
-            Br()
-            NavLink(to = router.root) {
-                Text("Go back to main page")
-            }
-        }
+        Users()
     }
     if (enableAnswer) {
         route("answer") {
@@ -95,7 +102,7 @@ fun NavBuilder.Routing() {
             Text("Hello Routing")
         }
         if (enableAnswer) {
-            NavLink("/answer") {
+            NavLink("answer") {
                 Text("Click to navigate to /answer")
             }
         } else {
@@ -123,7 +130,7 @@ fun NavBuilder.Routing() {
         P {
             Input(type = InputType.Button) {
                 onClick {
-                    router.navigate("/users")
+                    router.navigate("users")
                 }
                 value("Navigate to /users")
             }

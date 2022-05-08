@@ -1,6 +1,8 @@
 package app.softwork.routingcompose
 
-public data class Parameters(val raw: String, val map: Map<String, List<String>>) {
+import kotlin.jvm.*
+
+public class Parameters private constructor(public val raw: String, public val map: Map<String, List<String>>) {
     public companion object {
         private val reservedCharacters = mapOf(
             "+" to " ",
@@ -49,6 +51,32 @@ public data class Parameters(val raw: String, val map: Map<String, List<String>>
             return Parameters(rawParameters, keyed)
         }
 
+        @JvmName("fromParameterList")
+        public fun from(parameters: Map<String, List<String>>): Parameters {
+            val raw = parameters.entries.flatMap { (key, values) ->
+                values.mapNotNull {
+                    if (it.isEmpty()) null else "$key=$it"
+                }
+            }.joinToString(separator = "&", prefix = "?") {
+                it.percentDecode()
+            }
+            return Parameters(raw, parameters)
+        }
+
+        public fun from(parameters: Map<String, String>): Parameters {
+            val raw = parameters.mapNotNull { (key, value) ->
+                if (value.isEmpty()) null else "$key=$value"
+            }.joinToString(separator = "&") {
+                it.percentDecode()
+            }
+            return Parameters(raw, parameters.mapValues { listOf(it.value) })
+        }
+
+        public fun from(vararg parameters: Pair<String, String>): Parameters = from(parameters.toMap())
+
+        @JvmName("fromParameterListVararg")
+        public fun from(vararg parameters: Pair<String, List<String>>): Parameters = from(parameters.toMap())
+
         private fun String.percentEncode(): String {
             var encoded = this
             for ((replaced, value) in reservedCharacters) {
@@ -56,5 +84,28 @@ public data class Parameters(val raw: String, val map: Map<String, List<String>>
             }
             return encoded
         }
+
+        private fun String.percentDecode(): String {
+            var decoded = this
+            for ((value, replacement) in reservedCharacters) {
+                decoded = decoded.replace(value, replacement)
+            }
+            return decoded
+        }
     }
+
+    override fun toString(): String = raw
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as Parameters
+
+        if (raw != other.raw) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int = raw.hashCode()
 }

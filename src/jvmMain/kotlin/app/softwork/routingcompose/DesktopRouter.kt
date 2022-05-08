@@ -2,15 +2,13 @@ package app.softwork.routingcompose
 
 import androidx.compose.runtime.*
 
-public class DesktopRouter private constructor() : Router() {
+public class DesktopRouter private constructor() : Router {
     private val stack = mutableStateListOf<String>()
 
     @Composable
     override fun getPath(initPath: String): State<String> {
         return derivedStateOf { stack.lastOrNull() ?: initPath }
     }
-
-    override val root: String = "/"
 
     override fun navigate(to: String) {
         stack.add(to)
@@ -29,8 +27,8 @@ public class DesktopRouter private constructor() : Router() {
          */
         @Routing
         @Composable
-        public operator fun invoke(initRoute: String, navBuilder: @Composable NavBuilder.() -> Unit) {
-            DesktopRouter().invoke(initRoute, navBuilder)
+        public operator fun invoke(initRoute: String, navBuilder: @Composable RouteBuilder.() -> Unit) {
+            DesktopRouter().route(initRoute, navBuilder)
         }
     }
 }

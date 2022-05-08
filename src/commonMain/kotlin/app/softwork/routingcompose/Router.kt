@@ -1,33 +1,15 @@
 package app.softwork.routingcompose
 
 import androidx.compose.runtime.*
-import kotlin.reflect.*
+import kotlin.jvm.*
 
-
-public abstract class Router {
-    public abstract fun navigate(to: String)
-    public abstract val root: String
+public interface Router {
+    public fun navigate(to: String)
 
     @Composable
-    public abstract fun getPath(initPath: String): State<String>
-
-    @Composable
-    public operator fun invoke(
-        initRoute: String,
-        routing: @Composable NavBuilder.() -> Unit
-    ) {
-        // Provide [RouterCompositionLocal] to composables deeper in the composition.
-        CompositionLocalProvider(RouterCompositionLocal provides this) {
-            val rawPath by getPath(initRoute)
-            val node by derivedStateOf { NavBuilder(Path.from(rawPath)) }
-            node.routing()
-        }
-    }
+    public fun getPath(initPath: String): State<String>
 
     public companion object {
-        private val RouterCompositionLocal: ProvidableCompositionLocal<Router> =
-            staticCompositionLocalOf { error("Router not defined, cannot provide through RouterCompositionLocal.") }
-
         /**
          * Provide the router implementation through a CompositionLocal so deeper level
          * Composables in the composition can have access to the current router.
@@ -41,4 +23,33 @@ public abstract class Router {
             @Composable
             get() = RouterCompositionLocal.current
     }
+}
+
+internal val RouterCompositionLocal: ProvidableCompositionLocal<Router> =
+    compositionLocalOf { error("Router not defined, cannot provide through RouterCompositionLocal.") }
+
+@Composable
+public fun Router.route(
+    initRoute: String,
+    routing: @Composable RouteBuilder.() -> Unit
+) {
+    CompositionLocalProvider(RouterCompositionLocal provides this) {
+        val rawPath by getPath(initRoute)
+        val path = Path.from(rawPath)
+        val node by derivedStateOf { RouteBuilder(path.path, path) }
+        node.routing()
+    }
+}
+
+public fun Router.navigate(to: String, parameters: Parameters) {
+    navigate("$to?$parameters")
+}
+
+@JvmName("navigateParameterList")
+public fun Router.navigate(to: String, parameters: Map<String, List<String>>) {
+    navigate(to, Parameters.from(parameters))
+}
+
+public fun Router.navigate(to: String, parameters: Map<String, String>) {
+    navigate(to, Parameters.from(parameters))
 }

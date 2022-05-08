@@ -18,7 +18,15 @@ import org.w3c.dom.*
  * instructions. For development environments, see the RoutingCompose Readme
  * for full instructions.
  */
-public object BrowserRouter : Router() {
+@Composable
+public fun BrowserRouter(
+    initPath: String,
+    routeBuilder: @Composable RouteBuilder.() -> Unit
+) {
+    BrowserRouter().route(initPath, routeBuilder)
+}
+
+public class BrowserRouter : Router {
 
     private val currentPath: MutableState<String> = mutableStateOf(window.location.newPath())
 
@@ -33,7 +41,7 @@ public object BrowserRouter : Router() {
         return derivedStateOf { currentPath.value.ifBlank { initPath } }
     }
 
-    private fun Location.newPath() = "${pathname}${search}"
+    private fun Location.newPath() = "$pathname$search"
 
     override fun navigate(to: String) {
         window.history.pushState(null, "", to)
@@ -43,6 +51,4 @@ public object BrowserRouter : Router() {
          */
         currentPath.value = window.location.newPath()
     }
-
-    override val root: String = "/"
 }
