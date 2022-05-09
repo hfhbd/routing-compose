@@ -1,6 +1,7 @@
 package app.softwork.routingcompose
 
 import androidx.compose.runtime.*
+import kotlinx.uuid.*
 import org.jetbrains.compose.web.attributes.*
 import org.jetbrains.compose.web.dom.*
 import org.jetbrains.compose.web.dom.Text
@@ -77,10 +78,22 @@ internal class RouterTest {
             router("/") {
                 noMatch {
                     Text("other")
+                    Text(remainingPath)
+                    val parameters = parameters
+                    if (parameters != null) {
+                        Text(parameters.raw)
+                    }
                 }
             }
         }
-        assertEquals("other", root.innerHTML)
+        assertEquals("other/", root.innerHTML)
+        router.navigate("/foo")
+        waitForRecompositionComplete()
+        assertEquals("other/foo", root.innerHTML)
+
+        router.navigate("/foo", Parameters.from("V" to "b"))
+        waitForRecompositionComplete()
+        assertEquals("other/fooV=b", root.innerHTML)
     }
 
     @Test
@@ -228,7 +241,7 @@ internal class RouterTest {
     }
 
     @Test
-    fun RouterCompositionLocalTest() = runTest {
+    fun RouterCompositionLocalCurrentRouterTest() = runTest {
         val mockRouter = MockRouter()
         var input: HTMLInputElement? = null
         composition {
@@ -243,9 +256,7 @@ internal class RouterTest {
                     Input(type = InputType.Text) {
                         ref {
                             input = it
-                            onDispose {
-
-                            }
+                            onDispose { }
                         }
                         onClick {
                             router.navigate(to = "/foo")
@@ -258,6 +269,83 @@ internal class RouterTest {
         input!!.click()
         waitForRecompositionComplete()
         assertEquals("Foo", root.innerHTML)
+    }
+
+    @Test
+    fun RouterCompositionLocalRouterCurrentTest() = runTest {
+        val mockRouter = MockRouter()
+        var input: HTMLInputElement? = null
+        composition {
+            mockRouter("/") {
+                route("foo") {
+                    Text("Foo")
+                }
+                noMatch {
+                    Text("NoMatch")
+
+                    val router = Router.current
+                    Input(type = InputType.Text) {
+                        ref {
+                            input = it
+                            onDispose { }
+                        }
+                        onClick {
+                            router.navigate(to = "/foo")
+                        }
+                    }
+                }
+            }
+        }
+        assertEquals("""NoMatch<input type="text">""", root.innerHTML)
+        input!!.click()
+        waitForRecompositionComplete()
+        assertEquals("Foo", root.innerHTML)
+    }
+
+    @Test
+    fun relativeRoutingTest() = runTest {
+        var router: Router = MockRouter()
+        composition {
+            router.route("/") {
+                route("foo") {
+                    int {
+                        uuid {
+                            Text("UUID $it")
+                            router = Router.current
+                        }
+                        noMatch {
+                            Text("Int $it")
+                            router = Router.current
+                        }
+                    }
+                    noMatch {
+                        Text("Foo")
+                        router = Router.current
+                    }
+                }
+                noMatch {
+                    Text("NoMatch")
+                    router = Router.current
+                }
+            }
+        }
+        assertEquals("NoMatch", root.innerHTML)
+
+        router.navigate("/foo")
+        waitForRecompositionComplete()
+        assertEquals("Foo", root.innerHTML)
+
+        router.navigate("42")
+        waitForRecompositionComplete()
+        assertEquals("Int 42", root.innerHTML)
+
+        router.navigate(UUID.NIL.toString())
+        waitForRecompositionComplete()
+        assertEquals("UUID ${UUID.NIL}", root.innerHTML)
+
+        router.navigate("/")
+        waitForRecompositionComplete()
+        assertEquals("NoMatch", root.innerHTML)
     }
 
     @Test

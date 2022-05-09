@@ -8,6 +8,8 @@ class ParametersTest {
         val parameters = Parameters.from("key=value")
         assertEquals("key=value", parameters.raw)
         assertEquals(mapOf("key" to listOf("value")), parameters.map)
+
+        assertEquals(Parameters.from(mapOf("key" to "value")), parameters)
     }
 
     @Test
@@ -42,6 +44,12 @@ class ParametersTest {
     fun listMultipleTestEncoding() {
         val parameters = Parameters.from("key=va%26lue&key2=val%20ue2&key=val+ue1;key2=val%3Due2")
         assertEquals("key=va%26lue&key2=val%20ue2&key=val+ue1;key2=val%3Due2", parameters.raw)
-        assertEquals(mapOf("key" to listOf("va&lue", "val ue1"), "key2" to listOf("val ue2", "val=ue2")), parameters.map)
+        assertEquals(
+            mapOf(
+                "key" to listOf("va&lue", "val ue1"),
+                "key2" to listOf("val ue2", "val=ue2")
+            ),
+            parameters.map
+        )
     }
 }

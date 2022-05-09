@@ -2,7 +2,7 @@ package app.softwork.routingcompose
 
 import androidx.compose.runtime.*
 
-class MockRouter : Router() {
+class MockRouter : Router {
 
     private val currentPath = mutableStateOf<String?>(null)
 
@@ -13,6 +13,8 @@ class MockRouter : Router() {
     override fun navigate(to: String) {
         currentPath.value = to
     }
-
-    override val root: String = "/"
 }
+
+@Composable
+operator fun MockRouter.invoke(initPath: String, routeBuilder: @Composable RouteBuilder.() -> Unit) =
+    route(initPath, routeBuilder)

@@ -33,15 +33,14 @@ import kotlinx.uuid.*
  *     }
  */
 @Routing
-public class NavBuilder internal constructor(private val remainingPath: Path) {
-    public val parameters: Parameters? get() = remainingPath.parameters
+public class RouteBuilder internal constructor(private val basePath: String, private val remainingPath: Path) {
+    public val parameters: Parameters? = remainingPath.parameters
 
     private var match by mutableStateOf(Match.NoMatch)
 
     private enum class Match {
         Constant, Integer, String, Uuid, NoMatch
     }
-
 
     /**
      * Executes its children when the requested subroute matches this constant [route].
@@ -52,16 +51,27 @@ public class NavBuilder internal constructor(private val remainingPath: Path) {
     @Composable
     public fun route(
         route: String,
-        nestedRoute: @Composable NavBuilder.() -> Unit
+        nestedRoute: @Composable RouteBuilder.() -> Unit
     ) {
         val relaxedRoute = route.removePrefix("/").removeSuffix("/")
         require(!relaxedRoute.contains("/")) { "To use nested routes, use route() { route() { } } instead." }
+        require(relaxedRoute.isNotEmpty()) { "Route $route cannot be empty. Use noMatch instead." }
+
         val currentPath = remainingPath.currentPath
         if ((match == Match.NoMatch || match == Match.Constant) && relaxedRoute == currentPath) {
-            val newPath = remainingPath.newPath(currentPath)
-            val newState = remember(newPath) { NavBuilder(newPath) }
-            newState.nestedRoute()
+            execute(currentPath, nestedRoute)
             match = Match.Constant
+        }
+    }
+
+    @Composable
+    private fun execute(currentPath: String, nestedRoute: @Composable RouteBuilder.() -> Unit) {
+        val newPath = remainingPath.newPath(currentPath)
+        val currentRouter = Router.current
+        val delegatingRouter = remember(newPath) { DelegatingRouter(basePath, currentRouter) }
+        CompositionLocalProvider(RouterCompositionLocal provides delegatingRouter) {
+            val newState = RouteBuilder(basePath, newPath)
+            newState.nestedRoute()
         }
     }
 
@@ -70,12 +80,12 @@ public class NavBuilder internal constructor(private val remainingPath: Path) {
      */
     @Routing
     @Composable
-    public fun string(nestedRoute: @Composable NavBuilder.(String) -> Unit) {
+    public fun string(nestedRoute: @Composable RouteBuilder.(String) -> Unit) {
         val currentPath = remainingPath.currentPath
         if ((match == Match.NoMatch || match == Match.String) && currentPath.isNotEmpty()) {
-            val newPath = remainingPath.newPath(currentPath)
-            val newState = remember(newPath) { NavBuilder(newPath) }
-            newState.nestedRoute(currentPath)
+            execute(currentPath) {
+                nestedRoute(currentPath)
+            }
             match = Match.String
         }
     }
@@ -85,13 +95,13 @@ public class NavBuilder internal constructor(private val remainingPath: Path) {
      */
     @Routing
     @Composable
-    public fun int(nestedRoute: @Composable NavBuilder.(Int) -> Unit) {
+    public fun int(nestedRoute: @Composable RouteBuilder.(Int) -> Unit) {
         val currentPath = remainingPath.currentPath
         val int = currentPath.toIntOrNull()
         if ((match == Match.NoMatch || match == Match.Integer) && int != null) {
-            val newPath = remainingPath.newPath(currentPath)
-            val newState = remember(newPath) { NavBuilder(newPath) }
-            newState.nestedRoute(int)
+            execute(currentPath) {
+                nestedRoute(int)
+            }
             match = Match.Integer
         }
     }
@@ -101,13 +111,13 @@ public class NavBuilder internal constructor(private val remainingPath: Path) {
      */
     @Routing
     @Composable
-    public fun uuid(nestedRoute: @Composable NavBuilder.(UUID) -> Unit) {
+    public fun uuid(nestedRoute: @Composable RouteBuilder.(UUID) -> Unit) {
         val currentPath = remainingPath.currentPath
         val uuid = currentPath.toUUIDOrNull()
         if ((match == Match.NoMatch || match == Match.Uuid) && uuid != null) {
-            val newPath = remainingPath.newPath(currentPath)
-            val newState = remember(newPath) { NavBuilder(newPath) }
-            newState.nestedRoute(uuid)
+            execute(currentPath) {
+                nestedRoute(uuid)
+            }
             match = Match.Uuid
         }
     }
@@ -117,9 +127,27 @@ public class NavBuilder internal constructor(private val remainingPath: Path) {
      */
     @Routing
     @Composable
-    public fun noMatch(content: @Composable () -> Unit) {
+    public fun noMatch(content: @Composable NoMatch.() -> Unit) {
         if (match == Match.NoMatch) {
-            content()
+            NoMatch(remainingPath.path, remainingPath.parameters).content()
+        }
+    }
+
+    public class NoMatch(public val remainingPath: String, public val parameters: Parameters?)
+}
+
+private class DelegatingRouter(val basePath: String, val router: Router) : Router by router {
+    override fun navigate(to: String) {
+        when {
+            to.startsWith("/") -> {
+                router.navigate(to)
+            }
+            basePath == "/" -> {
+                router.navigate("/$to")
+            }
+            else -> {
+                router.navigate("$basePath/$to")
+            }
         }
     }
 }

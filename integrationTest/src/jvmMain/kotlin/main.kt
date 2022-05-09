@@ -9,6 +9,8 @@ fun main() = application {
     Demo(2)
 }
 
+private const val Answer = 42
+
 @Composable
 private fun Demo(it: Int) {
     var isOpen by remember { mutableStateOf(true) }
@@ -34,7 +36,7 @@ private fun Demo(it: Int) {
                     }
                     int {
                         Content(it, wasMagic42)
-                        if (it == 42) {
+                        if (it == Answer) {
                             LaunchedEffect(it) {
                                 wasMagic42 = true
                             }
