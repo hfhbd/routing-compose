@@ -18,21 +18,29 @@ public fun HashRouter(
 }
 
 public class HashRouter : Router {
+
+    private val currentPath: MutableState<String> = mutableStateOf(window.location.hash.currentURL(null))
+
     @Composable
-    override fun getPath(initPath: String): State<String> =
-        produceState(initialValue = currentURL(fallback = initPath)) {
+    override fun getPath(initPath: String): State<String> {
+        LaunchedEffect(Unit) {
             window.onhashchange = {
-                value = currentURL(fallback = null)
+                currentPath.value = it.newURL.currentURL(null)
                 Unit
             }
         }
+        return derivedStateOf { currentPath.value.ifBlank { initPath } }
+    }
 
-    private fun currentURL(fallback: String?) = window.location.hash
-        .removePrefix("#")
+    private fun String.currentURL(fallback: String?) = removePrefix("#")
         .removePrefix("/")
         .ifBlank { fallback ?: "" }
 
-    override fun navigate(to: String) {
-        window.location.hash = to
+    override fun navigate(to: String, hide: Boolean) {
+        if (hide) {
+            currentPath.value = to.currentURL(null)
+        } else {
+            window.location.hash = to
+        }
     }
 }

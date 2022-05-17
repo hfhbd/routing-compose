@@ -3,15 +3,16 @@ package app.softwork.routingcompose
 import androidx.compose.runtime.*
 
 public class DesktopRouter private constructor() : Router {
-    private val stack = mutableStateListOf<String>()
+    private data class Entry(val path: String, val hide: Boolean)
+    private val stack = mutableStateListOf<Entry>()
 
     @Composable
     override fun getPath(initPath: String): State<String> {
-        return derivedStateOf { stack.lastOrNull() ?: initPath }
+        return derivedStateOf { stack.lastOrNull { !it.hide }?.path ?: initPath }
     }
 
-    override fun navigate(to: String) {
-        stack.add(to)
+    override fun navigate(to: String, hide: Boolean) {
+        stack.add(Entry(to, hide))
     }
 
     internal fun navigateBack() {

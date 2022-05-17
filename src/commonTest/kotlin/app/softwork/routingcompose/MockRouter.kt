@@ -10,7 +10,7 @@ class MockRouter : Router {
     override fun getPath(initPath: String) =
         derivedStateOf { currentPath.value ?: initPath }
 
-    override fun navigate(to: String) {
+    override fun navigate(to: String, hide: Boolean) {
         currentPath.value = to
     }
 }

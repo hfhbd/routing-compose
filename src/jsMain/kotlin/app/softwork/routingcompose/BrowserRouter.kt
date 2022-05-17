@@ -43,12 +43,16 @@ public class BrowserRouter : Router {
 
     private fun Location.newPath() = "$pathname$search"
 
-    override fun navigate(to: String) {
-        window.history.pushState(null, "", to)
-        /*
-        The history API unfortunately provides no callback to listen for
-        [window.history.pushState], so we need to notify subscribers when pushing a new path.
-         */
-        currentPath.value = window.location.newPath()
+    override fun navigate(to: String, hide: Boolean) {
+        if (hide) {
+            currentPath.value = to
+        } else {
+            window.history.pushState(null, "", to)
+            /*
+                The history API unfortunately provides no callback to listen for
+                [window.history.pushState], so we need to notify subscribers when pushing a new path.
+                */
+            currentPath.value = window.location.newPath()
+        }
     }
 }

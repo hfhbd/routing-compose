@@ -91,6 +91,7 @@ fun RouteBuilder.Routing() {
     route("users") {
         Users()
     }
+    redirect("redirect", target = "users", hide = true)
     if (enableAnswer) {
         route("answer") {
             Br()
@@ -135,6 +136,20 @@ fun RouteBuilder.Routing() {
                 value("Navigate to /users")
             }
         }
+        Hr()
+        RedirectButton()
+    }
+}
+
+@Composable
+fun RedirectButton() {
+    Text("You could also hide navigations and redirect path to other routes.")
+    val router = Router.current
+    Input(type = InputType.Button) {
+        onClick {
+            router.navigate("redirect", hide = true)
+        }
+        value("Navigate to /users. Check the url.")
     }
 }
 
