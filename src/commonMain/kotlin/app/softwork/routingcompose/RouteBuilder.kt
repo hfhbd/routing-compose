@@ -43,24 +43,41 @@ public class RouteBuilder internal constructor(private val basePath: String, pri
     }
 
     /**
-     * Executes its children when the requested subroute matches this constant [route].
+     * Executes its children when the requested subroute matches one of these constant [route].
      *
      * To match `foo/bar`, create a [route] inside the first [route].
      */
     @Routing
     @Composable
     public fun route(
-        route: String,
+        vararg route: String,
         nestedRoute: @Composable RouteBuilder.() -> Unit
     ) {
-        val relaxedRoute = route.removePrefix("/").removeSuffix("/")
-        require(!relaxedRoute.contains("/")) { "To use nested routes, use route() { route() { } } instead." }
-        require(relaxedRoute.isNotEmpty()) { "Route $route cannot be empty. Use noMatch instead." }
-
+        val relaxedRoute = route.check()
         val currentPath = remainingPath.currentPath
-        if ((match == Match.NoMatch || match == Match.Constant) && relaxedRoute == currentPath) {
+        if ((match == Match.NoMatch || match == Match.Constant) && currentPath in relaxedRoute) {
             execute(currentPath, nestedRoute)
             match = Match.Constant
+        }
+    }
+
+    private fun Array<out String>.check(): List<String> {
+        val relaxedRoute = map { it.removePrefix("/").removeSuffix("/") }
+        require(relaxedRoute.none { it.contains("/") }) { "To use nested routes, use route() { route() { } } instead." }
+        require(relaxedRoute.none { it.isEmpty() }) { "Route $this cannot be empty. Use noMatch instead." }
+        return relaxedRoute
+    }
+
+    @Routing
+    @Composable
+    public fun redirect(vararg route: String, target: String, hide: Boolean = false) {
+        val routes = route.check()
+        val currentPath = remainingPath.currentPath
+        if (match == Match.NoMatch && currentPath in routes) {
+            val router = Router.current
+            LaunchedEffect(Unit) {
+                router.navigate(target, hide)
+            }
         }
     }
 
@@ -137,16 +154,16 @@ public class RouteBuilder internal constructor(private val basePath: String, pri
 }
 
 private class DelegatingRouter(val basePath: String, val router: Router) : Router by router {
-    override fun navigate(to: String) {
+    override fun navigate(to: String, hide: Boolean) {
         when {
             to.startsWith("/") -> {
-                router.navigate(to)
+                router.navigate(to, hide)
             }
             basePath == "/" -> {
-                router.navigate("/$to")
+                router.navigate("/$to", hide)
             }
             else -> {
-                router.navigate("$basePath/$to")
+                router.navigate("$basePath/$to", hide)
             }
         }
     }

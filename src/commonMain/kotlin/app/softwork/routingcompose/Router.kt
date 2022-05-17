@@ -4,7 +4,7 @@ import androidx.compose.runtime.*
 import kotlin.jvm.*
 
 public interface Router {
-    public fun navigate(to: String)
+    public fun navigate(to: String, hide: Boolean = false)
 
     @Composable
     public fun getPath(initPath: String): State<String>
@@ -41,15 +41,15 @@ public fun Router.route(
     }
 }
 
-public fun Router.navigate(to: String, parameters: Parameters) {
-    navigate("$to?$parameters")
+public fun Router.navigate(to: String, parameters: Parameters, hide: Boolean = false) {
+    navigate("$to?$parameters", hide = hide)
 }
 
 @JvmName("navigateParameterList")
-public fun Router.navigate(to: String, parameters: Map<String, List<String>>) {
-    navigate(to, Parameters.from(parameters))
+public fun Router.navigate(to: String, parameters: Map<String, List<String>>, hide: Boolean = false) {
+    navigate(to, Parameters.from(parameters), hide = hide)
 }
 
-public fun Router.navigate(to: String, parameters: Map<String, String>) {
-    navigate(to, Parameters.from(parameters))
+public fun Router.navigate(to: String, parameters: Map<String, String>, hide: Boolean = false) {
+    navigate(to, Parameters.from(parameters), hide = hide)
 }
