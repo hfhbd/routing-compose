@@ -5,9 +5,9 @@ import kotlinx.uuid.*
 
 /**
  * Use the DSL functions to build the expected route handled by a [Router].
- * If two routes matches the same path, the first declared route is chosen.
+ * If two routes match the same path, the first declared route is chosen.
  *
- * With dynamic routing displaying will not stop if two routes of the same kind matches the current route:
+ * With dynamic routing displaying will not stop if two routes of the same kind match the current route:
  *
  * wrong usage:
  *
