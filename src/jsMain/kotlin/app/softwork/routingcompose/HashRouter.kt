@@ -25,7 +25,7 @@ public class HashRouter : Router {
     override fun getPath(initPath: String): State<String> {
         LaunchedEffect(Unit) {
             window.onhashchange = {
-                currentPath.value = it.newURL.currentURL(null)
+                currentPath.value = window.location.hash.currentURL(null)
                 Unit
             }
         }
