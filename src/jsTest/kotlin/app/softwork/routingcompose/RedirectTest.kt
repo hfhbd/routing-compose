@@ -33,4 +33,28 @@ class RedirectTest {
         waitForChanges()
         assertEquals("foo", root.innerHTML, "Second")
     }
+
+    @Test
+    fun redirectingNoMatchTest() = runTest {
+        val router = MockRouter()
+        composition {
+            router("/bar") {
+                route("foo") {
+                    Text("foo")
+                }
+                route("bar") {
+                    Text("bar")
+                }
+                noMatch {
+                    redirect("foo", hide = true)
+                }
+            }
+        }
+        assertEquals("bar", root.innerHTML)
+
+        router.navigate("/asdf")
+        waitForChanges()
+        waitForChanges()
+        assertEquals("foo", root.innerHTML)
+    }
 }

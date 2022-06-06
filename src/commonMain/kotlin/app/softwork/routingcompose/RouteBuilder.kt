@@ -150,7 +150,17 @@ public class RouteBuilder internal constructor(private val basePath: String, pri
         }
     }
 
-    public class NoMatch(public val remainingPath: String, public val parameters: Parameters?)
+    @Routing
+    public class NoMatch(public val remainingPath: String, public val parameters: Parameters?) {
+        @Routing
+        @Composable
+        public fun redirect(target: String, hide: Boolean = false) {
+            val router = Router.current
+            LaunchedEffect(Unit) {
+                router.navigate(target, hide)
+            }
+        }
+    }
 }
 
 private class DelegatingRouter(val basePath: String, val router: Router) : Router by router {
@@ -159,13 +169,16 @@ private class DelegatingRouter(val basePath: String, val router: Router) : Route
             to.startsWith("/") -> {
                 router.navigate(to, hide)
             }
+
             basePath == "/" -> {
                 router.navigate("/$to", hide)
             }
+
             to.startsWith(".") -> {
                 val newPath = router.currentPath.relative(to)
                 router.navigate(newPath.path)
             }
+
             else -> {
                 router.navigate("$basePath/$to", hide)
             }
