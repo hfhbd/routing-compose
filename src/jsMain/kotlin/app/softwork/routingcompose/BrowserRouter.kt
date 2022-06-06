@@ -30,32 +30,34 @@ public fun BrowserRouter(
 }
 
 public class BrowserRouter : Router {
+    override val currentPath: String
+        get() = currentLocation.value
 
-    private val currentPath: MutableState<String> = mutableStateOf(window.location.newPath())
+    private val currentLocation: MutableState<String> = mutableStateOf(window.location.newPath())
 
     @Composable
     override fun getPath(initPath: String): State<String> {
         LaunchedEffect(Unit) {
             window.onpopstate = {
-                currentPath.value = window.location.newPath()
+                currentLocation.value = window.location.newPath()
                 Unit
             }
         }
-        return derivedStateOf { currentPath.value.ifBlank { initPath } }
+        return derivedStateOf { currentLocation.value.ifBlank { initPath } }
     }
 
     private fun Location.newPath() = "$pathname$search"
 
     override fun navigate(to: String, hide: Boolean) {
         if (hide) {
-            currentPath.value = to
+            currentLocation.value = to
         } else {
             window.history.pushState(null, "", to)
             /*
                 The history API unfortunately provides no callback to listen to
                 [window.history.pushState], so we need to notify subscribers when pushing a new path.
                 */
-            currentPath.value = window.location.newPath()
+            currentLocation.value = window.location.newPath()
         }
     }
 }
