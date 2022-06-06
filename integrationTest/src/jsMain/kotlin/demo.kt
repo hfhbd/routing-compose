@@ -97,10 +97,7 @@ fun RouteBuilder.Routing() {
     }
     redirect("redirect", target = "users", hide = true)
     if (enableAnswer) {
-        route("answer") {
-            Br()
-            Text("The Answer to the Ultimate Question of Life, the Universe, and Everything is 42.")
-        }
+        answer()
     }
     noMatch {
         P {
@@ -142,6 +139,20 @@ fun RouteBuilder.Routing() {
         }
         Hr()
         RedirectButton()
+    }
+}
+
+@Routing
+@Composable
+fun RouteBuilder.answer() {
+    route("answer") {
+        int {
+            Br()
+            Text("The Answer to the Ultimate Question of Life, the Universe, and Everything is $it.")
+        }
+        noMatch {
+            redirect("42")
+        }
     }
 }
 
