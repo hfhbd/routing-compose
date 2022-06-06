@@ -20,7 +20,7 @@ public fun NavLink(
     A(
         attrs = {
             attrs?.invoke(this)
-            if (router.currentPath.path.startsWith(to.removePrefix("/"))) {
+            if (router.currentPath.path.startsWith(to)) {
                 classes("active")
             }
             onClick {
