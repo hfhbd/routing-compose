@@ -71,6 +71,10 @@ fun RouteBuilder.Users() {
         NavLink(to = "/") {
             Text("Go back to main page")
         }
+        Br()
+        NavLink(to = "./answer") {
+            Text("Relative route to ./answer")
+        }
     }
 }
 

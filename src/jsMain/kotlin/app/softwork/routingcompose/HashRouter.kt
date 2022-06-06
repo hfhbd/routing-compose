@@ -18,8 +18,8 @@ public fun HashRouter(
 }
 
 public class HashRouter : Router {
-    override val currentPath: String
-        get() = currentHash.value
+    override val currentPath: Path
+        get() = Path.from(currentHash.value)
 
     private val currentHash: MutableState<String> = mutableStateOf(window.location.hash.currentURL(null))
 
