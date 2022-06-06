@@ -30,8 +30,8 @@ public fun BrowserRouter(
 }
 
 public class BrowserRouter : Router {
-    override val currentPath: String
-        get() = currentLocation.value
+    override val currentPath: Path
+        get() = Path.from(currentLocation.value)
 
     private val currentLocation: MutableState<String> = mutableStateOf(window.location.newPath())
 

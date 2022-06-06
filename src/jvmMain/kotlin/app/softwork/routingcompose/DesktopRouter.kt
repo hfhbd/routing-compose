@@ -3,8 +3,8 @@ package app.softwork.routingcompose
 import androidx.compose.runtime.*
 
 public class DesktopRouter private constructor() : Router {
-    override val currentPath: String
-        get() = stack.last().path
+    override val currentPath: Path
+        get() = Path.from(stack.last().path)
 
     private data class Entry(val path: String, val hide: Boolean)
     private val stack = mutableStateListOf<Entry>()

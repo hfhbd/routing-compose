@@ -162,6 +162,10 @@ private class DelegatingRouter(val basePath: String, val router: Router) : Route
             basePath == "/" -> {
                 router.navigate("/$to", hide)
             }
+            to.startsWith(".") -> {
+                val newPath = router.currentPath.relative(to)
+                router.navigate(newPath.path)
+            }
             else -> {
                 router.navigate("$basePath/$to", hide)
             }
