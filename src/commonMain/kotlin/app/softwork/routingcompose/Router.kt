@@ -4,6 +4,11 @@ import androidx.compose.runtime.*
 import kotlin.jvm.*
 
 public interface Router {
+    /**
+     * The current path
+     */
+    public val currentPath: String
+
     public fun navigate(to: String, hide: Boolean = false)
 
     @Composable

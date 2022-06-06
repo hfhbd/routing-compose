@@ -18,18 +18,20 @@ public fun HashRouter(
 }
 
 public class HashRouter : Router {
+    override val currentPath: String
+        get() = currentHash.value
 
-    private val currentPath: MutableState<String> = mutableStateOf(window.location.hash.currentURL(null))
+    private val currentHash: MutableState<String> = mutableStateOf(window.location.hash.currentURL(null))
 
     @Composable
     override fun getPath(initPath: String): State<String> {
         LaunchedEffect(Unit) {
             window.onhashchange = {
-                currentPath.value = window.location.hash.currentURL(null)
+                currentHash.value = window.location.hash.currentURL(null)
                 Unit
             }
         }
-        return derivedStateOf { currentPath.value.ifBlank { initPath } }
+        return derivedStateOf { currentHash.value.ifBlank { initPath } }
     }
 
     private fun String.currentURL(fallback: String?) = removePrefix("#")
@@ -38,7 +40,7 @@ public class HashRouter : Router {
 
     override fun navigate(to: String, hide: Boolean) {
         if (hide) {
-            currentPath.value = to.currentURL(null)
+            currentHash.value = to.currentURL(null)
         } else {
             window.location.hash = to
         }
