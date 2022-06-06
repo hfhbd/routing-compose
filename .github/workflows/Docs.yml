@@ -19,7 +19,7 @@ jobs:
           distribution: 'adopt'
           java-version: 11
       - name: Generate Docs
-        run: ./gradlew ./gradlew :integrationTest:hashRouterTest:jsProductionWebpack
+        run: ./gradlew :integrationTest:hashRouterTest:jsProductionWebpack
       - name: Save sample
         uses: actions/upload-artifact@v3
         with:
