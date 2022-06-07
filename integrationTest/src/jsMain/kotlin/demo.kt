@@ -151,7 +151,7 @@ fun RouteBuilder.answer() {
             Text("The Answer to the Ultimate Question of Life, the Universe, and Everything is $it.")
         }
         noMatch {
-            redirect("42")
+            redirect("42", hide = true)
         }
     }
 }
