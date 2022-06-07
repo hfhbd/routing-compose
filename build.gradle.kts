@@ -16,7 +16,7 @@ group = "app.softwork"
 repositories {
     mavenCentral()
     google()
-    jetbrainsCompose()
+    maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
 kotlin {
