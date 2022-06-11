@@ -41,7 +41,7 @@ public fun Router.route(
     CompositionLocalProvider(RouterCompositionLocal provides this) {
         val rawPath by getPath(initRoute)
         val path = Path.from(rawPath)
-        val node by derivedStateOf { RouteBuilder(path.path, path) }
+        val node = RouteBuilder(path.path, path)
         node.routing()
     }
 }
