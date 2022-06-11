@@ -16,7 +16,7 @@ fun Demo(router: Router, name: String) {
     P {
         Text("$name implementation")
     }
-    router.route("/users") {
+    router.route("/") {
         Routing()
     }
 }
@@ -88,6 +88,8 @@ fun RouteBuilder.Routing() {
     }
 
     Clock()
+    NavLink(to = "/") { Text("Main") }
+    Br()
     NavLink(to = "/users") { Text("Users") }
 
     P {

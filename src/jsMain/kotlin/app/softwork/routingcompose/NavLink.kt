@@ -1,7 +1,6 @@
 package app.softwork.routingcompose
 
 import androidx.compose.runtime.*
-import org.jetbrains.compose.web.attributes.*
 import org.jetbrains.compose.web.dom.*
 import org.w3c.dom.*
 
@@ -20,7 +19,11 @@ public fun NavLink(
     A(
         href = to,
         attrs = {
-            if (router.currentPath.path.startsWith(to)) {
+            if (to == "/") {
+                if (router.currentPath.path == to) {
+                    classes("active")
+                }
+            } else if (router.currentPath.path.startsWith(to)) {
                 classes("active")
             }
             onClick {
