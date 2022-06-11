@@ -13,19 +13,23 @@ import org.w3c.dom.*
 @Composable
 public fun NavLink(
     to: String,
-    attrs: (AttrsScope<HTMLAnchorElement>.() -> Unit)? = null,
-    content: @Composable () -> Unit
+    attrs: AttrBuilderContext<HTMLAnchorElement>? = null,
+    content: ContentBuilder<HTMLAnchorElement>? = null
 ) {
     val router = Router.current
     A(
+        href = to,
         attrs = {
-            attrs?.invoke(this)
             if (router.currentPath.path.startsWith(to)) {
                 classes("active")
             }
             onClick {
+                if (it.ctrlKey || it.metaKey) return@onClick
                 router.navigate(to)
+                it.preventDefault()
             }
-        }
-    ) { content() }
+            attrs?.invoke(this)
+        },
+        content = content
+    )
 }
