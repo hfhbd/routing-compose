@@ -26,12 +26,13 @@ public class HashRouter : Router {
     @Composable
     override fun getPath(initPath: String): State<String> {
         LaunchedEffect(Unit) {
+            currentHash.value = window.location.hash.currentURL() ?: initPath
             window.onhashchange = {
-                currentHash.value = window.location.hash.currentURL() ?: initPath
+                currentHash.value = window.location.hash.currentURL() ?: ""
                 Unit
             }
         }
-        return derivedStateOf { currentHash.value.ifBlank { initPath } }
+        return currentHash
     }
 
     private fun String.currentURL() = removePrefix("#")
@@ -42,7 +43,7 @@ public class HashRouter : Router {
         if (hide) {
             currentHash.value = to.currentURL() ?: ""
         } else if (window.location.hash.currentURL() == to.currentURL()) {
-            currentHash.value = to.currentURL() ?: ""
+            currentHash.value = to.removePrefix("#")
         } else {
             window.location.hash = to
         }

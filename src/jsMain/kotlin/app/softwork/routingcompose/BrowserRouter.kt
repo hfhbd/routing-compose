@@ -38,12 +38,13 @@ public class BrowserRouter : Router {
     @Composable
     override fun getPath(initPath: String): State<String> {
         LaunchedEffect(Unit) {
+            currentLocation.value = window.location.newPath().takeUnless { it == "/" } ?: initPath
             window.onpopstate = {
                 currentLocation.value = window.location.newPath()
                 Unit
             }
         }
-        return derivedStateOf { currentLocation.value.ifBlank { initPath } }
+        return currentLocation
     }
 
     private fun Location.newPath() = "$pathname$search"
