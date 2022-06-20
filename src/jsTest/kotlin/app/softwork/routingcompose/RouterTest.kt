@@ -97,6 +97,38 @@ internal class RouterTest {
     }
 
     @Test
+    fun blankRouteTest() = runTest {
+        val router = MockRouter()
+        composition {
+            router("/") {
+                route("/") {
+                    Text("Root")
+                }
+                noMatch {
+                    Text("other")
+                    Text(remainingPath)
+                    val parameters = parameters
+                    if (parameters != null) {
+                        Text(parameters.raw)
+                    }
+                }
+            }
+        }
+        assertEquals("Root", root.innerHTML)
+        router.navigate("/foo")
+        waitForRecompositionComplete()
+        assertEquals("other/foo", root.innerHTML)
+
+        router.navigate("/")
+        waitForRecompositionComplete()
+        assertEquals("Root", root.innerHTML)
+
+        router.navigate("/foo", Parameters.from("V" to "b"))
+        waitForRecompositionComplete()
+        assertEquals("other/fooV=b", root.innerHTML)
+    }
+
+    @Test
     fun mixed() = runTest {
         val router = MockRouter()
         composition {

@@ -64,7 +64,6 @@ public class RouteBuilder internal constructor(private val basePath: String, pri
     private fun Array<out String>.check(): List<String> {
         val relaxedRoute = map { it.removePrefix("/").removeSuffix("/") }
         require(relaxedRoute.none { it.contains("/") }) { "To use nested routes, use route() { route() { } } instead." }
-        require(relaxedRoute.none { it.isEmpty() }) { "Route $this cannot be empty. Use noMatch instead." }
         return relaxedRoute
     }
 
