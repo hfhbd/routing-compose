@@ -66,7 +66,7 @@ kotlin {
                 @OptIn(ExperimentalComposeLibrary::class)
                 implementation(compose.uiTestJUnit4) // there is no non-ui testing
                 implementation(compose.desktop.currentOs) // ui-testings needs skiko
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.6.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.6.3")
             }
         }
     }
