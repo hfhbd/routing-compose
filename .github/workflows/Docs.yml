@@ -28,6 +28,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: webpage
+      - run: find . \! -name CNAME -delete
       - uses: actions/download-artifact@v3
       - name: Copy files to /
         run: cp -r artifact/* . && rm -Rf artifact/*
