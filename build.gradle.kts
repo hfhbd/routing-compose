@@ -4,7 +4,7 @@ import io.gitlab.arturbosch.detekt.*
 
 plugins {
     kotlin("multiplatform") version "1.7.0"
-    id("org.jetbrains.compose") version "1.2.0-alpha01-dev731"
+    id("org.jetbrains.compose") version "1.2.0-alpha01-dev741"
     `maven-publish`
     signing
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
@@ -42,7 +42,7 @@ kotlin {
         commonMain {
             dependencies {
                 api(compose.runtime)
-                api("app.softwork:kotlinx-uuid-core:0.0.15")
+                api("app.softwork:kotlinx-uuid-core:0.0.14")
             }
         }
         commonTest {

@@ -12,3 +12,4 @@ updates:
       interval: "daily"
     assignees:
       - "hfhbd"
+    rebase-strategy: "disabled"
