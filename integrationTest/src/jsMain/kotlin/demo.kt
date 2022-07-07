@@ -111,46 +111,53 @@ fun RouteBuilder.Routing() {
         answer()
     }
     noMatch {
-        P {
-            Text("Hello Routing")
+        Hello(enableAnswer) {
+            enableAnswer = it
         }
-        if (enableAnswer) {
-            NavLink("answer") {
-                Text("Click to navigate to /answer")
-            }
-        } else {
-            Button({
-                onClick {
-                    enableAnswer = true
-                }
-            }) {
-                Text("Enable answer")
-            }
-        }
-        Hr()
-        P {
-            Text("Custom router usage")
-        }
-
-        Code {
-            Text("val router = Router.current")
-            Br()
-            Text("router.navigate(to = /users)")
-        }
-
-        val router = Router.current
-
-        P {
-            Input(type = InputType.Button) {
-                onClick {
-                    router.navigate("users")
-                }
-                value("Navigate to /users")
-            }
-        }
-        Hr()
-        RedirectButton()
     }
+}
+
+@Composable
+private fun Hello(enableAnswer: Boolean, updateEnableAnswer: (Boolean) -> Unit) {
+    P {
+        Text("Hello Routing")
+    }
+    if (enableAnswer) {
+        NavLink("answer") {
+            Text("Click to navigate to /answer")
+        }
+    } else {
+        Button({
+            onClick {
+                updateEnableAnswer(true)
+            }
+        }) {
+            Text("Enable answer")
+        }
+    }
+    Hr()
+    P {
+        Text("Custom router usage")
+    }
+
+    Code {
+        Text("val router = Router.current")
+        Br()
+        Text("router.navigate(to = /users)")
+    }
+
+    val router = Router.current
+
+    P {
+        Input(type = InputType.Button) {
+            onClick {
+                router.navigate("users")
+            }
+            value("Navigate to /users")
+        }
+    }
+    Hr()
+    RedirectButton()
 }
 
 @Routing
