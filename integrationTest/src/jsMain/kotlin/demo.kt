@@ -88,9 +88,17 @@ fun RouteBuilder.Routing() {
     }
 
     Clock()
-    NavLink(to = "/") { Text("Main") }
+    NavLink(to = "/", attrs = { selected ->
+        if (selected) {
+            classes("active")
+        }
+    }) { Text("Main") }
     Br()
-    NavLink(to = "/users") { Text("Users") }
+    NavLink(to = "/users", attrs = { selected ->
+        if (selected) {
+            classes("active")
+        }
+    }) { Text("Users") }
 
     P {
         Text("Parameters: ${this@Routing.parameters?.map}")
