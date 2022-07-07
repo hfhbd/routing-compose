@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: webpage
-      - run: find . ! -name CNAME -a ! -name ".git" -delete
+      - run: find . -maxdepth 1 ! \( -name "CNAME" -o -name ".git" -o -name "." -o -name ".." \) -exec rm -r {} +
       - uses: actions/download-artifact@v3
       - name: Copy files to /
         run: cp -r artifact/* . && rm -Rf artifact/*
