@@ -57,7 +57,7 @@ public class Parameters private constructor(public val raw: String, public val m
                 values.mapNotNull {
                     if (it.isEmpty()) null else "$key=$it"
                 }
-            }.joinToString(separator = "&", prefix = "?") {
+            }.joinToString(separator = "&") {
                 it.percentDecode()
             }
             return Parameters(raw, parameters)
