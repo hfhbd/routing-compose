@@ -8,7 +8,7 @@ plugins {
     `maven-publish`
     signing
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
-    id("io.gitlab.arturbosch.detekt") version "1.20.0"
+    id("io.gitlab.arturbosch.detekt") version "1.21.0"
 }
 
 group = "app.softwork"
@@ -66,7 +66,7 @@ kotlin {
                 @OptIn(ExperimentalComposeLibrary::class)
                 implementation(compose.uiTestJUnit4) // there is no non-ui testing
                 implementation(compose.desktop.currentOs) // ui-testings needs skiko
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.6.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.6.4")
             }
         }
     }
@@ -134,7 +134,7 @@ detekt {
 }
 
 dependencies {
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.20.0")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
 }
 
 tasks {
