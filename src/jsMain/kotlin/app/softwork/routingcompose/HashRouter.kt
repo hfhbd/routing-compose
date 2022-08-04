@@ -17,7 +17,7 @@ public fun HashRouter(
     HashRouter().route(initPath, routeBuilder)
 }
 
-public class HashRouter : Router {
+internal class HashRouter : Router {
     override val currentPath: Path
         get() = Path.from(currentHash.value)
 

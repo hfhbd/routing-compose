@@ -9,16 +9,15 @@ import org.jetbrains.compose.web.css.Color.white
 import org.jetbrains.compose.web.dom.*
 import kotlin.time.Duration.Companion.seconds
 
+@Routing
 @Composable
-fun Demo(router: Router, name: String) {
+fun RouteBuilder.Demo(name: String) {
     Style(DarkMode)
 
     P {
         Text("$name implementation")
     }
-    router.route("/") {
-        Routing()
-    }
+    Routing()
 }
 
 object DarkMode : StyleSheet() {
@@ -40,6 +39,7 @@ object DarkMode : StyleSheet() {
 
 private const val Players = 5
 
+@Routing
 @Composable
 fun RouteBuilder.Users() {
     P {
@@ -90,13 +90,17 @@ fun RouteBuilder.Routing() {
     Clock()
     NavLink(to = "/", attrs = { selected ->
         if (selected) {
-            classes("active")
+            style {
+                color(Color.red)
+            }
         }
     }) { Text("Main") }
     Br()
     NavLink(to = "/users", attrs = { selected ->
         if (selected) {
-            classes("active")
+            style {
+                color(Color.red)
+            }
         }
     }) { Text("Users") }
 

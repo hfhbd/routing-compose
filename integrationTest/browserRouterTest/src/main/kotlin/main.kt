@@ -3,6 +3,8 @@ import org.jetbrains.compose.web.*
 
 fun main() {
     renderComposableInBody {
-        Demo(BrowserRouter(), "BrowserRouter")
+        BrowserRouter("/") {
+            Demo("BrowserRouter")
+        }
     }
 }
