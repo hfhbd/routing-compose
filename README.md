@@ -109,7 +109,6 @@ You can confirm this by refreshing or manually entering a path.
 ### DesktopRouter
 
 You can use the `DesktopRouter` implementation to add a routing feature to your Compose Desktop application.
-Every Window must have exactly 1 `DesktopRouter`.
 The `DesktopRouter` contains a special `navigateBack` method.
 
 ```kotlin
