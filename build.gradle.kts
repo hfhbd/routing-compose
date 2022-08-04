@@ -9,6 +9,7 @@ plugins {
     signing
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
     id("io.gitlab.arturbosch.detekt") version "1.21.0"
+    id("app.cash.licensee") version "1.5.0"
 }
 
 group = "app.softwork"
@@ -70,6 +71,16 @@ kotlin {
             }
         }
     }
+}
+
+licensee {
+    allow("Apache-2.0")
+
+    // https://github.com/JetBrains/compose-jb/pull/2195
+    allowDependency("org.jetbrains.compose.web", "web-core-js", "1.2.0-alpha01-dev745")
+    allowDependency("org.jetbrains.compose.web", "web-core", "1.2.0-alpha01-dev745")
+    allowDependency("org.jetbrains.compose.web", "internal-web-core-runtime-js", "1.2.0-alpha01-dev745")
+    allowDependency("org.jetbrains.compose.web", "internal-web-core-runtime", "1.2.0-alpha01-dev745")
 }
 
 val emptyJar by tasks.creating(Jar::class) { }
@@ -154,11 +165,5 @@ tasks {
         reports {
             sarif.required.set(true)
         }
-    }
-}
-
-afterEvaluate {
-    rootProject.extensions.configure<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension> {
-        versions.webpackCli.version = "4.10.0"
     }
 }

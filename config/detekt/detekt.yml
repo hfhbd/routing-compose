@@ -1,13 +1,37 @@
+comments:
+  severity: "error"
+
+complexity:
+  severity: "error"
+
+coroutines:
+  severity: "error"
+
+empty-blocks:
+  severity: "error"
+
+exceptions:
+  severity: "error"
+
 formatting:
+  severity: "error"
   NoWildcardImports:
     active: false
 
-style:
-  WildcardImport:
-    active: false
-
 naming:
+  severity: "error"
   FunctionNaming:
     ignoreAnnotated: ['Composable']
   TopLevelPropertyNaming:
     constantPattern: '[A-Z][A-Za-z0-9]*'
+
+performance:
+  severity: "error"
+
+potential-bugs:
+  severity: "error"
+
+style:
+  severity: "error"
+  WildcardImport:
+    active: false
