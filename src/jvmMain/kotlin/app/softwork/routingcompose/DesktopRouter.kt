@@ -5,7 +5,6 @@ import androidx.compose.runtime.*
 /**
  * Creates a new [DesktopRouter] with the initial route [initRoute] and the route builder [navBuilder].
  *
- * You should never have more than 1 [DesktopRouter] per [Window][androidx.compose.desktop.Window].
  * To get the current [Router] inside the [navBuilder] `@Composable` tree call [Router.current].
  */
 @Routing
