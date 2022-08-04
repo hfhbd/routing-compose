@@ -2,16 +2,33 @@ package app.softwork.routingcompose
 
 import androidx.compose.runtime.*
 
-public class DesktopRouter private constructor() : Router {
+/**
+ * Creates a new [DesktopRouter] with the initial route [initRoute] and the route builder [navBuilder].
+ *
+ * You should never have more than 1 [DesktopRouter] per [Window][androidx.compose.desktop.Window].
+ * To get the current [Router] inside the [navBuilder] `@Composable` tree call [Router.current].
+ */
+@Routing
+@Composable
+public fun DesktopRouter(initRoute: String, navBuilder: @Composable RouteBuilder.() -> Unit) {
+    DesktopRouter().route(initRoute, navBuilder)
+}
+
+internal class DesktopRouter : Router {
     override val currentPath: Path
         get() = Path.from(stack.last().path)
 
     private data class Entry(val path: String, val hide: Boolean)
+
     private val stack = mutableStateListOf<Entry>()
 
     @Composable
-    override fun getPath(initPath: String): State<String> {
-        return derivedStateOf { stack.lastOrNull { !it.hide }?.path ?: initPath }
+    override fun getPath(initPath: String): State<String> = remember {
+        derivedStateOf {
+            stack.lastOrNull {
+                !it.hide
+            }?.path ?: initPath
+        }
     }
 
     override fun navigate(to: String, hide: Boolean) {
@@ -21,23 +38,12 @@ public class DesktopRouter private constructor() : Router {
     internal fun navigateBack() {
         stack.removeAt(stack.lastIndex)
     }
-
-    public companion object {
-        /**
-         * Creates a new [DesktopRouter] with the initial route [initRoute] and the route builder [navBuilder].
-         *
-         * You should never have more than 1 [DesktopRouter] per [Window][androidx.compose.desktop.Window].
-         * To get the current [Router] inside the [navBuilder] `@Composable` tree call [Router.current].
-         */
-        @Routing
-        @Composable
-        public operator fun invoke(initRoute: String, navBuilder: @Composable RouteBuilder.() -> Unit) {
-            DesktopRouter().route(initRoute, navBuilder)
-        }
-    }
 }
 
 public fun Router.navigateBack() {
-    val router = this as DesktopRouter
-    router.navigateBack()
+    if (this is DesktopRouter) {
+        navigateBack()
+    } else {
+        (this as DelegateRouter).router.navigateBack()
+    }
 }

@@ -25,9 +25,9 @@ private fun Demo(it: Int) {
                     if (params != null) {
                         Text("Parameters: $params")
                     }
-                    val router = Router.current
                     if (wasMagic42) {
                         route("/answer") {
+                            val router = Router.current
                             Text("The Answer to the Ultimate Question of Life, the Universe, and Everything is 42.")
                             Button(onClick = { router.navigateBack() }) {
                                 Text("Back")
@@ -44,6 +44,7 @@ private fun Demo(it: Int) {
                     }
                     string {
                         Column {
+                            val router = Router.current
                             Text("Hello $it")
                             Button(onClick = { router.navigateBack() }) {
                                 Text("Back")
@@ -66,10 +67,12 @@ fun Content(int: Int, wasMagic42: Boolean) {
             name = it
         })
 
-        Button({
-            router.navigate("/$name")
-        }) {
-            Text("Update name")
+        if (name.isNotBlank()) {
+            Button({
+                router.navigate("/$name")
+            }) {
+                Text("Update name")
+            }
         }
 
         if (wasMagic42) {
