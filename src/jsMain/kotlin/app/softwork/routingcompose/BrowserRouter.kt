@@ -29,7 +29,7 @@ public fun BrowserRouter(
     BrowserRouter().route(initPath, routeBuilder)
 }
 
-public class BrowserRouter : Router {
+internal class BrowserRouter : Router {
     override val currentPath: Path
         get() = Path.from(currentLocation.value)
 
