@@ -10,8 +10,8 @@ import kotlinx.uuid.*
  * With dynamic routing displaying will not stop if two routes of the same kind match the current route:
  *
  * wrong usage:
- *
- *     if(true) {
+ * ```kotlin
+ *     if (true) {
  *       int {
  *         Text("Match")
  *       }
@@ -19,10 +19,10 @@ import kotlinx.uuid.*
  *     int {
  *       Text("Will be displayed too")
  *     }
- *
+ * ```
  * correct usage:
- *
- *     if(true) {
+ * ```kotlin
+ *     if (true) {
  *       int {
  *         Text("Match")
  *       }
@@ -31,6 +31,7 @@ import kotlinx.uuid.*
  *         Text("Won't be displayed")
  *       }
  *     }
+ * ```
  */
 @Routing
 public class RouteBuilder internal constructor(private val basePath: String, private val remainingPath: Path) {
@@ -84,7 +85,7 @@ public class RouteBuilder internal constructor(private val basePath: String, pri
     private fun execute(currentPath: String, nestedRoute: @Composable RouteBuilder.() -> Unit) {
         val newPath = remainingPath.newPath(currentPath)
         val currentRouter = Router.current
-        val delegatingRouter = remember(newPath) { DelegatingRouter(basePath, currentRouter) }
+        val delegatingRouter = remember(newPath) { DelegateRouter(basePath, currentRouter) }
         CompositionLocalProvider(RouterCompositionLocal provides delegatingRouter) {
             val newState = RouteBuilder(basePath, newPath)
             newState.nestedRoute()
@@ -92,7 +93,7 @@ public class RouteBuilder internal constructor(private val basePath: String, pri
     }
 
     /**
-     * Executes its children when the requested subroute is a [String].
+     * Executes its children when the requested subroute is a non-empty [String].
      */
     @Routing
     @Composable
@@ -157,29 +158,6 @@ public class RouteBuilder internal constructor(private val basePath: String, pri
             val router = Router.current
             LaunchedEffect(Unit) {
                 router.navigate(target, hide)
-            }
-        }
-    }
-}
-
-private class DelegatingRouter(val basePath: String, val router: Router) : Router by router {
-    override fun navigate(to: String, hide: Boolean) {
-        when {
-            to.startsWith("/") -> {
-                router.navigate(to, hide)
-            }
-
-            basePath == "/" -> {
-                router.navigate("/$to", hide)
-            }
-
-            to.startsWith(".") -> {
-                val newPath = router.currentPath.relative(to)
-                router.navigate(newPath.path)
-            }
-
-            else -> {
-                router.navigate("$basePath/$to", hide)
             }
         }
     }

@@ -12,10 +12,10 @@ class RoutingNodeTest {
 
     @Test
     fun intRoutingNode() = runBlocking(Dispatchers.Main) {
-        val mockRouter = MockRouter()
+        val router: Router = DesktopRouter()
         var result: String? = null
         rule.setContent {
-            mockRouter("/") {
+            router.route("/") {
                 int { i ->
                     result = "$i"
                 }
@@ -27,17 +27,21 @@ class RoutingNodeTest {
         rule.awaitIdle()
         assertEquals("First", result)
 
-        mockRouter.navigate("/42")
+        router.navigate("/42")
         rule.awaitIdle()
         assertEquals("42", result)
+
+        router.navigateBack()
+        rule.awaitIdle()
+        assertEquals("First", result)
     }
 
     @Test
     fun intNestedRoutingNode() = runBlocking(Dispatchers.Main) {
-        val mockRouter = MockRouter()
+        val router: Router = DesktopRouter()
         var result: String? = null
         rule.setContent {
-            mockRouter("/") {
+            router.route("/") {
                 int { user ->
                     result = "$user"
                     int { i ->
@@ -50,7 +54,7 @@ class RoutingNodeTest {
             }
         }
         rule.awaitIdle()
-        mockRouter.navigate("/42/5")
+        router.navigate("/42/5")
         rule.awaitIdle()
         assertEquals("425", result)
     }
