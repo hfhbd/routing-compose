@@ -18,9 +18,6 @@ jobs:
       - name: Dependency Review
         uses: actions/dependency-review-action@v2
         if: github.event_name == 'push'
-        with:
-          base-ref: ${{ github.event.pull_request.base.ref }}
-          head-ref: ${{ github.event.pull_request.head.ref }}
       - name: Dependency Review
         uses: actions/dependency-review-action@v2
         if: github.event_name == 'pull_request'
