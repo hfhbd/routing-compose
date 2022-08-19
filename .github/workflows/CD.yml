@@ -4,6 +4,10 @@ on:
   release:
     types: [ created ]
 
+concurrency:
+  group: "mavenCentral"
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
