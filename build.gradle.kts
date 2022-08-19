@@ -23,9 +23,7 @@ repositories {
 kotlin {
     jvm()
     js(IR) {
-        browser {
-            binaries.library()
-        }
+        browser()
     }
 
     explicitApi()
