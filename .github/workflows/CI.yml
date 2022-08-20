@@ -17,14 +17,7 @@ jobs:
       - uses: gradle/wrapper-validation-action@v1
       - name: Dependency Review
         uses: actions/dependency-review-action@v2
-        if: github.event_name == 'push'
-      - name: Dependency Review
-        uses: actions/dependency-review-action@v2
         if: github.event_name == 'pull_request'
-        with:
-          base-ref: ${{ github.event.pull_request.base.ref }}
-          head-ref: ${{ github.event.pull_request.head.ref }}
-
       - uses: actions/setup-java@v3
         with:
           distribution: 'adopt'
