@@ -4,7 +4,7 @@ import io.gitlab.arturbosch.detekt.*
 
 plugins {
     kotlin("multiplatform") version "1.7.10"
-    id("org.jetbrains.compose") version "1.2.0-alpha01-dev770"
+    id("org.jetbrains.compose") version "1.2.0-alpha01-dev774"
     `maven-publish`
     signing
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
@@ -75,10 +75,10 @@ licensee {
     allow("Apache-2.0")
 
     // https://github.com/JetBrains/compose-jb/pull/2195
-    allowDependency("org.jetbrains.compose.web", "web-core-js", "1.2.0-alpha01-dev770")
-    allowDependency("org.jetbrains.compose.web", "web-core", "1.2.0-alpha01-dev770")
-    allowDependency("org.jetbrains.compose.web", "internal-web-core-runtime-js", "1.2.0-alpha01-dev770")
-    allowDependency("org.jetbrains.compose.web", "internal-web-core-runtime", "1.2.0-alpha01-dev770")
+    allowDependency("org.jetbrains.compose.web", "web-core-js", "1.2.0-alpha01-dev774")
+    allowDependency("org.jetbrains.compose.web", "web-core", "1.2.0-alpha01-dev774")
+    allowDependency("org.jetbrains.compose.web", "internal-web-core-runtime-js", "1.2.0-alpha01-dev774")
+    allowDependency("org.jetbrains.compose.web", "internal-web-core-runtime", "1.2.0-alpha01-dev774")
 }
 
 val emptyJar by tasks.creating(Jar::class) { }
