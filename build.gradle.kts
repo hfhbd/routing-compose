@@ -75,10 +75,10 @@ licensee {
     allow("Apache-2.0")
 
     // https://github.com/JetBrains/compose-jb/pull/2195
-    allowDependency("org.jetbrains.compose.web", "web-core-js", "1.2.0-alpha01-dev774")
-    allowDependency("org.jetbrains.compose.web", "web-core", "1.2.0-alpha01-dev774")
-    allowDependency("org.jetbrains.compose.web", "internal-web-core-runtime-js", "1.2.0-alpha01-dev774")
-    allowDependency("org.jetbrains.compose.web", "internal-web-core-runtime", "1.2.0-alpha01-dev774")
+    allowDependency("org.jetbrains.compose.web", "web-core-js", "1.2.0-alpha01-dev778")
+    allowDependency("org.jetbrains.compose.web", "web-core", "1.2.0-alpha01-dev778")
+    allowDependency("org.jetbrains.compose.web", "internal-web-core-runtime-js", "1.2.0-alpha01-dev778")
+    allowDependency("org.jetbrains.compose.web", "internal-web-core-runtime", "1.2.0-alpha01-dev778")
 }
 
 val emptyJar by tasks.creating(Jar::class) { }
