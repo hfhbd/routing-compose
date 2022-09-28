@@ -4,7 +4,7 @@ import io.gitlab.arturbosch.detekt.*
 
 plugins {
     kotlin("multiplatform") version "1.7.10"
-    id("org.jetbrains.compose") version "1.2.0-beta02-dev795"
+    id("org.jetbrains.compose") version "1.2.0-beta02-dev798"
     `maven-publish`
     signing
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
