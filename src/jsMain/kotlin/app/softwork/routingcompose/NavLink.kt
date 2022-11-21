@@ -23,7 +23,9 @@ public fun NavLink(
             val currentPath = router.currentPath.path
             val selected = if (to == "/") {
                 currentPath == to
-            } else currentPath.startsWith(to)
+            } else {
+                currentPath.startsWith(to)
+            }
 
             onClick {
                 if (it.ctrlKey || it.metaKey) return@onClick
