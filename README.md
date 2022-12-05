@@ -21,7 +21,7 @@ dependencies {
 Example with `HashRouter`, `BrowserRouter` and `DesktopRouter` will be implemented in the same manner.
 
 ```kotlin
-HashRouter(initRoute = "/hello") { // or BrowserRouter(initRoute = "/hello") {
+HashRouter(initPath = "/hello") { // or BrowserRouter(initRoute = "/hello") {
     route("/hello") {
         Text("Hello World")
     }
@@ -38,7 +38,7 @@ fun SomeContainer(content: @Composable () -> Unit) {
     footer()
 }
 
-HashRouter(initRoute = "/users") { // or BrowserRouter(initRoute = "/users") {
+HashRouter(initPath = "/users") { // or BrowserRouter(initRoute = "/users") {
     val enableFeature by remember { mutableStateOf(false) }
     route("/users") {
         SomeContainer {
