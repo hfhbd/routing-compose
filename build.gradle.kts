@@ -3,8 +3,8 @@ import java.util.*
 import io.gitlab.arturbosch.detekt.*
 
 plugins {
-    kotlin("multiplatform") version "1.7.20"
-    id("org.jetbrains.compose") version "1.2.2"
+    kotlin("multiplatform") version "1.8.0"
+    id("org.jetbrains.compose") version "1.3.0-rc02"
     `maven-publish`
     signing
     id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
@@ -27,13 +27,13 @@ kotlin {
     }
 
     explicitApi()
-    targets.all {
-        compilations.all {
+    targets.configureEach {
+        compilations.configureEach {
             kotlinOptions.allWarningsAsErrors = true
         }
     }
     sourceSets {
-        all {
+        configureEach {
             languageSettings {
                 progressiveMode = true
             }
@@ -49,18 +49,18 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
-        val jsMain by getting {
+        named("jsMain") {
             dependencies {
                 api(compose.web.core)
             }
         }
-        val jsTest by getting {
+        named("jsTest") {
             dependencies {
                 implementation(compose.web.testUtils)
             }
         }
 
-        val jvmTest by getting {
+        named("jvmTest") {
             dependencies {
                 @OptIn(ExperimentalComposeLibrary::class)
                 implementation(compose.uiTestJUnit4) // there is no non-ui testing
@@ -75,10 +75,10 @@ licensee {
     allow("Apache-2.0")
 }
 
-val emptyJar by tasks.creating(Jar::class) { }
+val emptyJar by tasks.registering(Jar::class) { }
 
 publishing {
-    publications.all {
+    publications.configureEach {
         this as MavenPublication
         artifact(emptyJar) {
             classifier = "javadoc"
