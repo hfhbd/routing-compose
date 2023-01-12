@@ -23,7 +23,7 @@ kotlin {
                 api(projects.routingCompose)
             }
         }
-        val jvmMain by getting {
+        named("jvmMain") {
             dependencies {
                 implementation(compose.desktop.currentOs)
             }
