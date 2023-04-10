@@ -18,10 +18,6 @@ jobs:
       - name: Dependency Review
         uses: actions/dependency-review-action@v3
         if: github.event_name == 'pull_request'
-      - uses: actions/setup-java@v3
-        with:
-          distribution: 'adopt'
-          java-version: 11
       - name: Build with Gradle
         run: ./gradlew build
       - name: Detekt
