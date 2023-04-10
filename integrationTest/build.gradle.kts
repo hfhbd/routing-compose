@@ -12,6 +12,7 @@ repositories {
 }
 
 kotlin {
+    jvmToolchain(11)
     jvm()
     js(IR) {
         browser()

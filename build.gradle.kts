@@ -12,8 +12,6 @@ plugins {
     id("app.cash.licensee") version "1.6.0"
 }
 
-group = "app.softwork"
-
 repositories {
     mavenCentral()
     google()
@@ -21,6 +19,7 @@ repositories {
 }
 
 kotlin {
+    jvmToolchain(11)
     jvm()
     js(IR) {
         browser()
@@ -119,6 +118,12 @@ publishing {
     }
 }
 
+// https://youtrack.jetbrains.com/issue/KT-46466
+val signingTasks = tasks.withType<Sign>()
+tasks.withType<AbstractPublishToMaven>().configureEach {
+    dependsOn(signingTasks)
+}
+
 nexusPublishing {
     repositories {
         sonatype {
@@ -133,6 +138,7 @@ nexusPublishing {
 detekt {
     source = files(rootProject.rootDir)
     parallel = true
+    autoCorrect = true
     buildUponDefaultConfig = true
 }
 
