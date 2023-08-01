@@ -2,7 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>Filename:demo.kt:1</ID>
-    <ID>Filename:main.kt:1</ID>
+    <ID>Filename:demo.kt$.demo.kt</ID>
+    <ID>Filename:main.kt$.main.kt</ID>
   </CurrentIssues>
 </SmellBaseline>

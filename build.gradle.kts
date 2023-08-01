@@ -8,7 +8,7 @@ plugins {
     id("maven-publish")
     id("signing")
     id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
-    id("io.gitlab.arturbosch.detekt") version "1.22.0"
+    id("io.gitlab.arturbosch.detekt") version "1.23.0"
     id("app.cash.licensee") version "1.7.0"
 }
 
@@ -132,14 +132,14 @@ nexusPublishing {
 }
 
 detekt {
-    source = files(rootProject.rootDir)
+    source.from(files(rootProject.rootDir))
     parallel = true
     autoCorrect = true
     buildUponDefaultConfig = true
 }
 
 dependencies {
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${detekt.toolVersion}")
 }
 
 tasks {
