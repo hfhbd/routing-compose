@@ -20,6 +20,9 @@ fun RouteBuilder.Demo(name: String) {
     Routing()
 }
 
+@Route("/foo/:bar")
+data class Foo(val bar: Int)
+
 object DarkMode : StyleSheet() {
     init {
         media("prefers-color-scheme", StylePropertyValue("dark")) {
@@ -51,6 +54,7 @@ fun RouteBuilder.Users() {
     }
 
     noMatch {
+        println("CALLED noMatch Users")
         P {
             Text("Users")
         }
@@ -103,6 +107,18 @@ fun RouteBuilder.Routing() {
             }
         }
     }) { Text("Users") }
+
+    P {
+        NavLink("/foo/42") {
+            Text("Go to foo/42")
+        }
+        route<Foo>(noMatch = {
+            val router = Router.current
+            Text("Route not found $router")
+        }) {
+            Text("Hello Foo ${it.bar}")
+        }
+    }
 
     P {
         Text("Parameters: ${this@Routing.parameters?.map}")

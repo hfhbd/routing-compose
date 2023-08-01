@@ -1,6 +1,8 @@
 package app.softwork.routingcompose
 
 import androidx.compose.runtime.*
+import kotlinx.serialization.modules.EmptySerializersModule
+import kotlinx.serialization.modules.SerializersModule
 
 /**
  * Creates a new [DesktopRouter] with the initial route [initRoute] and the route builder [navBuilder].
@@ -9,11 +11,17 @@ import androidx.compose.runtime.*
  */
 @Routing
 @Composable
-public fun DesktopRouter(initRoute: String, navBuilder: @Composable RouteBuilder.() -> Unit) {
-    DesktopRouter().route(initRoute, navBuilder)
+public fun DesktopRouter(
+    initRoute: String,
+    serializerModule: SerializersModule = EmptySerializersModule(),
+    navBuilder: @Composable RouteBuilder.() -> Unit
+) {
+    DesktopRouter(serializerModule).route(initRoute, navBuilder)
 }
 
-internal class DesktopRouter : Router {
+internal class DesktopRouter(
+    override val serializersModule: SerializersModule = EmptySerializersModule()
+) : Router {
     override val currentPath: Path
         get() = Path.from(stack.last().path)
 
@@ -37,6 +45,7 @@ internal class DesktopRouter : Router {
     internal fun navigateBack() {
         stack.removeAt(stack.lastIndex)
     }
+    override fun toString(): String = "/"
 }
 
 public fun Router.navigateBack() {

@@ -2,6 +2,7 @@ package app.softwork.routingcompose
 
 import androidx.compose.runtime.*
 import kotlinx.browser.*
+import kotlinx.serialization.modules.*
 
 /**
  * This [Router] implementation uses `/#/path` to persistent the current route in [window.location.hash].
@@ -12,12 +13,15 @@ import kotlinx.browser.*
 @Composable
 public fun HashRouter(
     initPath: String,
+    serializerModule: SerializersModule = EmptySerializersModule(),
     routeBuilder: @Composable RouteBuilder.() -> Unit
 ) {
-    HashRouter().route(initPath, routeBuilder)
+    HashRouter(serializerModule).route(initPath, routeBuilder)
 }
 
-internal class HashRouter : Router {
+internal class HashRouter(
+    override val serializersModule: SerializersModule
+) : Router {
     override val currentPath: Path
         get() = Path.from(currentHash.value)
 
@@ -48,4 +52,5 @@ internal class HashRouter : Router {
             window.location.hash = to
         }
     }
+    override fun toString(): String = "/"
 }

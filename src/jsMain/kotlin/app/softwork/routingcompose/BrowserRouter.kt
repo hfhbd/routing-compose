@@ -2,6 +2,8 @@ package app.softwork.routingcompose
 
 import androidx.compose.runtime.*
 import kotlinx.browser.*
+import kotlinx.serialization.modules.EmptySerializersModule
+import kotlinx.serialization.modules.SerializersModule
 import org.w3c.dom.*
 
 /**
@@ -24,12 +26,13 @@ import org.w3c.dom.*
 @Composable
 public fun BrowserRouter(
     initPath: String,
+    serializerModule: SerializersModule = EmptySerializersModule(),
     routeBuilder: @Composable RouteBuilder.() -> Unit
 ) {
-    BrowserRouter().route(initPath, routeBuilder)
+    BrowserRouter(serializerModule).route(initPath, routeBuilder)
 }
 
-internal class BrowserRouter : Router {
+internal class BrowserRouter(override val serializersModule: SerializersModule) : Router {
     override val currentPath: Path
         get() = Path.from(currentLocation.value)
 
@@ -61,4 +64,5 @@ internal class BrowserRouter : Router {
             currentLocation.value = window.location.newPath()
         }
     }
+    override fun toString(): String = "/"
 }

@@ -1,8 +1,12 @@
 package app.softwork.routingcompose
 
 import androidx.compose.runtime.*
+import kotlinx.serialization.modules.EmptySerializersModule
+import kotlinx.serialization.modules.SerializersModule
 
-class MockRouter : Router {
+class MockRouter(
+    override val serializersModule: SerializersModule = EmptySerializersModule()
+) : Router {
     override val currentPath: Path
         get() = Path.from(currentState.value!!)
 
@@ -15,6 +19,8 @@ class MockRouter : Router {
     override fun navigate(to: String, hide: Boolean) {
         currentState.value = to
     }
+
+    override fun toString(): String = "/"
 }
 
 @Composable

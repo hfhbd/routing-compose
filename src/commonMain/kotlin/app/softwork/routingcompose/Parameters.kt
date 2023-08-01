@@ -102,9 +102,7 @@ public class Parameters private constructor(public val raw: String, public val m
 
         other as Parameters
 
-        if (raw != other.raw) return false
-
-        return true
+        return raw == other.raw
     }
 
     override fun hashCode(): Int = raw.hashCode()

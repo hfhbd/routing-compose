@@ -4,6 +4,7 @@ import io.gitlab.arturbosch.detekt.*
 
 plugins {
     kotlin("multiplatform") version "1.9.21"
+    kotlin("plugin.serialization") version "1.9.21"
     id("org.jetbrains.compose") version "1.5.11"
     id("maven-publish")
     id("signing")
@@ -35,6 +36,7 @@ kotlin {
             dependencies {
                 api(compose.runtime)
                 api("app.softwork:kotlinx-uuid-core:0.0.22")
+                api("org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.2")
             }
         }
         commonTest {
