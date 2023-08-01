@@ -1,6 +1,6 @@
 pluginManagement {
     repositories {
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        mavenCentral()
         gradlePluginPortal()
     }
 }
@@ -17,6 +17,13 @@ gradleEnterprise {
             publishAlways()
             tag("CI")
         }
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        google()
     }
 }
 

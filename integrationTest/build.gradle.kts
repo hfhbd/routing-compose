@@ -1,14 +1,6 @@
-import org.jetbrains.compose.*
-
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose")
-}
-
-repositories {
-    mavenCentral()
-    google()
-    jetbrainsCompose()
 }
 
 kotlin {
