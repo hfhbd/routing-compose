@@ -55,9 +55,9 @@ internal class BrowserRouter : Router {
         } else {
             window.history.pushState(null, "", to)
             /*
-                The history API unfortunately provides no callback to listen to
-                [window.history.pushState], so we need to notify subscribers when pushing a new path.
-                */
+             The history API unfortunately provides no callback to listen to
+             [window.history.pushState], so we need to notify subscribers when pushing a new path.
+             */
             currentLocation.value = window.location.newPath()
         }
     }
