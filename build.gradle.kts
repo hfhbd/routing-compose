@@ -5,17 +5,11 @@ import io.gitlab.arturbosch.detekt.*
 plugins {
     kotlin("multiplatform") version "1.8.20"
     id("org.jetbrains.compose") version "1.4.3"
-    `maven-publish`
-    signing
+    id("maven-publish")
+    id("signing")
     id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
     id("io.gitlab.arturbosch.detekt") version "1.22.0"
     id("app.cash.licensee") version "1.7.0"
-}
-
-repositories {
-    mavenCentral()
-    google()
-    maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
 kotlin {
@@ -50,12 +44,12 @@ kotlin {
         }
         named("jsMain") {
             dependencies {
-                api(compose.web.core)
+                api(compose.html.core)
             }
         }
         named("jsTest") {
             dependencies {
-                implementation(compose.web.testUtils)
+                implementation(compose.html.testUtils)
             }
         }
 
@@ -129,10 +123,8 @@ tasks.withType<AbstractArchiveTask>().configureEach {
 }
 
 nexusPublishing {
-    repositories {
+    this.repositories {
         sonatype {
-            username.set(System.getProperty("sonartype.apiKey") ?: System.getenv("SONARTYPE_APIKEY"))
-            password.set(System.getProperty("sonartype.apiToken") ?: System.getenv("SONARTYPE_APITOKEN"))
             nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
             snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
         }

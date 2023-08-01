@@ -1,14 +1,7 @@
-import org.jetbrains.compose.*
-
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.serialization")
     id("org.jetbrains.compose")
-}
-
-repositories {
-    mavenCentral()
-    google()
-    jetbrainsCompose()
 }
 
 kotlin {
