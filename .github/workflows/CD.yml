@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Set environment for version
         run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: gradle/gradle-build-action@v2
       - name: Build with Gradle
         run: ./gradlew build
