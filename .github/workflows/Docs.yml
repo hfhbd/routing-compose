@@ -30,7 +30,7 @@ jobs:
       - uses: gradle/gradle-build-action@v2
       - name: Generate Docs
         run: ./gradlew :integrationTest:hashRouterTest:browserDistribution
-      - uses: actions/upload-pages-artifact@v2
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: integrationTest/hashRouterTest/build/distributions
       - name: Deploy to GitHub Pages
