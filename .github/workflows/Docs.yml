@@ -27,7 +27,7 @@ jobs:
     steps:
       - uses: actions/configure-pages@v4
       - uses: actions/checkout@v4
-      - uses: gradle/gradle-build-action@v2
+      - uses: gradle/actions/setup-gradle@v3
       - name: Generate Docs
         run: ./gradlew :integrationTest:hashRouterTest:browserDistribution
       - uses: actions/upload-pages-artifact@v3

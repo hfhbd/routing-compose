@@ -21,7 +21,7 @@ jobs:
       - name: Dependency Review
         uses: actions/dependency-review-action@v4
         if: github.event_name == 'pull_request'
-      - uses: gradle/gradle-build-action@v2
+      - uses: gradle/actions/setup-gradle@v3
         with:
           dependency-graph: generate-and-submit
           gradle-home-cache-cleanup: true
