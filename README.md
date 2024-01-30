@@ -1,6 +1,6 @@
 # RoutingCompose
 
-Routing feature for [Compose Web and Desktop](https://github.com/Jetbrains/compose-jb)
+Routing feature for [Compose Web, Compose HTML and Desktop](https://github.com/Jetbrains/compose-jb)
 
 ## Install
 
