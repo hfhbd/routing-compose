@@ -32,7 +32,7 @@ jobs:
         run: ./gradlew :integrationTest:hashRouterTest:browserDistribution
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: integrationTest/hashRouterTest/build/distributions
+          path: integrationTest/hashRouterTest/build/dist/js/productionExecutable
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
