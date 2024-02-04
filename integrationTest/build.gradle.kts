@@ -14,6 +14,7 @@ kotlin {
         commonMain {
             dependencies {
                 api(projects.routingCompose)
+                api(libs.kotlinx.coroutines.core)
             }
         }
         named("jvmMain") {
