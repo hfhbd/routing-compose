@@ -3,7 +3,7 @@ import io.gitlab.arturbosch.detekt.*
 
 plugins {
     kotlin("multiplatform") version "1.9.22"
-    id("org.jetbrains.compose") version "1.5.12"
+    id("org.jetbrains.compose") version "1.6.0-beta01"
     id("maven-publish")
     id("signing")
     id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
@@ -33,12 +33,13 @@ kotlin {
         commonMain {
             dependencies {
                 api(compose.runtime)
-                api("app.softwork:kotlinx-uuid-core:0.0.22")
+                api(libs.kotlinx.uuid)
             }
         }
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
+                implementation(libs.kotlinx.coroutines.core)
             }
         }
         named("jsMain") {
@@ -56,7 +57,7 @@ kotlin {
             dependencies {
                 implementation(compose.desktop.uiTestJUnit4) // there is no non-ui testing
                 implementation(compose.desktop.currentOs) // ui-testings needs skiko
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.7.3")
+                implementation(libs.kotlinx.coroutines.swing)
             }
         }
     }
@@ -76,7 +77,7 @@ publishing {
         }
         pom {
             name.set("app.softwork Routing Compose")
-            description.set("A multiplatform library for routing to use with JetPack Compose Web and Desktop")
+            description.set("A multiplatform library for routing to use with JetPack Compose Web, HTML and Desktop")
             url.set("https://github.com/hfhbd/routing-compose")
             licenses {
                 license {
