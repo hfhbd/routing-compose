@@ -6,7 +6,7 @@ plugins {
     id("org.jetbrains.compose") version "1.6.2"
     id("maven-publish")
     id("signing")
-    id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
+    id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
     id("io.gitlab.arturbosch.detekt") version "1.23.6"
     id("app.cash.licensee") version "1.11.0"
 }
