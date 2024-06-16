@@ -13,18 +13,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
       security-events: write
 
     steps:
       - uses: actions/checkout@v4
-      - name: Dependency Review
-        uses: actions/dependency-review-action@v4
-        if: github.event_name == 'pull_request'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 21
       - uses: gradle/actions/setup-gradle@v3
         with:
           validate-wrappers: true
-          dependency-graph: generate-and-submit
           gradle-home-cache-cleanup: true
       - name: Build with Gradle
         run: ./gradlew build
