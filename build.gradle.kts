@@ -2,28 +2,29 @@ import java.util.*
 import io.gitlab.arturbosch.detekt.*
 
 plugins {
-    kotlin("multiplatform") version "1.9.23"
+    kotlin("multiplatform") version "2.0.0"
+    kotlin("plugin.compose") version "2.0.0"
     id("org.jetbrains.compose") version "1.6.11"
     id("maven-publish")
     id("signing")
-    id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
+    id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
     id("io.gitlab.arturbosch.detekt") version "1.23.6"
     id("app.cash.licensee") version "1.11.0"
 }
 
 kotlin {
     jvmToolchain(11)
+
     jvm()
     js(IR) {
         browser()
     }
 
     explicitApi()
-    targets.configureEach {
-        compilations.configureEach {
-            kotlinOptions.allWarningsAsErrors = true
-        }
+    compilerOptions {
+        allWarningsAsErrors.set(true)
     }
+
     sourceSets {
         configureEach {
             languageSettings {
@@ -33,6 +34,7 @@ kotlin {
         commonMain {
             dependencies {
                 api(compose.runtime)
+                api(libs.kotlinx.coroutines.core)
                 api(libs.kotlinx.uuid)
             }
         }

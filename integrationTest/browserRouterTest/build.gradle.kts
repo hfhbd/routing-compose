@@ -1,5 +1,6 @@
 plugins {
     kotlin("js")
+    kotlin("plugin.compose")
     id("org.jetbrains.compose")
 }
 

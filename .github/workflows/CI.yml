@@ -23,6 +23,7 @@ jobs:
         if: github.event_name == 'pull_request'
       - uses: gradle/actions/setup-gradle@v3
         with:
+          validate-wrappers: true
           dependency-graph: generate-and-submit
           gradle-home-cache-cleanup: true
       - name: Build with Gradle

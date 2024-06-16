@@ -23,7 +23,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
       - name: Publish
-        run: ./gradlew -Pversion=$version -Dorg.gradle.parallel=false publish closeAndReleaseStagingRepository
+        run: ./gradlew -Pversion=$version -Dorg.gradle.parallel=false publish closeAndReleaseStagingRepositories
         env:
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_PRIVATE_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASSWORD }}

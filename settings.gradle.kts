@@ -6,17 +6,18 @@ pluginManagement {
 }
 
 plugins {
-    id("com.gradle.enterprise") version "3.17"
+    id("com.gradle.develocity") version "3.17.5"
 }
 
-gradleEnterprise {
+develocity {
     buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-        if (System.getenv("CI") != null) {
-            publishAlways()
-            tag("CI")
+        termsOfUseUrl.set("https://gradle.com/terms-of-service")
+        termsOfUseAgree.set("yes")
+        publishing {
+            val isCI = providers.environmentVariable("CI").isPresent
+            onlyIf { isCI }
         }
+        tag("CI")
     }
 }
 
