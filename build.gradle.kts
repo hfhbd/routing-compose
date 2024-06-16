@@ -60,7 +60,6 @@ kotlin {
                 implementation(compose.desktop.uiTestJUnit4) // there is no non-ui testing
                 implementation(compose.desktop.currentOs) // ui-testings needs skiko
                 implementation(libs.kotlinx.coroutines.swing)
-
             }
         }
     }
