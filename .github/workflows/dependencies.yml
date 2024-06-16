@@ -1,0 +1,26 @@
+name: Dependency review for pull requests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  dependency-submission:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    env:
+      GRADLE_OPTS: -Dorg.gradle.caching=true
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 21
+      - uses: gradle/actions/dependency-submission@v3
+      - uses: actions/dependency-review-action@v4
+        if: github.event_name == 'pull_request'
