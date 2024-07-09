@@ -4,4 +4,4 @@ coroutines = "1.8.1"
 [libraries]
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "coroutines" }
-kotlinx-uuid = { module = "app.softwork:kotlinx-uuid-core", version = "0.0.25" }
+kotlinx-uuid = { module = "app.softwork:kotlinx-uuid-core", version = "0.0.26" }
