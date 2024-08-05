@@ -21,10 +21,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 21
-      - uses: gradle/actions/setup-gradle@v3
-        with:
-          validate-wrappers: true
-          gradle-home-cache-cleanup: true
+      - uses: gradle/actions/setup-gradle@v4
       - name: Build with Gradle
         run: ./gradlew build
       - name: Detekt
