@@ -1,7 +1,8 @@
 package app.softwork.routingcompose
 
 import androidx.compose.runtime.*
-import kotlinx.uuid.*
+import app.softwork.uuid.*
+import kotlin.uuid.*
 
 /**
  * Use the DSL functions to build the expected route handled by a [Router].
@@ -124,13 +125,14 @@ public class RouteBuilder internal constructor(private val basePath: String, pri
     }
 
     /**
-     * Executes its children when the requested subroute is a [UUID].
+     * Executes its children when the requested subroute is a [Uuid].
      */
     @Routing
     @Composable
-    public fun uuid(nestedRoute: @Composable RouteBuilder.(UUID) -> Unit) {
+    @ExperimentalUuidApi
+    public fun uuid(nestedRoute: @Composable RouteBuilder.(Uuid) -> Unit) {
         val currentPath = remainingPath.currentPath
-        val uuid = currentPath.toUUIDOrNull()
+        val uuid = currentPath.toUuidOrNull()
         if ((match == Match.NoMatch || match == Match.Uuid) && uuid != null) {
             execute(currentPath) {
                 nestedRoute(uuid)

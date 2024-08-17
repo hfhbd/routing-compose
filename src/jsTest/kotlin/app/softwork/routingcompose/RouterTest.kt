@@ -1,13 +1,13 @@
 package app.softwork.routingcompose
 
 import androidx.compose.runtime.*
-import kotlinx.uuid.*
 import org.jetbrains.compose.web.attributes.*
 import org.jetbrains.compose.web.dom.*
 import org.jetbrains.compose.web.dom.Text
 import org.jetbrains.compose.web.testutils.*
 import org.w3c.dom.*
 import kotlin.test.*
+import kotlin.uuid.*
 
 @ComposeWebExperimentalTestsApi
 internal class RouterTest {
@@ -334,6 +334,7 @@ internal class RouterTest {
         assertEquals("Foo", root.innerHTML)
     }
 
+    @ExperimentalUuidApi
     @Test
     fun relativeRoutingTest() = runTest {
         var router: Router = MockRouter()
@@ -371,9 +372,9 @@ internal class RouterTest {
         waitForRecompositionComplete()
         assertEquals("Int 42", root.innerHTML)
 
-        router.navigate(UUID.NIL.toString())
+        router.navigate(Uuid.NIL.toString())
         waitForRecompositionComplete()
-        assertEquals("UUID ${UUID.NIL}", root.innerHTML)
+        assertEquals("UUID ${Uuid.NIL}", root.innerHTML)
 
         router.navigate("/")
         waitForRecompositionComplete()

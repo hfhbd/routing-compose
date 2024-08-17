@@ -2,8 +2,8 @@ import java.util.*
 import io.gitlab.arturbosch.detekt.*
 
 plugins {
-    kotlin("multiplatform") version "2.0.10"
-    kotlin("plugin.compose") version "2.0.10"
+    kotlin("multiplatform") version "2.0.20-RC2"
+    kotlin("plugin.compose") version "2.0.20-RC2"
     id("org.jetbrains.compose") version "1.6.11"
     id("maven-publish")
     id("signing")
@@ -121,6 +121,8 @@ tasks.withType<AbstractPublishToMaven>().configureEach {
 tasks.withType<AbstractArchiveTask>().configureEach {
     isPreserveFileTimestamps = false
     isReproducibleFileOrder = true
+    filePermissions {}
+    dirPermissions {}
 }
 
 nexusPublishing {
