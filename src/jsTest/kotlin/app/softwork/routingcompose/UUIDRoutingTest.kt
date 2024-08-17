@@ -1,10 +1,12 @@
 package app.softwork.routingcompose
 
-import kotlinx.uuid.*
 import org.jetbrains.compose.web.dom.*
 import org.jetbrains.compose.web.testutils.*
 import kotlin.test.*
+import kotlin.uuid.*
+import kotlin.uuid.ExperimentalUuidApi
 
+@ExperimentalUuidApi
 @ComposeWebExperimentalTestsApi
 class UUIDRoutingTest {
     @Test
@@ -31,7 +33,7 @@ class UUIDRoutingTest {
         waitForRecompositionComplete()
         assertEquals("foo", root.innerHTML)
 
-        val uuid = UUID()
+        val uuid = Uuid.random()
         router.navigate("/$uuid")
         waitForRecompositionComplete()
         assertEquals("bar$uuid", root.innerHTML)
@@ -70,14 +72,14 @@ class UUIDRoutingTest {
         router.navigate("/users")
         waitForRecompositionComplete()
         assertEquals("No userID", root.innerHTML)
-        val userID = UUID()
+        val userID = Uuid.random()
         router.navigate("/users/$userID")
         waitForRecompositionComplete()
         assertEquals("UserInfo: $userID", root.innerHTML)
         router.navigate("/users/$userID/todos")
         waitForRecompositionComplete()
         assertEquals("All todos for user: $userID", root.innerHTML)
-        val todoID = UUID()
+        val todoID = Uuid.random()
         router.navigate("/users/$userID/todos/$todoID")
         waitForRecompositionComplete()
         assertEquals("Todo $todoID for user: $userID", root.innerHTML)
@@ -102,11 +104,11 @@ class UUIDRoutingTest {
             }
         }
         assertEquals("No userID given", root.innerHTML)
-        val userID = UUID()
+        val userID = Uuid.random()
         router.navigate("/$userID")
         waitForRecompositionComplete()
         assertEquals("User $userID", root.innerHTML)
-        val todoID = UUID()
+        val todoID = Uuid.random()
         router.navigate("/$userID/$todoID")
         waitForRecompositionComplete()
         assertEquals("Todo with $todoID from user $userID", root.innerHTML)
