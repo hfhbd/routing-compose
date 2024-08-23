@@ -2,7 +2,7 @@ import java.util.*
 import io.gitlab.arturbosch.detekt.*
 
 plugins {
-    kotlin("multiplatform") version "2.0.20-RC2"
+    kotlin("multiplatform") version "2.0.20"
     kotlin("plugin.compose") version "2.0.20-RC2"
     id("org.jetbrains.compose") version "1.6.11"
     id("maven-publish")
