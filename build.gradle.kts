@@ -23,19 +23,14 @@ kotlin {
     explicitApi()
     compilerOptions {
         allWarningsAsErrors.set(true)
+        progressiveMode.set(true)
     }
 
     sourceSets {
-        configureEach {
-            languageSettings {
-                progressiveMode = true
-            }
-        }
         commonMain {
             dependencies {
                 api(compose.runtime)
                 api(libs.kotlinx.coroutines.core)
-                api(libs.kotlinx.uuid)
             }
         }
         commonTest {
