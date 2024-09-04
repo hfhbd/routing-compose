@@ -1,7 +1,6 @@
 package app.softwork.routingcompose
 
 import androidx.compose.runtime.*
-import app.softwork.uuid.*
 import kotlin.uuid.*
 
 /**
@@ -132,7 +131,11 @@ public class RouteBuilder internal constructor(private val basePath: String, pri
     @ExperimentalUuidApi
     public fun uuid(nestedRoute: @Composable RouteBuilder.(Uuid) -> Unit) {
         val currentPath = remainingPath.currentPath
-        val uuid = currentPath.toUuidOrNull()
+        val uuid = try {
+            Uuid.parse(currentPath)
+        } catch (_: IllegalArgumentException) {
+            null
+        }
         if ((match == Match.NoMatch || match == Match.Uuid) && uuid != null) {
             execute(currentPath) {
                 nestedRoute(uuid)
