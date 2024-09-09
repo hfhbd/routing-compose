@@ -2,6 +2,9 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
+    <ID>Filename:browserApi.js.kt$app.softwork.routingcompose.browserApi.js.kt</ID>
+    <ID>Filename:browserApi.kt$app.softwork.routingcompose.browserApi.kt</ID>
+    <ID>Filename:browserApi.wasm.kt$app.softwork.routingcompose.browserApi.wasm.kt</ID>
     <ID>Filename:demo.kt$.demo.kt</ID>
     <ID>Filename:main.kt$.main.kt</ID>
   </CurrentIssues>

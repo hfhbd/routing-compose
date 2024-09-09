@@ -16,14 +16,25 @@ kotlin {
     jvmToolchain(11)
 
     jvm()
-    js(IR) {
+    js {
         browser()
+    }
+    wasmJs {
+        browser()
+    }
+    applyDefaultHierarchyTemplate {
+        common {
+            group("jsShared") {
+                withJs()
+                withWasmJs()
+            }
+        }
     }
 
     explicitApi()
     compilerOptions {
-        allWarningsAsErrors.set(true)
         progressiveMode.set(true)
+        freeCompilerArgs.add("-Xexpect-actual-classes")
     }
 
     sourceSets {
@@ -39,18 +50,19 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
             }
         }
-        named("jsMain") {
+
+        jsMain {
             dependencies {
                 api(compose.html.core)
             }
         }
-        named("jsTest") {
+        jsTest {
             dependencies {
                 implementation(compose.html.testUtils)
             }
         }
 
-        named("jvmTest") {
+        jvmTest {
             dependencies {
                 implementation(compose.desktop.uiTestJUnit4) // there is no non-ui testing
                 implementation(compose.desktop.currentOs) // ui-testings needs skiko
@@ -158,4 +170,12 @@ tasks {
             sarif.required.set(true)
         }
     }
+}
+
+plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin> {
+    the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().downloadBaseUrl = null
+}
+
+the<org.jetbrains.kotlin.gradle.targets.js.binaryen.BinaryenRootExtension>().apply {
+    downloadBaseUrl = null
 }

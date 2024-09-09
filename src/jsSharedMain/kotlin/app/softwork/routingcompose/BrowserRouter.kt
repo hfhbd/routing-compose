@@ -1,8 +1,6 @@
 package app.softwork.routingcompose
 
 import androidx.compose.runtime.*
-import kotlinx.browser.*
-import org.w3c.dom.*
 
 /**
  * A router leveraging the History API (https://developer.mozilla.org/en-US/docs/Web/API/History).
