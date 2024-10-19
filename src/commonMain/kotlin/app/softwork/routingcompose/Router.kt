@@ -59,7 +59,11 @@ public fun Router.route(
     CompositionLocalProvider(RouterCompositionLocal provides this) {
         val rawPath by getPath(initRoute)
         val path = Path.from(rawPath)
-        val node = remember(path) { RouteBuilder(path.path, path) }
+        val node = remember(path) {
+            RouteBuilder.routeBuilderCache.getOrPut("${this.hashCode()} ${path.path} $path") {
+                RouteBuilder(path.path, path)
+            }
+        }
         node.routing()
     }
 }

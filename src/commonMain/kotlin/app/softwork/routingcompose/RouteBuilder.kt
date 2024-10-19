@@ -88,7 +88,9 @@ public class RouteBuilder internal constructor(private val basePath: String, pri
         val currentRouter = Router.current
         val delegatingRouter = remember(newPath) { DelegateRouter(basePath, currentRouter) }
         CompositionLocalProvider(RouterCompositionLocal provides delegatingRouter) {
-            val newState = RouteBuilder(basePath, newPath)
+            val newState = routeBuilderCache.getOrPut("${currentRouter.hashCode()} $basePath $newPath") {
+                RouteBuilder(basePath, newPath)
+            }
             newState.nestedRoute()
         }
     }
@@ -166,5 +168,13 @@ public class RouteBuilder internal constructor(private val basePath: String, pri
                 router.navigate(target, hide)
             }
         }
+    }
+
+    public companion object {
+        /**
+         * Cache for [RouteBuilder] to prevent memory leaks and
+         * performance degradation after large number of recompositions.
+         */
+        internal var routeBuilderCache = mutableMapOf<String, RouteBuilder>()
     }
 }
