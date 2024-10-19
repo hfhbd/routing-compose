@@ -9,7 +9,13 @@ public interface Router {
      */
     public val currentPath: Path
 
-    public fun navigate(to: String, hide: Boolean = false)
+    /**
+     * Navigate to a new path.
+     * @param to The path to navigate to.
+     * @param hide Whether to hide the current path.
+     * @param replace Whether to replace the current path.
+     */
+    public fun navigate(to: String, hide: Boolean = false, replace: Boolean = false)
 
     @Composable
     public fun getPath(initPath: String): State<String>
@@ -46,15 +52,25 @@ public fun Router.route(
     }
 }
 
-public fun Router.navigate(to: String, parameters: Parameters, hide: Boolean = false) {
-    navigate("$to?$parameters", hide = hide)
+public fun Router.navigate(to: String, parameters: Parameters, hide: Boolean = false, replace: Boolean = false) {
+    navigate("$to?$parameters", hide = hide, replace = replace)
 }
 
 @JvmName("navigateParameterList")
-public fun Router.navigate(to: String, parameters: Map<String, List<String>>, hide: Boolean = false) {
-    navigate(to, Parameters.from(parameters), hide = hide)
+public fun Router.navigate(
+    to: String,
+    parameters: Map<String, List<String>>,
+    hide: Boolean = false,
+    replace: Boolean = false
+) {
+    navigate(to, Parameters.from(parameters), hide = hide, replace = replace)
 }
 
-public fun Router.navigate(to: String, parameters: Map<String, String>, hide: Boolean = false) {
-    navigate(to, Parameters.from(parameters), hide = hide)
+public fun Router.navigate(
+    to: String,
+    parameters: Map<String, String>,
+    hide: Boolean = false,
+    replace: Boolean = false
+) {
+    navigate(to, Parameters.from(parameters), hide = hide, replace = replace)
 }

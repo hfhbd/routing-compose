@@ -21,7 +21,7 @@ fun RouteBuilder.Demo(
                 val router = Router.current
                 Text("The Answer to the Ultimate Question of Life, the Universe, and Everything is 42.")
                 Button(onClick = {
-                    router.navigate("/$root")
+                    router.navigate("/$root", replace = true)
                 }) {
                     Text("Back")
                 }

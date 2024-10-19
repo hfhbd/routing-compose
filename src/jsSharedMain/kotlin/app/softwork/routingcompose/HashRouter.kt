@@ -20,14 +20,14 @@ internal class HashRouter : Router {
     override val currentPath: Path
         get() = Path.from(currentHash.value)
 
-    private val currentHash: MutableState<String> = mutableStateOf(window.location.hash.currentURL() ?: "")
+    private val currentHash: MutableState<String> = mutableStateOf(window.location.hash.currentURL().ifBlank { "" })
 
     @Composable
     override fun getPath(initPath: String): State<String> {
         LaunchedEffect(Unit) {
-            currentHash.value = window.location.hash.currentURL() ?: initPath
+            currentHash.value = window.location.hash.currentURL().ifBlank { initPath }
             window.onhashchange = {
-                currentHash.value = window.location.hash.currentURL() ?: ""
+                currentHash.value = window.location.hash.currentURL().ifBlank { "" }
             }
         }
         return currentHash
@@ -35,15 +35,16 @@ internal class HashRouter : Router {
 
     private fun String.currentURL() = removePrefix("#")
         .removePrefix("/")
-        .ifBlank { null }
 
-    override fun navigate(to: String, hide: Boolean) {
+    override fun navigate(to: String, hide: Boolean, replace: Boolean) {
         if (hide) {
-            currentHash.value = to.currentURL() ?: ""
+            currentHash.value = to.currentURL().ifBlank { "" }
         } else if (window.location.hash.currentURL() == to.currentURL()) {
             currentHash.value = to.removePrefix("#")
+        } else if (replace) {
+            window.location.replace("#/${to.currentURL()}")
         } else {
-            window.location.hash = to
+            window.location.assign("#/${to.currentURL()}")
         }
     }
 }

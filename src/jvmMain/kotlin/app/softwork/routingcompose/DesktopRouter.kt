@@ -30,8 +30,12 @@ internal class DesktopRouter : Router {
         }
     }
 
-    override fun navigate(to: String, hide: Boolean) {
-        stack.add(Entry(to, hide))
+    override fun navigate(to: String, hide: Boolean, replace: Boolean) {
+        if (replace) {
+            stack.set(stack.lastIndex, Entry(to, hide))
+        } else {
+            stack.add(Entry(to, hide))
+        }
     }
 
     internal fun navigateBack() {
