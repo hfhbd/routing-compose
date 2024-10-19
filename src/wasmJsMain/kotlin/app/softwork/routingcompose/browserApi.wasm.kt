@@ -8,6 +8,10 @@ internal actual fun History.pushState(data: Any?, title: String, url: String?) {
     this.pushState(data, title, url)
 }
 
+internal actual fun History.replaceState(data: Any?, title: String, url: String?) {
+    this.replaceState(data, title, url)
+}
+
 internal actual typealias Location = org.w3c.dom.Location
 
 internal actual val window: Window get() = kotlinx.browser.window

@@ -30,7 +30,7 @@ internal class DesktopRouter : Router {
         }
     }
 
-    override fun navigate(to: String, hide: Boolean) {
+    override fun navigate(to: String, hide: Boolean, replace: Boolean) {
         stack.add(Entry(to, hide))
     }
 
