@@ -52,9 +52,9 @@ internal class BrowserRouter : Router {
             currentLocation.value = to
         } else {
             if (replace) {
-                window.history.replaceState(null, "", to)
+                window.history.replaceState("", to)
             } else {
-                window.history.pushState(null, "", to)
+                window.history.pushState("", to)
             }
             /*
              The history API unfortunately provides no callback to listen to
