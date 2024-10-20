@@ -39,7 +39,6 @@ internal class BrowserRouter : Router {
             currentLocation.value = window.location.newPath().takeUnless { it == "/" } ?: initPath
             window.onpopstate = {
                 currentLocation.value = window.location.newPath()
-                Unit
             }
         }
         return currentLocation
@@ -51,7 +50,7 @@ internal class BrowserRouter : Router {
         if (hide) {
             currentLocation.value = to
         } else {
-            window.history.pushState(null, "", to)
+            window.history.pushState("", to)
             /*
              The history API unfortunately provides no callback to listen to
              [window.history.pushState], so we need to notify subscribers when pushing a new path.

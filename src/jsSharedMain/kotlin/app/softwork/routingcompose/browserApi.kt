@@ -10,7 +10,7 @@ internal expect var Window.onpopstate: () -> Unit
 internal expect var Window.onhashchange: () -> Unit
 
 internal expect abstract class History
-internal expect fun History.pushState(data: Any?, title: String, url: String?)
+internal expect fun History.pushState(title: String, url: String?)
 
 internal expect abstract class Location {
     var pathname: String

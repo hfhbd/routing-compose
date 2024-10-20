@@ -28,7 +28,6 @@ internal class HashRouter : Router {
             currentHash.value = window.location.hash.currentURL() ?: initPath
             window.onhashchange = {
                 currentHash.value = window.location.hash.currentURL() ?: ""
-                Unit
             }
         }
         return currentHash
