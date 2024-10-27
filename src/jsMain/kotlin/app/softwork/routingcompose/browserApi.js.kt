@@ -6,6 +6,9 @@ internal actual typealias History = org.w3c.dom.History
 internal actual fun History.pushState(title: String, url: String?) {
     this.pushState(null, title, url)
 }
+internal actual fun History.replaceState(title: String, url: String?) {
+    this.replaceState(null, title, url)
+}
 
 internal actual typealias Location = org.w3c.dom.Location
 
