@@ -3,11 +3,12 @@ package app.softwork.routingcompose
 import androidx.compose.runtime.*
 import kotlin.jvm.*
 
+@Stable
 public interface Router {
     /**
      * The current path
      */
-    public val currentPath: Path
+    public fun currentPath(): Path
 
     public fun navigate(to: String, hide: Boolean = false)
 
@@ -33,8 +34,9 @@ public interface Router {
 internal val RouterCompositionLocal: ProvidableCompositionLocal<Router> =
     compositionLocalOf { error("Router not defined, cannot provide through RouterCompositionLocal.") }
 
+@Routing
 @Composable
-public fun Router.route(
+public operator fun Router.invoke(
     initRoute: String,
     routing: @Composable RouteBuilder.() -> Unit
 ) {

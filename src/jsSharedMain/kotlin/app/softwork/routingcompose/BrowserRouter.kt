@@ -19,17 +19,8 @@ import androidx.compose.runtime.*
  * For development environments, see the RoutingCompose Readme
  * for full instructions.
  */
-@Composable
-public fun BrowserRouter(
-    initPath: String,
-    routeBuilder: @Composable RouteBuilder.() -> Unit
-) {
-    BrowserRouter().route(initPath, routeBuilder)
-}
-
-internal class BrowserRouter : Router {
-    override val currentPath: Path
-        get() = Path.from(currentLocation.value)
+public data object BrowserRouter : Router {
+    override fun currentPath(): Path = Path.from(currentLocation.value)
 
     private val currentLocation: MutableState<String> = mutableStateOf(window.location.newPath())
 

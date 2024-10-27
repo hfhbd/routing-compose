@@ -34,6 +34,7 @@ import kotlin.uuid.*
  * ```
  */
 @Routing
+@Stable
 public class RouteBuilder internal constructor(private val basePath: String, private val remainingPath: Path) {
     public val path: String = remainingPath.path
     public val parameters: Parameters? = remainingPath.parameters
@@ -156,8 +157,9 @@ public class RouteBuilder internal constructor(private val basePath: String, pri
         }
     }
 
+    @Immutable
     @Routing
-    public class NoMatch(public val remainingPath: String, public val parameters: Parameters?) {
+    public class NoMatch internal constructor(public val remainingPath: String, public val parameters: Parameters?) {
         @Routing
         @Composable
         public fun redirect(target: String, hide: Boolean = false) {

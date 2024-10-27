@@ -7,15 +7,13 @@ import androidx.compose.runtime.*
  *
  * To get the current [Router] inside the [navBuilder] `@Composable` tree call [Router.current].
  */
-@Routing
 @Composable
 public fun DesktopRouter(initRoute: String, navBuilder: @Composable RouteBuilder.() -> Unit) {
-    DesktopRouter().route(initRoute, navBuilder)
+    DesktopRouter().invoke(initRoute, navBuilder)
 }
 
 internal class DesktopRouter : Router {
-    override val currentPath: Path
-        get() = Path.from(stack.last().path)
+    override fun currentPath() = Path.from(stack.last().path)
 
     private data class Entry(val path: String, val hide: Boolean)
 
@@ -36,6 +34,17 @@ internal class DesktopRouter : Router {
 
     internal fun navigateBack() {
         stack.removeAt(stack.lastIndex)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is DesktopRouter) {
+            return false
+        }
+        return stack == other.stack
+    }
+
+    override fun hashCode(): Int {
+        return stack.hashCode()
     }
 }
 
