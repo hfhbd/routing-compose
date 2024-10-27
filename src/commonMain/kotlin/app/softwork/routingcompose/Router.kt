@@ -33,8 +33,9 @@ public interface Router {
 internal val RouterCompositionLocal: ProvidableCompositionLocal<Router> =
     compositionLocalOf { error("Router not defined, cannot provide through RouterCompositionLocal.") }
 
+@Routing
 @Composable
-public fun Router.route(
+public operator fun Router.invoke(
     initRoute: String,
     routing: @Composable RouteBuilder.() -> Unit
 ) {

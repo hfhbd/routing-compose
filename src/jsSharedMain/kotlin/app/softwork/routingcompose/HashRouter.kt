@@ -8,15 +8,7 @@ import androidx.compose.runtime.*
  * Every request will always request `GET /`, so your server needs only to listen and serve this endpoint,
  * or using a SaaS `/index.html`.
  */
-@Composable
-public fun HashRouter(
-    initPath: String,
-    routeBuilder: @Composable RouteBuilder.() -> Unit
-) {
-    HashRouter().route(initPath, routeBuilder)
-}
-
-internal class HashRouter : Router {
+public data object HashRouter : Router {
     override val currentPath: Path
         get() = Path.from(currentHash.value)
 

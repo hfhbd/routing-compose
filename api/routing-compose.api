@@ -77,13 +77,13 @@ public final class app/softwork/routingcompose/Router$DefaultImpls {
 }
 
 public final class app/softwork/routingcompose/RouterKt {
+	public static final fun invoke (Lapp/softwork/routingcompose/Router;Ljava/lang/String;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
 	public static final fun navigate (Lapp/softwork/routingcompose/Router;Ljava/lang/String;Lapp/softwork/routingcompose/Parameters;Z)V
 	public static final fun navigate (Lapp/softwork/routingcompose/Router;Ljava/lang/String;Ljava/util/Map;Z)V
 	public static synthetic fun navigate$default (Lapp/softwork/routingcompose/Router;Ljava/lang/String;Lapp/softwork/routingcompose/Parameters;ZILjava/lang/Object;)V
 	public static synthetic fun navigate$default (Lapp/softwork/routingcompose/Router;Ljava/lang/String;Ljava/util/Map;ZILjava/lang/Object;)V
 	public static final fun navigateParameterList (Lapp/softwork/routingcompose/Router;Ljava/lang/String;Ljava/util/Map;Z)V
 	public static synthetic fun navigateParameterList$default (Lapp/softwork/routingcompose/Router;Ljava/lang/String;Ljava/util/Map;ZILjava/lang/Object;)V
-	public static final fun route (Lapp/softwork/routingcompose/Router;Ljava/lang/String;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
 }
 
 public abstract interface annotation class app/softwork/routingcompose/Routing : java/lang/annotation/Annotation {

@@ -15,7 +15,7 @@ class RoutingNodeTest {
         val router: Router = DesktopRouter()
         var result: String? = null
         rule.setContent {
-            router.route("/") {
+            router("/") {
                 int { i ->
                     result = "$i"
                 }
@@ -41,7 +41,7 @@ class RoutingNodeTest {
         val router: Router = DesktopRouter()
         var result: String? = null
         rule.setContent {
-            router.route("/") {
+            router("/") {
                 int { user ->
                     result = "$user"
                     int { i ->

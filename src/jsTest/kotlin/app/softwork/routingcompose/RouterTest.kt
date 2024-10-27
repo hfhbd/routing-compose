@@ -339,7 +339,7 @@ internal class RouterTest {
     fun relativeRoutingTest() = runTest {
         var router: Router = MockRouter()
         composition {
-            router.route("/") {
+            router("/") {
                 route("foo") {
                     int {
                         uuid {

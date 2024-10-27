@@ -16,7 +16,3 @@ class MockRouter : Router {
         currentState.value = to
     }
 }
-
-@Composable
-operator fun MockRouter.invoke(initPath: String, routeBuilder: @Composable RouteBuilder.() -> Unit) =
-    route(initPath, routeBuilder)

@@ -87,6 +87,28 @@ final class app.softwork.routingcompose/RouteBuilder { // app.softwork.routingco
     }
 }
 
+final object app.softwork.routingcompose/BrowserRouter : app.softwork.routingcompose/Router { // app.softwork.routingcompose/BrowserRouter|null[0]
+    final val currentPath // app.softwork.routingcompose/BrowserRouter.currentPath|{}currentPath[0]
+        final fun <get-currentPath>(): app.softwork.routingcompose/Path // app.softwork.routingcompose/BrowserRouter.currentPath.<get-currentPath>|<get-currentPath>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // app.softwork.routingcompose/BrowserRouter.equals|equals(kotlin.Any?){}[0]
+    final fun getPath(kotlin/String, androidx.compose.runtime/Composer?, kotlin/Int): androidx.compose.runtime/State<kotlin/String> // app.softwork.routingcompose/BrowserRouter.getPath|getPath(kotlin.String;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    final fun hashCode(): kotlin/Int // app.softwork.routingcompose/BrowserRouter.hashCode|hashCode(){}[0]
+    final fun navigate(kotlin/String, kotlin/Boolean) // app.softwork.routingcompose/BrowserRouter.navigate|navigate(kotlin.String;kotlin.Boolean){}[0]
+    final fun toString(): kotlin/String // app.softwork.routingcompose/BrowserRouter.toString|toString(){}[0]
+}
+
+final object app.softwork.routingcompose/HashRouter : app.softwork.routingcompose/Router { // app.softwork.routingcompose/HashRouter|null[0]
+    final val currentPath // app.softwork.routingcompose/HashRouter.currentPath|{}currentPath[0]
+        final fun <get-currentPath>(): app.softwork.routingcompose/Path // app.softwork.routingcompose/HashRouter.currentPath.<get-currentPath>|<get-currentPath>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // app.softwork.routingcompose/HashRouter.equals|equals(kotlin.Any?){}[0]
+    final fun getPath(kotlin/String, androidx.compose.runtime/Composer?, kotlin/Int): androidx.compose.runtime/State<kotlin/String> // app.softwork.routingcompose/HashRouter.getPath|getPath(kotlin.String;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    final fun hashCode(): kotlin/Int // app.softwork.routingcompose/HashRouter.hashCode|hashCode(){}[0]
+    final fun navigate(kotlin/String, kotlin/Boolean) // app.softwork.routingcompose/HashRouter.navigate|navigate(kotlin.String;kotlin.Boolean){}[0]
+    final fun toString(): kotlin/String // app.softwork.routingcompose/HashRouter.toString|toString(){}[0]
+}
+
 final val app.softwork.routingcompose/app_softwork_routingcompose_BrowserRouter$stableprop // app.softwork.routingcompose/app_softwork_routingcompose_BrowserRouter$stableprop|#static{}app_softwork_routingcompose_BrowserRouter$stableprop[0]
 final val app.softwork.routingcompose/app_softwork_routingcompose_DelegateRouter$stableprop // app.softwork.routingcompose/app_softwork_routingcompose_DelegateRouter$stableprop|#static{}app_softwork_routingcompose_DelegateRouter$stableprop[0]
 final val app.softwork.routingcompose/app_softwork_routingcompose_HashRouter$stableprop // app.softwork.routingcompose/app_softwork_routingcompose_HashRouter$stableprop|#static{}app_softwork_routingcompose_HashRouter$stableprop[0]
@@ -95,12 +117,10 @@ final val app.softwork.routingcompose/app_softwork_routingcompose_Path$stablepro
 final val app.softwork.routingcompose/app_softwork_routingcompose_RouteBuilder$stableprop // app.softwork.routingcompose/app_softwork_routingcompose_RouteBuilder$stableprop|#static{}app_softwork_routingcompose_RouteBuilder$stableprop[0]
 final val app.softwork.routingcompose/app_softwork_routingcompose_RouteBuilder_NoMatch$stableprop // app.softwork.routingcompose/app_softwork_routingcompose_RouteBuilder_NoMatch$stableprop|#static{}app_softwork_routingcompose_RouteBuilder_NoMatch$stableprop[0]
 
+final fun (app.softwork.routingcompose/Router).app.softwork.routingcompose/invoke(kotlin/String, kotlin/Function3<app.softwork.routingcompose/RouteBuilder, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // app.softwork.routingcompose/invoke|invoke@app.softwork.routingcompose.Router(kotlin.String;kotlin.Function3<app.softwork.routingcompose.RouteBuilder,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun (app.softwork.routingcompose/Router).app.softwork.routingcompose/navigate(kotlin/String, app.softwork.routingcompose/Parameters, kotlin/Boolean = ...) // app.softwork.routingcompose/navigate|navigate@app.softwork.routingcompose.Router(kotlin.String;app.softwork.routingcompose.Parameters;kotlin.Boolean){}[0]
 final fun (app.softwork.routingcompose/Router).app.softwork.routingcompose/navigate(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin.collections/List<kotlin/String>>, kotlin/Boolean = ...) // app.softwork.routingcompose/navigate|navigate@app.softwork.routingcompose.Router(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.collections.List<kotlin.String>>;kotlin.Boolean){}[0]
 final fun (app.softwork.routingcompose/Router).app.softwork.routingcompose/navigate(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/String>, kotlin/Boolean = ...) // app.softwork.routingcompose/navigate|navigate@app.softwork.routingcompose.Router(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.String>;kotlin.Boolean){}[0]
-final fun (app.softwork.routingcompose/Router).app.softwork.routingcompose/route(kotlin/String, kotlin/Function3<app.softwork.routingcompose/RouteBuilder, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // app.softwork.routingcompose/route|route@app.softwork.routingcompose.Router(kotlin.String;kotlin.Function3<app.softwork.routingcompose.RouteBuilder,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
-final fun app.softwork.routingcompose/BrowserRouter(kotlin/String, kotlin/Function3<app.softwork.routingcompose/RouteBuilder, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // app.softwork.routingcompose/BrowserRouter|BrowserRouter(kotlin.String;kotlin.Function3<app.softwork.routingcompose.RouteBuilder,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
-final fun app.softwork.routingcompose/HashRouter(kotlin/String, kotlin/Function3<app.softwork.routingcompose/RouteBuilder, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // app.softwork.routingcompose/HashRouter|HashRouter(kotlin.String;kotlin.Function3<app.softwork.routingcompose.RouteBuilder,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun app.softwork.routingcompose/app_softwork_routingcompose_BrowserRouter$stableprop_getter(): kotlin/Int // app.softwork.routingcompose/app_softwork_routingcompose_BrowserRouter$stableprop_getter|app_softwork_routingcompose_BrowserRouter$stableprop_getter(){}[0]
 final fun app.softwork.routingcompose/app_softwork_routingcompose_DelegateRouter$stableprop_getter(): kotlin/Int // app.softwork.routingcompose/app_softwork_routingcompose_DelegateRouter$stableprop_getter|app_softwork_routingcompose_DelegateRouter$stableprop_getter(){}[0]
 final fun app.softwork.routingcompose/app_softwork_routingcompose_HashRouter$stableprop_getter(): kotlin/Int // app.softwork.routingcompose/app_softwork_routingcompose_HashRouter$stableprop_getter|app_softwork_routingcompose_HashRouter$stableprop_getter(){}[0]
