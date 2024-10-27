@@ -1,5 +1,5 @@
 plugins {
-    kotlin("js")
+    kotlin("multiplatform")
     kotlin("plugin.compose")
     id("org.jetbrains.compose")
 }
@@ -10,8 +10,12 @@ kotlin {
             binaries.executable()
         }
     }
-}
 
-dependencies {
-    implementation(projects.integrationTest)
+    sourceSets {
+        jsMain {
+            dependencies {
+                implementation(projects.integrationTest)
+            }
+        }
+    }
 }
