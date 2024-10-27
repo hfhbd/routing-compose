@@ -1,7 +1,3 @@
-import org.gradle.kotlin.dsl.support.KotlinCompilerOptions
-import org.jetbrains.kotlin.gradle.dsl.KotlinCommonCompilerOptions
-import org.jetbrains.kotlin.gradle.targets.js.ir.KotlinJsIrCompilation
-
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.compose")

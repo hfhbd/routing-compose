@@ -1,0 +1,85 @@
+public final class app/softwork/routingcompose/DesktopRouterKt {
+	public static final fun DesktopRouter (Ljava/lang/String;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
+	public static final fun navigateBack (Lapp/softwork/routingcompose/Router;)V
+}
+
+public final class app/softwork/routingcompose/Parameters {
+	public static final field $stable I
+	public static final field Companion Lapp/softwork/routingcompose/Parameters$Companion;
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/Map;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMap ()Ljava/util/Map;
+	public final fun getRaw ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class app/softwork/routingcompose/Parameters$Companion {
+	public final fun from (Ljava/lang/String;)Lapp/softwork/routingcompose/Parameters;
+	public final fun from (Ljava/util/Map;)Lapp/softwork/routingcompose/Parameters;
+	public final fun from ([Lkotlin/Pair;)Lapp/softwork/routingcompose/Parameters;
+	public final fun fromParameterList (Ljava/util/Map;)Lapp/softwork/routingcompose/Parameters;
+	public final fun fromParameterListVararg ([Lkotlin/Pair;)Lapp/softwork/routingcompose/Parameters;
+}
+
+public final class app/softwork/routingcompose/Path {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Lapp/softwork/routingcompose/Parameters;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lapp/softwork/routingcompose/Parameters;
+	public final fun copy (Ljava/lang/String;Lapp/softwork/routingcompose/Parameters;)Lapp/softwork/routingcompose/Path;
+	public static synthetic fun copy$default (Lapp/softwork/routingcompose/Path;Ljava/lang/String;Lapp/softwork/routingcompose/Parameters;ILjava/lang/Object;)Lapp/softwork/routingcompose/Path;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getParameters ()Lapp/softwork/routingcompose/Parameters;
+	public final fun getPath ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class app/softwork/routingcompose/RouteBuilder {
+	public static final field $stable I
+	public final fun getParameters ()Lapp/softwork/routingcompose/Parameters;
+	public final fun int (Lkotlin/jvm/functions/Function4;Landroidx/compose/runtime/Composer;I)V
+	public final fun noMatch (Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
+	public final fun redirect ([Ljava/lang/String;Ljava/lang/String;ZLandroidx/compose/runtime/Composer;II)V
+	public final fun route ([Ljava/lang/String;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
+	public final fun string (Lkotlin/jvm/functions/Function4;Landroidx/compose/runtime/Composer;I)V
+	public final fun uuid (Lkotlin/jvm/functions/Function4;Landroidx/compose/runtime/Composer;I)V
+}
+
+public final class app/softwork/routingcompose/RouteBuilder$NoMatch {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Lapp/softwork/routingcompose/Parameters;)V
+	public final fun getParameters ()Lapp/softwork/routingcompose/Parameters;
+	public final fun getRemainingPath ()Ljava/lang/String;
+	public final fun redirect (Ljava/lang/String;ZLandroidx/compose/runtime/Composer;II)V
+}
+
+public abstract interface class app/softwork/routingcompose/Router {
+	public static final field Companion Lapp/softwork/routingcompose/Router$Companion;
+	public abstract fun getCurrentPath ()Lapp/softwork/routingcompose/Path;
+	public abstract fun getPath (Ljava/lang/String;Landroidx/compose/runtime/Composer;I)Landroidx/compose/runtime/State;
+	public abstract fun navigate (Ljava/lang/String;Z)V
+}
+
+public final class app/softwork/routingcompose/Router$Companion {
+	public final fun getCurrent (Landroidx/compose/runtime/Composer;I)Lapp/softwork/routingcompose/Router;
+}
+
+public final class app/softwork/routingcompose/Router$DefaultImpls {
+	public static synthetic fun navigate$default (Lapp/softwork/routingcompose/Router;Ljava/lang/String;ZILjava/lang/Object;)V
+}
+
+public final class app/softwork/routingcompose/RouterKt {
+	public static final fun navigate (Lapp/softwork/routingcompose/Router;Ljava/lang/String;Lapp/softwork/routingcompose/Parameters;Z)V
+	public static final fun navigate (Lapp/softwork/routingcompose/Router;Ljava/lang/String;Ljava/util/Map;Z)V
+	public static synthetic fun navigate$default (Lapp/softwork/routingcompose/Router;Ljava/lang/String;Lapp/softwork/routingcompose/Parameters;ZILjava/lang/Object;)V
+	public static synthetic fun navigate$default (Lapp/softwork/routingcompose/Router;Ljava/lang/String;Ljava/util/Map;ZILjava/lang/Object;)V
+	public static final fun navigateParameterList (Lapp/softwork/routingcompose/Router;Ljava/lang/String;Ljava/util/Map;Z)V
+	public static synthetic fun navigateParameterList$default (Lapp/softwork/routingcompose/Router;Ljava/lang/String;Ljava/util/Map;ZILjava/lang/Object;)V
+	public static final fun route (Lapp/softwork/routingcompose/Router;Ljava/lang/String;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
+}
+
+public abstract interface annotation class app/softwork/routingcompose/Routing : java/lang/annotation/Annotation {
+}
+
