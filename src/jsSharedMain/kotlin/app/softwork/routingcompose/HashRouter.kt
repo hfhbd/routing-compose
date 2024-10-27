@@ -13,7 +13,7 @@ public fun HashRouter(
     initPath: String,
     routeBuilder: @Composable RouteBuilder.() -> Unit
 ) {
-    HashRouter().route(initPath, routeBuilder)
+    Router.internalGlobalRouter = HashRouter().apply { route(initPath, routeBuilder) }
 }
 
 internal class HashRouter : Router {
@@ -38,7 +38,7 @@ internal class HashRouter : Router {
         .removePrefix("/")
         .ifBlank { null }
 
-    override fun navigate(to: String, hide: Boolean) {
+    override fun navigate(to: String, hide: Boolean, replace: Boolean) {
         if (hide) {
             currentHash.value = to.currentURL() ?: ""
         } else if (window.location.hash.currentURL() == to.currentURL()) {

@@ -9,7 +9,13 @@ public interface Router {
      */
     public val currentPath: Path
 
-    public fun navigate(to: String, hide: Boolean = false)
+    /**
+     * Navigate to a new path.
+     * @param to The path to navigate to.
+     * @param hide Whether to hide the current path.
+     * @param replace Whether to replace the current path.
+     */
+    public fun navigate(to: String, hide: Boolean = false, replace: Boolean = false)
 
     @Composable
     public fun getPath(initPath: String): State<String>
@@ -27,6 +33,18 @@ public interface Router {
         public val current: Router
             @Composable
             get() = RouterCompositionLocal.current
+
+        /**
+         * Internal global router instance for use outside of composition.
+         * Do not use directly, use [global] instead.
+         */
+        public var internalGlobalRouter: Router? = null
+
+        /**
+         * Provide the global router instance for use outside of composition.
+         */
+        public val global: Router
+            get() = internalGlobalRouter ?: error("Router not defined.")
     }
 }
 
@@ -41,20 +59,34 @@ public fun Router.route(
     CompositionLocalProvider(RouterCompositionLocal provides this) {
         val rawPath by getPath(initRoute)
         val path = Path.from(rawPath)
-        val node = remember(path) { RouteBuilder(path.path, path) }
+        val node = remember(path) {
+            RouteBuilder.routeBuilderCache.getOrPut("${this.hashCode()} ${path.path} $path") {
+                RouteBuilder(path.path, path)
+            }
+        }
         node.routing()
     }
 }
 
-public fun Router.navigate(to: String, parameters: Parameters, hide: Boolean = false) {
-    navigate("$to?$parameters", hide = hide)
+public fun Router.navigate(to: String, parameters: Parameters, hide: Boolean = false, replace: Boolean = false) {
+    navigate("$to?$parameters", hide = hide, replace = replace)
 }
 
 @JvmName("navigateParameterList")
-public fun Router.navigate(to: String, parameters: Map<String, List<String>>, hide: Boolean = false) {
-    navigate(to, Parameters.from(parameters), hide = hide)
+public fun Router.navigate(
+    to: String,
+    parameters: Map<String, List<String>>,
+    hide: Boolean = false,
+    replace: Boolean = false
+) {
+    navigate(to, Parameters.from(parameters), hide = hide, replace = replace)
 }
 
-public fun Router.navigate(to: String, parameters: Map<String, String>, hide: Boolean = false) {
-    navigate(to, Parameters.from(parameters), hide = hide)
+public fun Router.navigate(
+    to: String,
+    parameters: Map<String, String>,
+    hide: Boolean = false,
+    replace: Boolean = false
+) {
+    navigate(to, Parameters.from(parameters), hide = hide, replace = replace)
 }
