@@ -10,6 +10,7 @@ plugins {
     id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
     id("io.gitlab.arturbosch.detekt") version "1.23.7"
     id("app.cash.licensee") version "1.12.0"
+    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.16.3"
 }
 
 kotlin {
@@ -178,4 +179,11 @@ plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin>
 
 the<org.jetbrains.kotlin.gradle.targets.js.binaryen.BinaryenRootExtension>().apply {
     downloadBaseUrl = null
+}
+
+apiValidation {
+    klib {
+        enabled = true
+    }
+    ignoredProjects += "integrationTest"
 }
