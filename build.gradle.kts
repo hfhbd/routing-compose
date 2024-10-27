@@ -186,4 +186,6 @@ apiValidation {
         enabled = true
     }
     ignoredProjects += "integrationTest"
+    ignoredProjects += "hashRouterTest"
+    ignoredProjects += "browserRouterTest"
 }
