@@ -3,11 +3,12 @@ package app.softwork.routingcompose
 import androidx.compose.runtime.*
 import kotlin.jvm.*
 
+@Stable
 public interface Router {
     /**
      * The current path
      */
-    public val currentPath: Path
+    public fun currentPath(): Path
 
     public fun navigate(to: String, hide: Boolean = false)
 

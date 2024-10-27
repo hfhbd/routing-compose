@@ -1,7 +1,9 @@
 package app.softwork.routingcompose
 
+import androidx.compose.runtime.Immutable
 import kotlin.jvm.*
 
+@Immutable
 public class Parameters private constructor(public val raw: String, public val map: Map<String, List<String>>) {
     public companion object {
         private val reservedCharacters = mapOf(

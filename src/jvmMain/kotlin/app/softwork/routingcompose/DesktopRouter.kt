@@ -13,8 +13,7 @@ public fun DesktopRouter(initRoute: String, navBuilder: @Composable RouteBuilder
 }
 
 internal class DesktopRouter : Router {
-    override val currentPath: Path
-        get() = Path.from(stack.last().path)
+    override fun currentPath() = Path.from(stack.last().path)
 
     private data class Entry(val path: String, val hide: Boolean)
 

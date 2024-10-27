@@ -3,8 +3,7 @@ package app.softwork.routingcompose
 import androidx.compose.runtime.*
 
 class MockRouter : Router {
-    override val currentPath: Path
-        get() = Path.from(currentState.value!!)
+    override fun currentPath() = Path.from(currentState.value!!)
 
     private val currentState = mutableStateOf<String?>(null)
 

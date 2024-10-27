@@ -9,8 +9,7 @@ import androidx.compose.runtime.*
  * or using a SaaS `/index.html`.
  */
 public data object HashRouter : Router {
-    override val currentPath: Path
-        get() = Path.from(currentHash.value)
+    override fun currentPath(): Path = Path.from(currentHash.value)
 
     private val currentHash: MutableState<String> = mutableStateOf(window.location.hash.currentURL() ?: "")
 

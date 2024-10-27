@@ -20,7 +20,7 @@ public fun NavLink(
     A(
         href = to,
         attrs = {
-            val currentPath = router.currentPath.path
+            val currentPath = router.currentPath().path
             val selected = if (to == "/") {
                 currentPath == to
             } else {

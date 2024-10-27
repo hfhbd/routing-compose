@@ -20,8 +20,7 @@ import androidx.compose.runtime.*
  * for full instructions.
  */
 public data object BrowserRouter : Router {
-    override val currentPath: Path
-        get() = Path.from(currentLocation.value)
+    override fun currentPath(): Path = Path.from(currentLocation.value)
 
     private val currentLocation: MutableState<String> = mutableStateOf(window.location.newPath())
 

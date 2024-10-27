@@ -11,8 +11,8 @@ internal data class DelegateRouter(val basePath: String, val router: Router) : R
                 router.navigate("/$to", hide)
             }
 
-            to.startsWith(".") -> {
-                val newPath = router.currentPath.relative(to)
+            to.startsWith("./") -> {
+                val newPath = router.currentPath().relative(to)
                 router.navigate(newPath.path)
             }
 
