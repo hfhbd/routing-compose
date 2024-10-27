@@ -56,11 +56,17 @@ final class app.softwork.routingcompose/Path { // app.softwork.routingcompose/Pa
     final fun equals(kotlin/Any?): kotlin/Boolean // app.softwork.routingcompose/Path.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // app.softwork.routingcompose/Path.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // app.softwork.routingcompose/Path.toString|toString(){}[0]
+
+    final object Companion { // app.softwork.routingcompose/Path.Companion|null[0]
+        final fun from(kotlin/String): app.softwork.routingcompose/Path // app.softwork.routingcompose/Path.Companion.from|from(kotlin.String){}[0]
+    }
 }
 
 final class app.softwork.routingcompose/RouteBuilder { // app.softwork.routingcompose/RouteBuilder|null[0]
     final val parameters // app.softwork.routingcompose/RouteBuilder.parameters|{}parameters[0]
         final fun <get-parameters>(): app.softwork.routingcompose/Parameters? // app.softwork.routingcompose/RouteBuilder.parameters.<get-parameters>|<get-parameters>(){}[0]
+    final val path // app.softwork.routingcompose/RouteBuilder.path|{}path[0]
+        final fun <get-path>(): kotlin/String // app.softwork.routingcompose/RouteBuilder.path.<get-path>|<get-path>(){}[0]
 
     final fun int(kotlin/Function4<app.softwork.routingcompose/RouteBuilder, kotlin/Int, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // app.softwork.routingcompose/RouteBuilder.int|int(kotlin.Function4<app.softwork.routingcompose.RouteBuilder,kotlin.Int,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
     final fun noMatch(kotlin/Function3<app.softwork.routingcompose/RouteBuilder.NoMatch, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // app.softwork.routingcompose/RouteBuilder.noMatch|noMatch(kotlin.Function3<app.softwork.routingcompose.RouteBuilder.NoMatch,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]

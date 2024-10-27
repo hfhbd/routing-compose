@@ -24,6 +24,7 @@ public final class app/softwork/routingcompose/Parameters$Companion {
 
 public final class app/softwork/routingcompose/Path {
 	public static final field $stable I
+	public static final field Companion Lapp/softwork/routingcompose/Path$Companion;
 	public fun <init> (Ljava/lang/String;Lapp/softwork/routingcompose/Parameters;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Lapp/softwork/routingcompose/Parameters;
@@ -36,9 +37,14 @@ public final class app/softwork/routingcompose/Path {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class app/softwork/routingcompose/Path$Companion {
+	public final fun from (Ljava/lang/String;)Lapp/softwork/routingcompose/Path;
+}
+
 public final class app/softwork/routingcompose/RouteBuilder {
 	public static final field $stable I
 	public final fun getParameters ()Lapp/softwork/routingcompose/Parameters;
+	public final fun getPath ()Ljava/lang/String;
 	public final fun int (Lkotlin/jvm/functions/Function4;Landroidx/compose/runtime/Composer;I)V
 	public final fun noMatch (Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
 	public final fun redirect ([Ljava/lang/String;Ljava/lang/String;ZLandroidx/compose/runtime/Composer;II)V

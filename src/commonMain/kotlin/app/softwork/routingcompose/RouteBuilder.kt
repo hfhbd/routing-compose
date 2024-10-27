@@ -35,6 +35,7 @@ import kotlin.uuid.*
  */
 @Routing
 public class RouteBuilder internal constructor(private val basePath: String, private val remainingPath: Path) {
+    public val path: String = remainingPath.path
     public val parameters: Parameters? = remainingPath.parameters
 
     private var match by mutableStateOf(Match.NoMatch)
