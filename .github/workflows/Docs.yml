@@ -34,7 +34,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - name: Generate Docs
         run: ./gradlew :integrationTest:hashRouterTest:jsBrowserDistribution
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: integrationTest/hashRouterTest/build/dist/js/productionExecutable
       - name: Deploy to GitHub Pages
