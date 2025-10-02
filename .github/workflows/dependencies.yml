@@ -21,6 +21,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 21
-      - uses: gradle/actions/dependency-submission@v4
+      - uses: gradle/actions/dependency-submission@v5
       - uses: actions/dependency-review-action@v4
         if: github.event_name == 'pull_request'
