@@ -66,6 +66,7 @@ public abstract interface class app/softwork/routingcompose/Router {
 	public abstract fun getCurrentPath ()Lapp/softwork/routingcompose/Path;
 	public abstract fun getPath (Ljava/lang/String;Landroidx/compose/runtime/Composer;I)Landroidx/compose/runtime/State;
 	public abstract fun navigate (Ljava/lang/String;ZZ)V
+	public static synthetic fun navigate$default (Lapp/softwork/routingcompose/Router;Ljava/lang/String;ZZILjava/lang/Object;)V
 }
 
 public final class app/softwork/routingcompose/Router$Companion {

@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
+
 plugins {
     kotlin("multiplatform") version "2.2.20"
     kotlin("plugin.compose") version "2.2.20"
@@ -11,6 +13,17 @@ plugins {
 
 kotlin {
     jvmToolchain(11)
+
+    @OptIn(ExperimentalAbiValidation::class)
+    abiValidation {
+        enabled = true
+        klib {
+            enabled = true
+        }
+        tasks.check {
+            dependsOn(tasks.checkLegacyAbi)
+        }
+    }
 
     jvm()
     js {
@@ -152,15 +165,3 @@ plugins.withType<org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmNodeJsRootP
     the<org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmNodeJsEnvSpec>().downloadBaseUrl = null
 }
 the<org.jetbrains.kotlin.gradle.targets.wasm.binaryen.BinaryenEnvSpec>().downloadBaseUrl.set(null)
-
-/*
-apiValidation {
-    klib {
-        enabled = true
-    }
-    ignoredProjects += "integrationTest"
-    ignoredProjects += "hashRouterTest"
-    ignoredProjects += "browserRouterTest"
-}
-
- */
