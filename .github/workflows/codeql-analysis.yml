@@ -27,7 +27,7 @@ jobs:
           build-mode: manual
 
       - name: Build with Gradle
-        run: ./gradlew --no-build-cache jvmClasses
+        run: ./gradlew --no-build-cache jvmMainClasses
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
