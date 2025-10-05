@@ -12,9 +12,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    environment:
+      name: MavenCentral
+
     steps:
       - name: Set environment for version
-        run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
+        run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_OUTPUT
+        id: version
       - uses: actions/checkout@v5
       - uses: gradle/actions/setup-gradle@v5
         with:
@@ -23,9 +27,9 @@ jobs:
           build-scan-terms-of-use-agree: 'yes'
 
       - name: Publish
-        run: ./gradlew -Pversion=$version publish
+        run: ./gradlew -Pversion=${{ steps.version.outputs.version }} publish
         env:
-          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_PRIVATE_KEY }}
-          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASSWORD }}
-          ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONARTYPE_APIKEY }}
-          ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.SONARTYPE_APITOKEN }}
+          ORG_GRADLE_PROJECT_SIGNING_PRIVATE_KEY: ${{ secrets.SIGNING_PRIVATE_KEY }}
+          ORG_GRADLE_PROJECT_SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.CENTRAL_PASSWORD }}
