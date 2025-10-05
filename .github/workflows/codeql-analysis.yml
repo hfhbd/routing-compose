@@ -45,16 +45,16 @@ jobs:
       - uses: actions/checkout@v5
       - uses: gradle/actions/setup-gradle@v4
 
-      - run: mkdir -p integrationTest/hashRouterTest/build/dist/js/productionExecutable
+      - run: mkdir -p integrationTest/hashRouterTest/build/dist/js/developmentExecutable
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: javascript
           build-mode: none
-          source-root: integrationTest/hashRouterTest/build/dist/js/productionExecutable
+          source-root: integrationTest/hashRouterTest/build/dist/js/developmentExecutable
 
       - name: Build with Gradle
-        run: ./gradlew --no-build-cache :integrationTest:hashRouterTest:jsBrowserDistribution
+        run: ./gradlew --no-build-cache :integrationTest:hashRouterTest:jsBrowserDevelopmentExecutableDistribution
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
