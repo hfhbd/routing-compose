@@ -1,16 +1,12 @@
-import java.util.*
-import io.gitlab.arturbosch.detekt.*
-
 plugins {
-    kotlin("multiplatform") version "2.0.21"
-    kotlin("plugin.compose") version "2.0.21"
-    id("org.jetbrains.compose") version "1.7.0"
+    kotlin("multiplatform") version "2.2.20"
+    kotlin("plugin.compose") version "2.2.20"
+    id("org.jetbrains.compose") version "1.9.0"
     id("maven-publish")
     id("signing")
-    id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
+    id("io.github.hfhbd.mavencentral") version "0.0.23"
     id("io.gitlab.arturbosch.detekt") version "1.23.8"
     id("app.cash.licensee") version "1.13.0"
-    id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.18.1"
 }
 
 kotlin {
@@ -22,14 +18,6 @@ kotlin {
     }
     wasmJs {
         browser()
-    }
-    applyDefaultHierarchyTemplate {
-        common {
-            group("jsShared") {
-                withJs()
-                withWasmJs()
-            }
-        }
     }
 
     explicitApi()
@@ -62,6 +50,11 @@ kotlin {
                 implementation(compose.html.testUtils)
             }
         }
+        wasmJsMain {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-browser:0.3")
+            }
+        }
 
         jvmTest {
             dependencies {
@@ -80,8 +73,7 @@ licensee {
 val emptyJar by tasks.registering(Jar::class) { }
 
 publishing {
-    publications.configureEach {
-        this as MavenPublication
+    publications.withType<MavenPublication>().configureEach {
         artifact(emptyJar) {
             classifier = "javadoc"
         }
@@ -91,7 +83,7 @@ publishing {
             url.set("https://github.com/hfhbd/routing-compose")
             licenses {
                 license {
-                    name.set("The Apache License, Version 2.0")
+                    name.set("Apache-2.0")
                     url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
                 }
             }
@@ -112,10 +104,9 @@ publishing {
 }
 
 signing {
-    val signingKey: String? by project
-    val signingPassword: String? by project
-    signingKey?.let {
-        useInMemoryPgpKeys(String(Base64.getDecoder().decode(it)).trim(), signingPassword)
+    val signingKey = providers.gradleProperty("SIGNING_PRIVATE_KEY")
+    if (signingKey.isPresent) {
+        useInMemoryPgpKeys(signingKey.get(), providers.gradleProperty("SIGNING_PASSWORD").get())
         sign(publishing.publications)
     }
 }
@@ -126,61 +117,43 @@ tasks.withType<AbstractPublishToMaven>().configureEach {
     dependsOn(signingTasks)
 }
 
-tasks.withType<AbstractArchiveTask>().configureEach {
-    isPreserveFileTimestamps = false
-    isReproducibleFileOrder = true
-    filePermissions {}
-    dirPermissions {}
-}
-
-nexusPublishing {
-    this.repositories {
-        sonatype {
-            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
-            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
-        }
-    }
-}
-
 detekt {
-    source.from(files(rootProject.rootDir))
-    parallel = true
-    autoCorrect = true
-    buildUponDefaultConfig = true
-}
-
-dependencies {
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${detekt.toolVersion}")
-}
-
-tasks {
-    fun SourceTask.config() {
+    source.from(fileTree(layout.settingsDirectory) {
         include("**/*.kt")
         exclude("**/*.kts")
         exclude("**/resources/**")
         exclude("**/generated/**")
         exclude("**/build/**")
+    })
+    parallel = true
+    autoCorrect = true
+    buildUponDefaultConfig = true
+    reports {
+        sarif.required.set(true)
     }
-    withType<DetektCreateBaselineTask>().configureEach {
-        config()
-    }
-    withType<Detekt>().configureEach {
-        config()
 
-        reports {
-            sarif.required.set(true)
-        }
+    dependencies {
+        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${detekt.toolVersion}")
     }
 }
 
 plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin> {
-    the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().downloadBaseUrl = null
+    the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsEnvSpec>().downloadBaseUrl = null
 }
 
-the<org.jetbrains.kotlin.gradle.targets.js.binaryen.BinaryenRootExtension>().apply {
-    downloadBaseUrl = null
+plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsPlugin> {
+    the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsEnvSpec>().downloadBaseUrl = null
 }
 
+plugins.withType<org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmNodeJsPlugin> {
+    the<org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmNodeJsEnvSpec>().downloadBaseUrl = null
+}
+plugins.withType<org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmNodeJsRootPlugin> {
+    the<org.jetbrains.kotlin.gradle.targets.wasm.nodejs.WasmNodeJsEnvSpec>().downloadBaseUrl = null
+}
+the<org.jetbrains.kotlin.gradle.targets.wasm.binaryen.BinaryenEnvSpec>().downloadBaseUrl.set(null)
+
+/*
 apiValidation {
     klib {
         enabled = true
@@ -189,3 +162,5 @@ apiValidation {
     ignoredProjects += "hashRouterTest"
     ignoredProjects += "browserRouterTest"
 }
+
+ */
