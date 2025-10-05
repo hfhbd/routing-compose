@@ -1,0 +1,80 @@
+name: "CodeQL"
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  analyze:
+    name: Analyze Kotlin
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+      packages: read
+
+    steps:
+      - uses: actions/checkout@v5
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: kotlin
+          build-mode: manual
+
+      - name: Build with Gradle
+        run: ./gradlew --no-build-cache jvmMainClasses
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+  analyzeJs:
+    name: Analyze Kotlin/JS
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+      packages: read
+
+    steps:
+      - uses: actions/checkout@v5
+      - uses: gradle/actions/setup-gradle@v4
+
+      - run: mkdir -p integrationTest/hashRouterTest/build/dist/js/developmentExecutable
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript
+          build-mode: none
+          source-root: integrationTest/hashRouterTest/build/dist/js/developmentExecutable
+
+      - name: Build with Gradle
+        run: ./gradlew --no-build-cache :integrationTest:hashRouterTest:jsBrowserDevelopmentExecutableDistribution
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+  
+  analyzeActions:
+    name: Analyze Actions
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: actions
+          build-mode: none
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
