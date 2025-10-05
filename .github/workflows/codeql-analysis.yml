@@ -45,6 +45,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: gradle/actions/setup-gradle@v4
 
+      - run: mkdir -p integrationTest/hashRouterTest/build/dist/js/productionExecutable
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
