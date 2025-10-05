@@ -7,6 +7,7 @@ import androidx.compose.runtime.*
  *
  * To get the current [Router] inside the [navBuilder] `@Composable` tree call [Router.current].
  */
+@Deprecated("Use org.jetbrains.androidx.navigation:navigation-compose for Desktop and WASM instead")
 @Routing
 @Composable
 public fun DesktopRouter(initRoute: String, navBuilder: @Composable RouteBuilder.() -> Unit) {

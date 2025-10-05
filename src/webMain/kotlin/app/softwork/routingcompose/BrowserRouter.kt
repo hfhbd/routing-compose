@@ -20,12 +20,10 @@ import androidx.compose.runtime.*
  * for full instructions.
  */
 @Composable
-public fun BrowserRouter(
+public expect fun BrowserRouter(
     initPath: String,
     routeBuilder: @Composable RouteBuilder.() -> Unit
-) {
-    BrowserRouter().route(initPath, routeBuilder)
-}
+)
 
 internal class BrowserRouter : Router {
     override val currentPath: Path

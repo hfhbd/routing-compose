@@ -9,12 +9,10 @@ import androidx.compose.runtime.*
  * or using a SaaS `/index.html`.
  */
 @Composable
-public fun HashRouter(
+public expect fun HashRouter(
     initPath: String,
     routeBuilder: @Composable RouteBuilder.() -> Unit
-) {
-    HashRouter().route(initPath, routeBuilder)
-}
+)
 
 internal class HashRouter : Router {
     override val currentPath: Path
