@@ -10,6 +10,10 @@ kotlin {
     jvm()
     js {
         browser()
+        useEsModules()
+        compilerOptions {
+            target.set("es2015")
+        }
     }
     wasmJs {
         browser()
