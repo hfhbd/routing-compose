@@ -6,6 +6,10 @@ changelog:
       exclude:
         labels:
           - dependencies
+          - build
     - title: Updated Dependencies
       labels:
         - dependencies
+      exclude:
+        labels:
+          - build
