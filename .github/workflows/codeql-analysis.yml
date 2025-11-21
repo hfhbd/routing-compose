@@ -17,7 +17,7 @@ jobs:
       packages: read
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: gradle/actions/setup-gradle@v5
 
       - name: Initialize CodeQL
@@ -42,7 +42,7 @@ jobs:
       packages: read
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: gradle/actions/setup-gradle@v5
 
       - run: mkdir -p integrationTest/hashRouterTest/build/dist/js/developmentExecutable
@@ -68,7 +68,7 @@ jobs:
       security-events: write
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
