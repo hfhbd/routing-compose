@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 plugins {
     kotlin("multiplatform") version "2.2.21"
     kotlin("plugin.compose") version "2.2.20"
-    id("org.jetbrains.compose") version "1.9.0"
+    id("org.jetbrains.compose") version "1.10.1"
     id("maven-publish")
     id("signing")
     id("io.github.hfhbd.mavencentral") version "0.0.23"
