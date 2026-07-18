@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - uses: actions/configure-pages@v6
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: gradle/actions/setup-gradle@v6
         with:
           build-scan-publish: true
