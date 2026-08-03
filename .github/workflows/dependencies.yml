@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
-      - uses: gradle/actions/dependency-submission@v6
+      - uses: gradle/actions/dependency-submission@v6.2.0
 
   dependency-review:
     runs-on: ubuntu-latest
