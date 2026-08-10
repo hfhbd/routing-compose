@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
-      - uses: gradle/actions/setup-gradle@v6.2.0
+      - uses: gradle/actions/setup-gradle@v6.3.0
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4.37.6
@@ -43,7 +43,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
-      - uses: gradle/actions/setup-gradle@v6.2.0
+      - uses: gradle/actions/setup-gradle@v6.3.0
 
       - run: mkdir -p integrationTest/hashRouterTest/build/dist/js/developmentExecutable
       - name: Initialize CodeQL
