@@ -6,7 +6,7 @@ plugins {
     id("org.jetbrains.compose") version "1.9.0"
     id("maven-publish")
     id("signing")
-    id("io.github.hfhbd.mavencentral") version "0.0.23"
+    id("io.github.hfhbd.mavencentral") version "0.0.26"
     id("io.gitlab.arturbosch.detekt") version "1.23.8"
     id("app.cash.licensee") version "1.14.1"
 }
